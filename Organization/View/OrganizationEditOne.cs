@@ -83,7 +83,7 @@ namespace IS_5.View
 
         private void FillFields()
         {
-            var service = new APIServiceConnection<LocalityModel>();
+            var service = new APIServiceConnection<LocalityView>();
             //service.Get()
             //var typeOrg = _controller.ShowTypesOrganizations();
             //var typeOwnOrg = _controller.ShowTypesOwnerOrganizations();

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetsClient", "PetsClient.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLibrary", "..\ModelLibrary\ModelLibrary.csproj", "{1A9C59AD-25AE-41E8-BDAC-146BF7F49E4D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetsServer", "..\PetsServer\PetsServer.csproj", "{FC54B996-0386-494D-8FBE-6760A36A2AA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1A9C59AD-25AE-41E8-BDAC-146BF7F49E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A9C59AD-25AE-41E8-BDAC-146BF7F49E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A9C59AD-25AE-41E8-BDAC-146BF7F49E4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC54B996-0386-494D-8FBE-6760A36A2AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC54B996-0386-494D-8FBE-6760A36A2AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC54B996-0386-494D-8FBE-6760A36A2AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC54B996-0386-494D-8FBE-6760A36A2AA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
