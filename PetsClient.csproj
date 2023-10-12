@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\fast-forward(1).png" />
+    <None Remove="Resources\fast-forward.png" />
+    <None Remove="Resources\fast-forward_r.png" />
+    <None Remove="Resources\Microsoft-Fluentui-Emoji-Mono-Service-Dog.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\fast-forward(1).png" />
+    <Content Include="Resources\fast-forward.png" />
+    <Content Include="Resources\fast-forward_r.png" />
+    <Content Include="Resources\Microsoft-Fluentui-Emoji-Mono-Service-Dog.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
+    <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="110.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ModelLibrary\ModelLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Etc\ScanView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MenuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Organization\View\OrganizationEditOne.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Organization\View\OrganizationView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
+</Project>
