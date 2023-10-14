@@ -8,6 +8,8 @@ namespace PetsClient.Services
 
         public PageSettings<TList> Get(string resources, PageSettingsView page);
 
+        public byte[] GetFile(string resources, FilterSetting filters);
+
         public void Post(string resources, TEdit view);
 
         public void Put(string resources, int id, TEdit view);

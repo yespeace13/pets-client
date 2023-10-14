@@ -2,6 +2,8 @@
 using ModelLibrary.View;
 using PetsClient.Etc;
 using PetsClient.Services;
+using RestSharp;
+using System.IO;
 
 namespace PetsClient.Organization.View
 {
@@ -95,7 +97,7 @@ namespace PetsClient.Organization.View
             var result = new OrganizationEditView();
             if (result.ShowDialog() == DialogResult.OK)
                 service.Post("organizations", result.OrganizationEdit);
-            
+
             ShowOrganizations();
         }
 
@@ -111,10 +113,9 @@ namespace PetsClient.Organization.View
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            //var columns = new string[OrgDataGrid.ColumnCount];
-            //for (var col = 0; col < OrgDataGrid.ColumnCount; col++)
-            //    columns[col] = OrgDataGrid.Columns[col].HeaderText;
-            //_controller.ExportToExcel(columns, _filterSetting);
+            var byteArray = service.GetFile("organizationexport", _filterSetting);
+            File.WriteAllBytes("Организации.xlsx", byteArray);
+
         }
 
         private void OrgDataGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -128,7 +129,7 @@ namespace PetsClient.Organization.View
             var selectedRow = OrgDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
             var selectedItem = (OrganizationViewList)OrgDataGrid.Rows[selectedRow].DataBoundItem;
             var result = new OrganizationEditView(selectedItem, State.Update);
-            if(result.ShowDialog() == DialogResult.OK)
+            if (result.ShowDialog() == DialogResult.OK)
             {
                 service.Put("organizations", selectedItem.Id, result.OrganizationEdit);
             }
