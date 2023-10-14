@@ -1,4 +1,3 @@
-using IS_5;
 using PetsClient.Organization.View;
 
 namespace PetsClient
@@ -13,11 +12,9 @@ namespace PetsClient
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            //ApplicationConfiguration.Initialize();
-            //Application.Run(new Form1());
+            ApplicationConfiguration.Initialize();
+            Application.Run(new OrganizationView());
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             //var authoizationView = new AuthorizationView();
             //Application.Run(authoizationView);
 
@@ -25,7 +22,6 @@ namespace PetsClient
             //{
             //    Application.Run(new MenuForm());
             //}
-            Application.Run(new OrganizationView());
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using IS_5.Services;
-using IS_5.View;
-using ModelLibrary.Model.Organization;
+﻿using ModelLibrary.Model.Organization;
 using ModelLibrary.View;
 using PetsClient.Etc;
+using PetsClient.Services;
 
 namespace PetsClient.Organization.View
 {
@@ -12,11 +11,11 @@ namespace PetsClient.Organization.View
         private SortSettings _sortSettings;
         private PageSettingsView _page;
         private FilterSetting _filterSetting;
-        private APIServiceConnection<OrganizationViewList, OrganizationViewEdit, OrganizationViewEdit> service;
+        private APIServiceConnection<OrganizationViewList, OrganizationEdit, OrganizationEdit> service;
 
         public OrganizationView()
         {
-            service = new APIServiceConnection<OrganizationViewList, OrganizationViewEdit, OrganizationViewEdit>();
+            service = new APIServiceConnection<OrganizationViewList, OrganizationEdit, OrganizationEdit>();
             InitializeComponent();
             InitializeFiltrsDictionary();
             InitializeForm();
@@ -93,7 +92,7 @@ namespace PetsClient.Organization.View
 
         private void CreateOrgButton_Click(object sender, EventArgs e)
         {
-            var result = new OrganizationEditOneView();
+            var result = new OrganizationEditView();
             if (result.ShowDialog() == DialogResult.OK)
                 service.Post("organizations", result.OrganizationEdit);
             
@@ -128,8 +127,8 @@ namespace PetsClient.Organization.View
         {
             var selectedRow = OrgDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
             var selectedItem = (OrganizationViewList)OrgDataGrid.Rows[selectedRow].DataBoundItem;
-            var result = new OrganizationEditOneView(selectedItem, State.Update);
-            if(result.DialogResult == DialogResult.OK)
+            var result = new OrganizationEditView(selectedItem, State.Update);
+            if(result.ShowDialog() == DialogResult.OK)
             {
                 service.Put("organizations", selectedItem.Id, result.OrganizationEdit);
             }
@@ -176,7 +175,7 @@ namespace PetsClient.Organization.View
                 if (hti.RowIndex != -1)
                 {
                     var selectedRow = OrgDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-                    new OrganizationEditOneView((OrganizationViewList)OrgDataGrid.Rows[selectedRow].DataBoundItem,
+                    new OrganizationEditView((OrganizationViewList)OrgDataGrid.Rows[selectedRow].DataBoundItem,
                         State.Read).ShowDialog();
                 }
             }

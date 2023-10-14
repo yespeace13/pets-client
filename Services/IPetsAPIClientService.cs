@@ -1,6 +1,6 @@
 ﻿using ModelLibrary.View;
 
-namespace IS_5.Services
+namespace PetsClient.Services
 {
     public interface IPetsAPIClientService<TList, TEdit, TOne>
     {

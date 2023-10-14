@@ -1,16 +1,14 @@
 ﻿using ModelLibrary.View;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
-using static System.Net.Mime.MediaTypeNames;
-using System.Security.Policy;
 
-namespace IS_5.Services
+namespace PetsClient.Services
 {
     public class APIServiceConnection<TList, TEdit, TOne> : IPetsAPIClientService<TList, TEdit, TOne>
     {
         private static string URL = "https://localhost:7279/";
         private RestClient _restClient;
-        public APIServiceConnection() 
+        public APIServiceConnection()
         {
             _restClient = new RestClient(URL,
                 configureSerialization: s => s.UseNewtonsoftJson());
@@ -24,15 +22,26 @@ namespace IS_5.Services
 
         public PageSettings<TList> Get(string resources, PageSettingsView pageSettings)
         {
-            var request = new RestRequest(resources);
-            request.AddHeader<int>("Page", pageSettings.Page);
-            request.AddHeader<int>("Pages", pageSettings.Pages);
-            var filters = pageSettings.Filter.Columns.Select(c => $"{c}:{Uri.EscapeDataString(pageSettings.Filter[c])}").ToArray();
+            var request = new RestRequest(resources, Method.Get);
+
+            request.AddParameter("Page", pageSettings.Page);
+            request.AddParameter("Pages", pageSettings.Pages);
+            
+            var filters = pageSettings.Filter.Columns
+                .Select(c => $"{c}:{Uri.EscapeDataString(pageSettings.Filter[c])}")
+                .ToArray();
             var filter = String.Join(";", filters);
-            request.AddHeader("Filter", filter);
-            request.AddHeader("SortField", pageSettings.Sort.Column);
-            request.AddHeader<int>("SortType", pageSettings.Sort.Direction);
-            return _restClient.Get<PageSettings<TList>>(request);
+
+            request.AddParameter("Filter", filter);
+            request.AddParameter("SortField", pageSettings.Sort.Column);
+            request.AddParameter("SortType", pageSettings.Sort.Direction);
+
+            var execute = _restClient.ExecuteGet<PageSettings<TList>>(request);
+            if (execute.IsSuccessful)
+            {
+                return execute.Data;
+            }
+            throw new Exception("Ошибка запроса public PageSettings<TList> Get(string resources, PageSettingsView pageSettings)");
         }
 
         public List<T> Get<T>(string resources)
@@ -44,7 +53,7 @@ namespace IS_5.Services
                 return execute.Data;
             }
             throw new Exception("Ошибка запроса public List<T> Get<T>(string resources)");
-            
+
         }
         public TOne Get(string resources, int id)
         {

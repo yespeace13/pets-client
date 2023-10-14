@@ -1,27 +1,26 @@
-﻿using IS_5.Services;
+﻿using PetsClient.Services;
 using ModelLibrary.Model.Etc;
 using ModelLibrary.Model.Organization;
 using PetsClient.Etc;
-using RestSharp;
+using System.Windows.Forms;
 
-namespace IS_5.View
+namespace PetsClient.Organization.View
 {
-    public partial class OrganizationEditOneView : Form
+    public partial class OrganizationEditView : Form
     {
-        public OrganizationViewEdit? OrganizationEdit { get; set; }
+        public OrganizationEdit? OrganizationEdit { get; set; }
         private OrganizationViewList? _viewUpdate;
 
-        public OrganizationEditOneView(OrganizationViewList view, State status)
+        public OrganizationEditView(OrganizationViewList view, State status)
         {
             InitializeComponent();
             _viewUpdate = view;
             if (status == State.Read)
                 ChangeEnable();
             FillFields();
-            this.FormBorderStyle = FormBorderStyle.None;
         }
 
-        public OrganizationEditOneView()
+        public OrganizationEditView()
         {
             InitializeComponent();
             FillFields();
@@ -29,8 +28,9 @@ namespace IS_5.View
 
         private void ChangeEnable()
         {
-            NameOrgTextBox.Enabled = false;
-            TaxIdenNumTextBox.Enabled = false;
+            CancelButton.Left = (this.ClientSize.Width - CancelButton.Width) / 2;
+            NameOrganizationTextBox.Enabled = false;
+            INNTextBox.Enabled = false;
             KPPTextBox.Enabled = false;
             AddressTextBox.Enabled = false;
             TypeOrganizationComboBox.Enabled = false;
@@ -43,9 +43,9 @@ namespace IS_5.View
         private bool CheckFilds()
         {
             var dialogRes = DialogResult.No;
-            if (string.IsNullOrEmpty(NameOrgTextBox.Text))
+            if (string.IsNullOrEmpty(NameOrganizationTextBox.Text))
                 dialogRes = ShowErrorMessage("Не заполнено название.");
-            else if (string.IsNullOrEmpty(TaxIdenNumTextBox.Text))
+            else if (string.IsNullOrEmpty(INNTextBox.Text))
                 dialogRes = ShowErrorMessage("Не заполнен ИНН.");
             else if (string.IsNullOrEmpty(AddressTextBox.Text))
                 dialogRes = ShowErrorMessage("Не заполнен адрес.");
@@ -67,9 +67,9 @@ namespace IS_5.View
         {
             if (CheckFilds())
             {
-                OrganizationEdit = new OrganizationViewEdit(
-                    NameOrgTextBox.Text,
-                    TaxIdenNumTextBox.Text,
+                OrganizationEdit = new OrganizationEdit(
+                    NameOrganizationTextBox.Text,
+                    INNTextBox.Text,
                     KPPTextBox.Text,
                     AddressTextBox.Text,
                     ((TypeOrganizationView)TypeOrganizationComboBox.SelectedItem).Id,
@@ -82,7 +82,7 @@ namespace IS_5.View
 
         private void FillFields()
         {
-            var service = new APIServiceConnection<LocalityView, OrganizationViewEdit, OrganizationViewEdit>();
+            var service = new APIServiceConnection<LocalityView, OrganizationEdit, OrganizationEdit>();
 
             var typeOrg = service.Get<TypeOrganizationView>("typeorganization");
 
@@ -104,8 +104,8 @@ namespace IS_5.View
 
             if (_viewUpdate != null)
             {
-                NameOrgTextBox.Text = _viewUpdate.NameOrganization;
-                TaxIdenNumTextBox.Text = _viewUpdate.INN;
+                NameOrganizationTextBox.Text = _viewUpdate.NameOrganization;
+                INNTextBox.Text = _viewUpdate.INN;
                 KPPTextBox.Text = _viewUpdate.KPP;
                 AddressTextBox.Text = _viewUpdate.Address;
                 TypeOrganizationComboBox.SelectedItem = typeOrg.Find(t => t.Name == _viewUpdate.TypeOrganization);
@@ -116,6 +116,5 @@ namespace IS_5.View
         }
 
         private void CancelButton_Click(object sender, EventArgs e) => Close();
-
     }
 }
