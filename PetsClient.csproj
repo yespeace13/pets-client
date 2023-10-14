@@ -39,7 +39,7 @@
     <Compile Update="MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Organization\View\OrganizationEditOne.cs">
+    <Compile Update="Organization\View\OrganizationEditOneView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Organization\View\OrganizationView.cs">

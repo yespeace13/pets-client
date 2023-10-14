@@ -1,6 +1,6 @@
 ﻿using ModelLibrary.Model.Organization;
 
-namespace IS_5
+namespace PetsClient.Organization.View
 {
     partial class OrganizationView
     {
@@ -40,7 +40,15 @@ namespace IS_5
             NumberPageLabel = new Label();
             CountLabel = new Label();
             OrgDataGrid = new DataGridView();
-            organizationViewEditBindingSource = new BindingSource(components);
+            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            nameOrganizationDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            iNNDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            kPPDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            addressDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            typeOrganizationDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            legalTypeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            localityDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            organizationViewListBindingSource = new BindingSource(components);
             OrganizationContextMenuStrip = new ContextMenuStrip(components);
             ChangeToolStripMenuItem = new ToolStripMenuItem();
             DeleteToolStripMenuItem = new ToolStripMenuItem();
@@ -50,28 +58,18 @@ namespace IS_5
             ClearFiltrsButton = new Button();
             AcceptFiltrButton = new Button();
             FiltrTextBox = new TextBox();
-            organizationViewOneBindingSource = new BindingSource(components);
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn8 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)NumberOfPage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PagesSize).BeginInit();
             ((System.ComponentModel.ISupportInitialize)OrgDataGrid).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)organizationViewEditBindingSource).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)organizationViewListBindingSource).BeginInit();
             OrganizationContextMenuStrip.SuspendLayout();
             FiltrGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)organizationViewOneBindingSource).BeginInit();
             SuspendLayout();
             // 
             // CreateOrgButton
             // 
             CreateOrgButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            CreateOrgButton.Location = new Point(975, 12);
+            CreateOrgButton.Location = new Point(1018, 12);
             CreateOrgButton.Name = "CreateOrgButton";
             CreateOrgButton.Size = new Size(90, 29);
             CreateOrgButton.TabIndex = 0;
@@ -82,7 +80,7 @@ namespace IS_5
             // NextPageButton
             // 
             NextPageButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            NextPageButton.Location = new Point(1071, 475);
+            NextPageButton.Location = new Point(1114, 600);
             NextPageButton.Name = "NextPageButton";
             NextPageButton.Size = new Size(130, 29);
             NextPageButton.TabIndex = 2;
@@ -93,7 +91,7 @@ namespace IS_5
             // PreviousPageButton
             // 
             PreviousPageButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            PreviousPageButton.Location = new Point(935, 475);
+            PreviousPageButton.Location = new Point(978, 600);
             PreviousPageButton.Name = "PreviousPageButton";
             PreviousPageButton.Size = new Size(130, 29);
             PreviousPageButton.TabIndex = 3;
@@ -104,7 +102,7 @@ namespace IS_5
             // NumberOfPage
             // 
             NumberOfPage.Anchor = AnchorStyles.Bottom;
-            NumberOfPage.Location = new Point(638, 477);
+            NumberOfPage.Location = new Point(660, 602);
             NumberOfPage.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NumberOfPage.Name = "NumberOfPage";
             NumberOfPage.Size = new Size(64, 27);
@@ -114,7 +112,7 @@ namespace IS_5
             // SelectPageButton
             // 
             SelectPageButton.Anchor = AnchorStyles.Bottom;
-            SelectPageButton.Location = new Point(708, 475);
+            SelectPageButton.Location = new Point(730, 600);
             SelectPageButton.Name = "SelectPageButton";
             SelectPageButton.Size = new Size(95, 29);
             SelectPageButton.TabIndex = 5;
@@ -126,7 +124,7 @@ namespace IS_5
             // 
             PagesSize.Anchor = AnchorStyles.Bottom;
             PagesSize.Increment = new decimal(new int[] { 5, 0, 0, 0 });
-            PagesSize.Location = new Point(468, 477);
+            PagesSize.Location = new Point(490, 602);
             PagesSize.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             PagesSize.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             PagesSize.Name = "PagesSize";
@@ -138,7 +136,7 @@ namespace IS_5
             // NumberPageLabel
             // 
             NumberPageLabel.Anchor = AnchorStyles.Bottom;
-            NumberPageLabel.Location = new Point(555, 469);
+            NumberPageLabel.Location = new Point(577, 594);
             NumberPageLabel.Name = "NumberPageLabel";
             NumberPageLabel.Size = new Size(77, 40);
             NumberPageLabel.TabIndex = 7;
@@ -148,7 +146,7 @@ namespace IS_5
             // CountLabel
             // 
             CountLabel.Anchor = AnchorStyles.Bottom;
-            CountLabel.Location = new Point(262, 469);
+            CountLabel.Location = new Point(284, 594);
             CountLabel.Name = "CountLabel";
             CountLabel.Size = new Size(200, 40);
             CountLabel.TabIndex = 8;
@@ -165,8 +163,8 @@ namespace IS_5
             OrgDataGrid.AutoGenerateColumns = false;
             OrgDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             OrgDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            OrgDataGrid.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6, dataGridViewTextBoxColumn7, dataGridViewTextBoxColumn8 });
-            OrgDataGrid.DataSource = organizationViewOneBindingSource;
+            OrgDataGrid.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nameOrganizationDataGridViewTextBoxColumn, iNNDataGridViewTextBoxColumn, kPPDataGridViewTextBoxColumn, addressDataGridViewTextBoxColumn, typeOrganizationDataGridViewTextBoxColumn, legalTypeDataGridViewTextBoxColumn, localityDataGridViewTextBoxColumn });
+            OrgDataGrid.DataSource = organizationViewListBindingSource;
             OrgDataGrid.Location = new Point(12, 47);
             OrgDataGrid.MultiSelect = false;
             OrgDataGrid.Name = "OrgDataGrid";
@@ -175,11 +173,79 @@ namespace IS_5
             OrgDataGrid.RowHeadersWidth = 51;
             OrgDataGrid.RowTemplate.Height = 24;
             OrgDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            OrgDataGrid.Size = new Size(1189, 422);
+            OrgDataGrid.Size = new Size(1232, 547);
             OrgDataGrid.TabIndex = 9;
             OrgDataGrid.ColumnHeaderMouseClick += OrgDataGrid_ColumnHeaderMouseClick;
             OrgDataGrid.MouseDoubleClick += OrgDataGrid_MouseDoubleClick;
             OrgDataGrid.MouseDown += OrgDataGrid_MouseDown;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            idDataGridViewTextBoxColumn.HeaderText = "Код";
+            idDataGridViewTextBoxColumn.MinimumWidth = 6;
+            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // nameOrganizationDataGridViewTextBoxColumn
+            // 
+            nameOrganizationDataGridViewTextBoxColumn.DataPropertyName = "NameOrganization";
+            nameOrganizationDataGridViewTextBoxColumn.HeaderText = "Название организации";
+            nameOrganizationDataGridViewTextBoxColumn.MinimumWidth = 6;
+            nameOrganizationDataGridViewTextBoxColumn.Name = "nameOrganizationDataGridViewTextBoxColumn";
+            nameOrganizationDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // iNNDataGridViewTextBoxColumn
+            // 
+            iNNDataGridViewTextBoxColumn.DataPropertyName = "INN";
+            iNNDataGridViewTextBoxColumn.HeaderText = "ИНН";
+            iNNDataGridViewTextBoxColumn.MinimumWidth = 6;
+            iNNDataGridViewTextBoxColumn.Name = "iNNDataGridViewTextBoxColumn";
+            iNNDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // kPPDataGridViewTextBoxColumn
+            // 
+            kPPDataGridViewTextBoxColumn.DataPropertyName = "KPP";
+            kPPDataGridViewTextBoxColumn.HeaderText = "КПП";
+            kPPDataGridViewTextBoxColumn.MinimumWidth = 6;
+            kPPDataGridViewTextBoxColumn.Name = "kPPDataGridViewTextBoxColumn";
+            kPPDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // addressDataGridViewTextBoxColumn
+            // 
+            addressDataGridViewTextBoxColumn.DataPropertyName = "Address";
+            addressDataGridViewTextBoxColumn.HeaderText = "Адрес";
+            addressDataGridViewTextBoxColumn.MinimumWidth = 6;
+            addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
+            addressDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // typeOrganizationDataGridViewTextBoxColumn
+            // 
+            typeOrganizationDataGridViewTextBoxColumn.DataPropertyName = "TypeOrganization";
+            typeOrganizationDataGridViewTextBoxColumn.HeaderText = "Тип организации";
+            typeOrganizationDataGridViewTextBoxColumn.MinimumWidth = 6;
+            typeOrganizationDataGridViewTextBoxColumn.Name = "typeOrganizationDataGridViewTextBoxColumn";
+            typeOrganizationDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // legalTypeDataGridViewTextBoxColumn
+            // 
+            legalTypeDataGridViewTextBoxColumn.DataPropertyName = "LegalType";
+            legalTypeDataGridViewTextBoxColumn.HeaderText = "Юридический статус организации";
+            legalTypeDataGridViewTextBoxColumn.MinimumWidth = 6;
+            legalTypeDataGridViewTextBoxColumn.Name = "legalTypeDataGridViewTextBoxColumn";
+            legalTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // localityDataGridViewTextBoxColumn
+            // 
+            localityDataGridViewTextBoxColumn.DataPropertyName = "Locality";
+            localityDataGridViewTextBoxColumn.HeaderText = "Населенный пункт";
+            localityDataGridViewTextBoxColumn.MinimumWidth = 6;
+            localityDataGridViewTextBoxColumn.Name = "localityDataGridViewTextBoxColumn";
+            localityDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // organizationViewListBindingSource
+            // 
+            organizationViewListBindingSource.DataSource = typeof(OrganizationViewList);
             // 
             // OrganizationContextMenuStrip
             // 
@@ -213,7 +279,7 @@ namespace IS_5
             // ExportButton
             // 
             ExportButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ExportButton.Location = new Point(1071, 12);
+            ExportButton.Location = new Point(1114, 12);
             ExportButton.Name = "ExportButton";
             ExportButton.Size = new Size(130, 29);
             ExportButton.TabIndex = 15;
@@ -264,79 +330,11 @@ namespace IS_5
             FiltrTextBox.Size = new Size(233, 27);
             FiltrTextBox.TabIndex = 1;
             // 
-            // organizationViewOneBindingSource
-            // 
-            organizationViewOneBindingSource.DataSource = typeof(OrganizationViewList);
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.DataPropertyName = "Id";
-            dataGridViewTextBoxColumn1.HeaderText = "Код";
-            dataGridViewTextBoxColumn1.MinimumWidth = 6;
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.DataPropertyName = "NameOrganization";
-            dataGridViewTextBoxColumn2.HeaderText = "Название организации";
-            dataGridViewTextBoxColumn2.MinimumWidth = 6;
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.DataPropertyName = "INN";
-            dataGridViewTextBoxColumn3.HeaderText = "ИНН";
-            dataGridViewTextBoxColumn3.MinimumWidth = 6;
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.DataPropertyName = "KPP";
-            dataGridViewTextBoxColumn4.HeaderText = "КПП";
-            dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            dataGridViewTextBoxColumn5.DataPropertyName = "Address";
-            dataGridViewTextBoxColumn5.HeaderText = "Адрес";
-            dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            dataGridViewTextBoxColumn5.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            dataGridViewTextBoxColumn6.DataPropertyName = "TypeOrganization";
-            dataGridViewTextBoxColumn6.HeaderText = "Тип организации";
-            dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            dataGridViewTextBoxColumn6.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            dataGridViewTextBoxColumn7.DataPropertyName = "LegalType";
-            dataGridViewTextBoxColumn7.HeaderText = "Юридический тип";
-            dataGridViewTextBoxColumn7.MinimumWidth = 6;
-            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            dataGridViewTextBoxColumn7.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            dataGridViewTextBoxColumn8.DataPropertyName = "Locality";
-            dataGridViewTextBoxColumn8.HeaderText = "Муниципалитет";
-            dataGridViewTextBoxColumn8.MinimumWidth = 6;
-            dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            dataGridViewTextBoxColumn8.ReadOnly = true;
-            // 
             // OrganizationView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1213, 516);
+            ClientSize = new Size(1256, 641);
             Controls.Add(FiltrGroupBox);
             Controls.Add(ExportButton);
             Controls.Add(label1);
@@ -355,11 +353,10 @@ namespace IS_5
             ((System.ComponentModel.ISupportInitialize)NumberOfPage).EndInit();
             ((System.ComponentModel.ISupportInitialize)PagesSize).EndInit();
             ((System.ComponentModel.ISupportInitialize)OrgDataGrid).EndInit();
-            ((System.ComponentModel.ISupportInitialize)organizationViewEditBindingSource).EndInit();
+            ((System.ComponentModel.ISupportInitialize)organizationViewListBindingSource).EndInit();
             OrganizationContextMenuStrip.ResumeLayout(false);
             FiltrGroupBox.ResumeLayout(false);
             FiltrGroupBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)organizationViewOneBindingSource).EndInit();
             ResumeLayout(false);
         }
 
@@ -382,7 +379,6 @@ namespace IS_5
         private TextBox FiltrTextBox;
         private Button AcceptFiltrButton;
         private Button ClearFiltrsButton;
-        private BindingSource organizationViewEditBindingSource;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn nameOrganizationDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn iNNDataGridViewTextBoxColumn;
@@ -391,15 +387,7 @@ namespace IS_5
         private DataGridViewTextBoxColumn typeOrganizationDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn legalTypeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn localityDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private BindingSource organizationViewOneBindingSource;
+        private BindingSource organizationViewListBindingSource;
     }
 }
 

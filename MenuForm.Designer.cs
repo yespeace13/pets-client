@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IS_5
+namespace PetsClient
 {
     partial class MenuForm
     {

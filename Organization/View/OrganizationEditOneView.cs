@@ -2,27 +2,28 @@
 using ModelLibrary.Model.Etc;
 using ModelLibrary.Model.Organization;
 using PetsClient.Etc;
+using RestSharp;
 
 namespace IS_5.View
 {
-    public partial class OrganizationEditOne : Form
+    public partial class OrganizationEditOneView : Form
     {
+        public OrganizationViewEdit? OrganizationEdit { get; set; }
         private OrganizationViewList? _viewUpdate;
-        private State _state;
 
-        public OrganizationEditOne(OrganizationViewList view, State status)
+        public OrganizationEditOneView(OrganizationViewList view, State status)
         {
             InitializeComponent();
             _viewUpdate = view;
             if (status == State.Read)
                 ChangeEnable();
             FillFields();
+            this.FormBorderStyle = FormBorderStyle.None;
         }
 
-        public OrganizationEditOne()
+        public OrganizationEditOneView()
         {
             InitializeComponent();
-            _state = State.Create;
             FillFields();
         }
 
@@ -33,7 +34,7 @@ namespace IS_5.View
             KPPTextBox.Enabled = false;
             AddressTextBox.Enabled = false;
             TypeOrganizationComboBox.Enabled = false;
-            TypeOwnerComboBox.Enabled = false;
+            LegalTypeComboBox.Enabled = false;
             LocalityComboBox.Enabled = false;
             OkButton.Visible = false;
             CancelButton.Text = "Закрыть";
@@ -42,17 +43,15 @@ namespace IS_5.View
         private bool CheckFilds()
         {
             var dialogRes = DialogResult.No;
-            if (string.IsNullOrEmpty(NameOrgTextBox.Text)) 
+            if (string.IsNullOrEmpty(NameOrgTextBox.Text))
                 dialogRes = ShowErrorMessage("Не заполнено название.");
             else if (string.IsNullOrEmpty(TaxIdenNumTextBox.Text))
                 dialogRes = ShowErrorMessage("Не заполнен ИНН.");
-            else if (string.IsNullOrEmpty(KPPTextBox.Text))
-                dialogRes = ShowErrorMessage("Не заполнен КПП.");
             else if (string.IsNullOrEmpty(AddressTextBox.Text))
                 dialogRes = ShowErrorMessage("Не заполнен адрес.");
             else if (TypeOrganizationComboBox.SelectedIndex == -1)
                 dialogRes = ShowErrorMessage("Не выбран тип организации.");
-            else if (TypeOwnerComboBox.SelectedIndex == -1)
+            else if (LegalTypeComboBox.SelectedIndex == -1)
                 dialogRes = ShowErrorMessage("Не выбран вид организации.");
             else if (LocalityComboBox.SelectedIndex == -1)
                 dialogRes = ShowErrorMessage("Не выбран муниципалитет.");
@@ -68,43 +67,55 @@ namespace IS_5.View
         {
             if (CheckFilds())
             {
-                //new OrganizationViewCreate(
-                //    NameOrgTextBox.Text,
-                //    TaxIdenNumTextBox.Text,
-                //    KPPTextBox.Text,
-                //    AddressTextBox.Text,
-                //    ((TypeOrganizationModel)TypeOrganizationComboBox.SelectedItem).Id,
-                //    ((LegalTypeModel)TypeOwnerComboBox.SelectedItem).Id,
-                //    ((LocalityModel)LocalityComboBox.SelectedItem).Id
-                //    );
-                //Close();
+                OrganizationEdit = new OrganizationViewEdit(
+                    NameOrgTextBox.Text,
+                    TaxIdenNumTextBox.Text,
+                    KPPTextBox.Text,
+                    AddressTextBox.Text,
+                    ((TypeOrganizationView)TypeOrganizationComboBox.SelectedItem).Id,
+                    ((LegalTypeView)LegalTypeComboBox.SelectedItem).Id,
+                    ((LocalityView)LocalityComboBox.SelectedItem).Id
+                    );
+                Close();
             }
         }
 
         private void FillFields()
         {
-            var service = new APIServiceConnection<LocalityView>();
-            //service.Get()
-            //var typeOrg = _controller.ShowTypesOrganizations();
-            //var typeOwnOrg = _controller.ShowTypesOwnerOrganizations();
-            //var localitys = _controller.ShowLocalitys();
-            //TypeOrganizationComboBox.Items.AddRange(typeOrg);
-            //TypeOwnerComboBox.Items.AddRange(typeOwnOrg);
-            //LocalityComboBox.Items.AddRange(localitys);
+            var service = new APIServiceConnection<LocalityView, OrganizationViewEdit, OrganizationViewEdit>();
+
+            var typeOrg = service.Get<TypeOrganizationView>("typeorganization");
+
+            var legalType = service.Get<LegalTypeView>("legaltype");
+
+            var localitys = service.Get<LocalityView>("localitys");
+
+            TypeOrganizationComboBox.DataSource = typeOrg;
+            TypeOrganizationComboBox.DisplayMember = "Name";
+            TypeOrganizationComboBox.ValueMember = "Id";
+
+            LegalTypeComboBox.DataSource = legalType;
+            LegalTypeComboBox.DisplayMember = "Name";
+            LegalTypeComboBox.ValueMember = "Id";
+
+            LocalityComboBox.DataSource = localitys;
+            LocalityComboBox.DisplayMember = "Name";
+            LocalityComboBox.ValueMember = "Id";
+
             if (_viewUpdate != null)
             {
                 NameOrgTextBox.Text = _viewUpdate.NameOrganization;
                 TaxIdenNumTextBox.Text = _viewUpdate.INN;
                 KPPTextBox.Text = _viewUpdate.KPP;
                 AddressTextBox.Text = _viewUpdate.Address;
-                TypeOrganizationComboBox.SelectedItem = _viewUpdate.TypeOrganization;
-                TypeOwnerComboBox.SelectedItem = _viewUpdate.LegalType;
-                LocalityComboBox.SelectedItem = _viewUpdate.Locality;
+                TypeOrganizationComboBox.SelectedItem = typeOrg.Find(t => t.Name == _viewUpdate.TypeOrganization);
+                LegalTypeComboBox.SelectedItem = legalType.Find(t => t.Name == _viewUpdate.LegalType);
+                LocalityComboBox.SelectedItem = localitys.Find(l => l.Name == _viewUpdate.Locality);
             }
-            
+
         }
 
         private void CancelButton_Click(object sender, EventArgs e) => Close();
-        
+
     }
 }

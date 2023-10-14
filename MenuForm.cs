@@ -1,7 +1,6 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using PetsClient.Organization.View;
 
-namespace IS_5
+namespace PetsClient
 {
     public partial class MenuForm : Form
     {

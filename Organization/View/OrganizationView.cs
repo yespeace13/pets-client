@@ -1,9 +1,10 @@
 ﻿using IS_5.Services;
 using IS_5.View;
-using ModelLibrary.View;
 using ModelLibrary.Model.Organization;
+using ModelLibrary.View;
+using PetsClient.Etc;
 
-namespace IS_5
+namespace PetsClient.Organization.View
 {
     public partial class OrganizationView : Form
     {
@@ -11,11 +12,11 @@ namespace IS_5
         private SortSettings _sortSettings;
         private PageSettingsView _page;
         private FilterSetting _filterSetting;
-        private APIServiceConnection<OrganizationViewList> service;
+        private APIServiceConnection<OrganizationViewList, OrganizationViewEdit, OrganizationViewEdit> service;
 
         public OrganizationView()
         {
-            service = new APIServiceConnection<OrganizationViewList>();
+            service = new APIServiceConnection<OrganizationViewList, OrganizationViewEdit, OrganizationViewEdit>();
             InitializeComponent();
             InitializeFiltrsDictionary();
             InitializeForm();
@@ -76,23 +77,26 @@ namespace IS_5
 
         public void ShowOrganizations()
         {
-            //(string Column, int Value) sortCol = OrgDataGrid.SortedColumn == null ?
-            //    ("Id", 0) : (OrgDataGrid.SortedColumn.Name, OrgDataGrid.SortOrder == SortOrder.Descending ? 0 : 1);
-            //_page = new PageSettingsView();
-            //_sortSettings = new SortSettings(sortCol.Column, sortCol.Value);
+            (string Column, int Value) sortCol = OrgDataGrid.SortedColumn == null ?
+                ("Id", 0) : (OrgDataGrid.SortedColumn.Name, OrgDataGrid.SortOrder == SortOrder.Descending ? 0 : 1);
+            _page = new PageSettingsView();
+            _sortSettings = new SortSettings(sortCol.Column, sortCol.Value);
 
-            //_page.Sort = _sortSettings;
-            //_page.Filter = _filterSetting;
-            //_page.Pages = (int)PagesSize.Value;
-            //_page.Page = (int)NumberOfPage.Value;
-            //var page = service.Get("organizations", _page);
-            //OrgDataGrid.DataSource = page.Items;
-            //NumberOfPage.Maximum = page.Pages;
+            _page.Sort = _sortSettings;
+            _page.Filter = _filterSetting;
+            _page.Pages = (int)PagesSize.Value;
+            _page.Page = (int)NumberOfPage.Value;
+            var page = service.Get("organizations", _page);
+            OrgDataGrid.DataSource = page.Items;
+            NumberOfPage.Maximum = page.Pages;
         }
 
         private void CreateOrgButton_Click(object sender, EventArgs e)
         {
-            new OrganizationEditOne().ShowDialog();
+            var result = new OrganizationEditOneView();
+            if (result.ShowDialog() == DialogResult.OK)
+                service.Post("organizations", result.OrganizationEdit);
+            
             ShowOrganizations();
         }
 
@@ -122,10 +126,14 @@ namespace IS_5
 
         private void ChangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //var selectedRow = OrgDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-            //new OrganizationEditView(_controller, State.Update,
-            //    int.Parse(OrgDataGrid.Rows[selectedRow].Cells[0].Value.ToString())).ShowDialog();
-            //ShowOrganizations();
+            var selectedRow = OrgDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
+            var selectedItem = (OrganizationViewList)OrgDataGrid.Rows[selectedRow].DataBoundItem;
+            var result = new OrganizationEditOneView(selectedItem, State.Update);
+            if(result.DialogResult == DialogResult.OK)
+            {
+                service.Put("organizations", selectedItem.Id, result.OrganizationEdit);
+            }
+            ShowOrganizations();
         }
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -167,10 +175,9 @@ namespace IS_5
                 var hti = OrgDataGrid.HitTest(e.X, e.Y);
                 if (hti.RowIndex != -1)
                 {
-                    //var selectedRow = OrgDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-                    //new OrganizationEditOne(
-                    //    (OrganizationViewList)OrgDataGrid.Rows[selectedRow].DataBoundItem,
-                    //    PetsClient.Etc.State.Read).ShowDialog();
+                    var selectedRow = OrgDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
+                    new OrganizationEditOneView((OrganizationViewList)OrgDataGrid.Rows[selectedRow].DataBoundItem,
+                        State.Read).ShowDialog();
                 }
             }
         }
