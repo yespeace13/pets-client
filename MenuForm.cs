@@ -1,4 +1,5 @@
 ﻿using PetsClient.Organization.View;
+using PetsClient.Services;
 
 namespace PetsClient
 {
@@ -14,6 +15,7 @@ namespace PetsClient
 
         private void OrgsButton_Click(object sender, EventArgs e)
         {
+            
             new OrganizationView().ShowDialog();
             
         }

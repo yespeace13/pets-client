@@ -1,29 +1,29 @@
 ﻿using ModelLibrary.View;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
-using System.Drawing.Printing;
 
 namespace PetsClient.Services
 {
     public class APIServiceConnection<TList, TEdit, TOne> : IPetsAPIClientService<TList, TEdit, TOne>
     {
-        private static string URL = "https://localhost:7279/";
         private RestClient _сlient;
         public APIServiceConnection()
         {
-            _сlient = new RestClient(URL,
+            _сlient = new RestClient(ConnectionConfig.URL,
                 configureSerialization: s => s.UseNewtonsoftJson());
         }
 
         public void Delete(string resources, int id)
         {
             var request = new RestRequest(resources + $"/{id}", Method.Delete);
+            //request.AddHeader("")
             _сlient.Execute(request);
         }
 
         public PageSettings<TList> Get(string resources, PageSettingsView pageSettings)
         {
             var request = new RestRequest(resources, Method.Get);
+            request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
 
             request.AddParameter("Page", pageSettings.Page);
             request.AddParameter("Pages", pageSettings.Pages);

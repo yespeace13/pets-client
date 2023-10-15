@@ -101,15 +101,9 @@ namespace PetsClient.Organization.View
             ShowOrganizations();
         }
 
-        private void PagesSize_ValueChanged(object sender, EventArgs e)
-        {
-            ShowOrganizations();
-        }
+        private void PagesSize_ValueChanged(object sender, EventArgs e) => ShowOrganizations();
 
-        private void AcceptButton_Click(object sender, EventArgs e)
-        {
-            ShowOrganizations();
-        }
+        private void AcceptButton_Click(object sender, EventArgs e) => ShowOrganizations();
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
