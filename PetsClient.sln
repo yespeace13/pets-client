@@ -5,9 +5,9 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetsClient", "PetsClient.csproj", "{F16FDC7B-E55C-48E4-ABDB-A5E65CDE29CC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLibrary", "..\ModelLibrary\ModelLibrary.csproj", "{1A9C59AD-25AE-41E8-BDAC-146BF7F49E4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLibrary", "..\model-library\ModelLibrary.csproj", "{1A9C59AD-25AE-41E8-BDAC-146BF7F49E4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetsServer", "..\PetsServer\PetsServer.csproj", "{FC54B996-0386-494D-8FBE-6760A36A2AA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetsServer", "..\pets-server\PetsServer.csproj", "{FC54B996-0386-494D-8FBE-6760A36A2AA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
