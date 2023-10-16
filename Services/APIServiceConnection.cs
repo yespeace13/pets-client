@@ -16,6 +16,7 @@ namespace PetsClient.Services
         public void Delete(string resources, int id)
         {
             var request = new RestRequest(resources + $"/{id}", Method.Delete);
+            request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
             //request.AddHeader("")
             _сlient.Execute(request);
         }
@@ -48,6 +49,8 @@ namespace PetsClient.Services
         public List<T> Get<T>(string resources)
         {
             var request = new RestRequest(resources);
+            request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+
             var execute = _сlient.ExecuteGet<List<T>>(request);
             if (execute.IsSuccessful)
             {
@@ -59,6 +62,8 @@ namespace PetsClient.Services
         public TOne Get(string resources, int id)
         {
             var request = new RestRequest(resources + $"/{id}");
+            request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+
             var execute = _сlient.ExecuteGet<TOne>(request);
             if (execute.IsSuccessful)
             {
@@ -79,6 +84,8 @@ namespace PetsClient.Services
         public void Post(string resources, TEdit view)
         {
             var request = new RestRequest(resources);
+            request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+
             if (view == null) throw new ArgumentNullException("Не передан параметр view");
             request.AddBody(view);
             _сlient.Post(request);
@@ -87,6 +94,8 @@ namespace PetsClient.Services
         public void Put(string resources, int id, TEdit view)
         {
             var request = new RestRequest(resources + $"/{id}");
+            request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+
             if (view == null) throw new ArgumentNullException("Не передан параметр view");
             request.AddBody(view);
             _сlient.Put(request);
