@@ -17,7 +17,6 @@ namespace PetsClient.Services
         {
             var request = new RestRequest(resources + $"/{id}", Method.Delete);
             request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
-            //request.AddHeader("")
             _сlient.Execute(request);
         }
 
@@ -28,7 +27,7 @@ namespace PetsClient.Services
 
             request.AddParameter("Page", pageSettings.Page);
             request.AddParameter("Pages", pageSettings.Pages);
-            
+
             var filters = pageSettings.Filter.Columns
                 .Select(c => $"{c}:{Uri.EscapeDataString(pageSettings.Filter[c])}")
                 .ToArray();
@@ -40,10 +39,9 @@ namespace PetsClient.Services
 
             var execute = _сlient.ExecuteGet<PageSettings<TList>>(request);
             if (execute.IsSuccessful)
-            {
                 return execute.Data;
-            }
-            throw new Exception("Ошибка запроса public PageSettings<TList> Get(string resources, PageSettingsView pageSettings)");
+            else
+                return null;
         }
 
         public List<T> Get<T>(string resources)
@@ -56,9 +54,9 @@ namespace PetsClient.Services
             {
                 return execute.Data;
             }
-            throw new Exception("Ошибка запроса public List<T> Get<T>(string resources)");
-
+            throw new Exception(execute.ErrorMessage);
         }
+
         public TOne Get(string resources, int id)
         {
             var request = new RestRequest(resources + $"/{id}");
@@ -66,10 +64,8 @@ namespace PetsClient.Services
 
             var execute = _сlient.ExecuteGet<TOne>(request);
             if (execute.IsSuccessful)
-            {
                 return execute.Data;
-            }
-            throw new Exception("Ошибка запроса public T Get(string resources, int id)");
+            throw new Exception(execute.ErrorMessage);
         }
 
         public byte[] GetFile(string resources, FilterSetting filters)
@@ -78,7 +74,8 @@ namespace PetsClient.Services
                 .Select(c => $"{c}:{Uri.EscapeDataString(filters[c])}")
                 .ToArray();
             var query = String.Join(";", filters);
-            return _сlient.DownloadData(new RestRequest(resources, Method.Get));
+            var data = _сlient.DownloadData(new RestRequest(resources, Method.Get));
+            return data;
         }
 
         public void Post(string resources, TEdit view)

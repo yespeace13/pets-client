@@ -19,14 +19,9 @@ namespace PetsClient.Organization.View
         {
             service = new APIServiceConnection<OrganizationViewList, OrganizationEdit, OrganizationEdit>();
             InitializeComponent();
-            InitializeFiltrsDictionary();
             InitializeForm();
+            InitializeFiltrsDictionary();
             ShowOrganizations();
-        }
-
-        private void InitializeFiltrsDictionary()
-        {
-            _filterSetting = new FilterSetting(typeof(OrganizationViewList));
         }
 
         private void InitializeForm()
@@ -88,8 +83,12 @@ namespace PetsClient.Organization.View
             _page.Pages = (int)PagesSize.Value;
             _page.Page = (int)NumberOfPage.Value;
             var page = service.Get("organizations", _page);
-            OrgDataGrid.DataSource = page.Items;
-            NumberOfPage.Maximum = page.Pages;
+            if(page != null)
+            {
+                OrgDataGrid.DataSource = page.Items;
+                NumberOfPage.Maximum = page.Pages;
+            }
+            
         }
 
         private void CreateOrgButton_Click(object sender, EventArgs e)
@@ -193,6 +192,11 @@ namespace PetsClient.Organization.View
             FiltrTextBox.Clear();
             ShowOrganizations();
             FiltrGroupBox.Visible = false;
+        }
+
+        private void InitializeFiltrsDictionary()
+        {
+            _filterSetting = new FilterSetting(typeof(OrganizationViewList));
         }
     }
 }
