@@ -1,5 +1,5 @@
-﻿using PetsClient.Organization.View;
-using PetsClient.Services;
+﻿using PetsClient.Contract;
+using PetsClient.Organization.View;
 
 namespace PetsClient
 {
@@ -15,14 +15,13 @@ namespace PetsClient
 
         private void OrgsButton_Click(object sender, EventArgs e)
         {
-            
             new OrganizationView().ShowDialog();
             
         }
 
         private void ContractsButton_Click(object sender, EventArgs e)
         {
-            //new Contractview().ShowDialog();
+            new Contractview().ShowDialog();
         }
 
         private void button3_Click(object sender, EventArgs e)

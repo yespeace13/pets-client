@@ -6,9 +6,11 @@ namespace PetsClient.Services
 {
     public class AuthorizationService
     {
-        public static bool Authorization(string login)
+        public static bool IsAuthentication(string login, string password)
         {
-            var request = new RestRequest(ConnectionConfig.URL + $"login/{login}");
+            var request = new RestRequest(ConnectionConfig.URL + $"login");
+            request.AddParameter("login", login);
+            request.AddParameter("password", password);
             var response = new RestClient().Execute(request);
             if (response.IsSuccessful)
             {
