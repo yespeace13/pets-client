@@ -44,19 +44,6 @@ namespace PetsClient.Services
                 return null;
         }
 
-        public List<T> Get<T>(string resources)
-        {
-            var request = new RestRequest(resources);
-            request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
-
-            var execute = _сlient.ExecuteGet<List<T>>(request);
-            if (execute.IsSuccessful)
-            {
-                return execute.Data;
-            }
-            throw new Exception(execute.ErrorMessage);
-        }
-
         public TOne Get(string resources, int id)
         {
             var request = new RestRequest(resources + $"/{id}");

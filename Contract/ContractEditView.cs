@@ -1,42 +1,47 @@
 ﻿using ModelLibrary.Model.Contract;
+using ModelLibrary.Model.Etc;
+using ModelLibrary.Model.Organization;
 using PetsClient.Etc;
+using PetsClient.Services;
 
 namespace PetsClient.Contract
 {
     public partial class ContractEditView : Form
     {
         public ContractEdit? ContractEdit { get; set; }
-        private ContractViewOne? _viewUpdate;
+        private APIServiceConnection<ContractViewList, ContractEdit, ContractViewOne> _service;
+        private int _id;
 
-        public ContractEditView(int id, State status)
+        public ContractEditView()
         {
+            _service = new APIServiceConnection<ContractViewList, ContractEdit, ContractViewOne>();
+            this.ContractEdit = new ContractEdit();
             InitializeComponent();
-            //_viewUpdate = view;
-            if (status == State.Read)
+            FillOrganizations();
+        }
+        public ContractEditView(State state, int id)
+        {
+            _service = new APIServiceConnection<ContractViewList, ContractEdit, ContractViewOne>();
+            InitializeComponent();
+            if (state == State.Read)
                 ChangeEnable();
+            PrevScanButton.Enabled = false;
+            NextScanButton.Enabled = false;
+            _id = id;
+            FillOrganizations();
             FillFields();
         }
 
         private void FillOrganizations()
         {
-            //var organizations = _controller
-            //                .ShowOrganizations()
-            //                .Select(o => o[1])
-            //                .ToArray();
-            //ClientComboBox.Items.AddRange(organizations);
-            //ExecutorComboBox.Items.AddRange(organizations);
-        }
+            var organizations = APIServiceOne.GetAllFromPage<OrganizationViewList>("organizations");
 
-        public ContractEditView()
-        {
-            //InitializeComponent();
-            //_controller = controller;
-            //FillOrganizations();
-            //_scans = new List<string>();
-            //_state = State.Insert;
-            //_localprice = new List<string[]>();
-            //PrevScanButton.Enabled = false;
-            //NextScanButton.Enabled = false;
+            ClientComboBox.DataSource = organizations;
+            ClientComboBox.DisplayMember = "NameOrganization";
+            ClientComboBox.ValueMember = "Id";
+            ExecutorComboBox.DataSource = new List<OrganizationViewList>(organizations);
+            ExecutorComboBox.DisplayMember = "NameOrganization";
+            ExecutorComboBox.ValueMember = "Id";
         }
 
         private void ChangeEnable()
@@ -78,46 +83,49 @@ namespace PetsClient.Contract
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-            //if (CheckFilds())
-            //{
-            //    if (_state == State.Insert)
-            //    {
-            //        _controller.CreateContract(NumberTextBox.Text, 
-            //            DateOfConclusionDateTimePicker.Value, DateValidDateTimePicker.Value,
-            //            ExecutorComboBox.SelectedItem.ToString(), ClientComboBox.SelectedItem.ToString(),
-            //            _localprice, _scans);
-            //    }
-            //    else
-            //    {
-            //        _controller.UpdateContract(int.Parse(_contract[0].ToString()), NumberTextBox.Text,
-            //            DateOfConclusionDateTimePicker.Value, DateValidDateTimePicker.Value,
-            //            ExecutorComboBox.SelectedItem.ToString(), ClientComboBox.SelectedItem.ToString(),
-            //            _localprice, _scans);
-            //    }
-            //    Close();
-            //}
+            if (CheckFilds())
+            {
+                foreach (var row in LocalsPricesDataGridView.Rows)
+                {
+                    this.ContractEdit.ContractContent.Add(new ContractContentEdit());
+                }
+                Close();
+            }
         }
 
         private void FillFields()
         {
-            //NumberTextBox.Text = _contract[1];
-            //DateOfConclusionDateTimePicker.Value = DateTime.Parse(_contract[2]);
-            //DateValidDateTimePicker.Value = DateTime.Parse(_contract[3]);
-            //ExecutorComboBox.SelectedItem = _contract[4];
-            //ClientComboBox.SelectedItem = _contract[5];
-            //ShowLocals();
+            this.ContractEdit = new ContractEdit();
+            var contract = _service.Get("contracts", _id);
+            NumberTextBox.Text = contract.Number;
+            DateOfConclusionDateTimePicker.Value = contract.DateOfConclusion;
+            DateValidDateTimePicker.Value = contract.DateValid;
+            var orgs = (List<OrganizationViewList>)ExecutorComboBox.DataSource;
+            ExecutorComboBox.SelectedItem = orgs.Find(o => o.Id == contract.Executor.Id);
+            ClientComboBox.SelectedItem = orgs.Find(o => o.Id == contract.Client.Id);
+
+            LocalsPricesDataGridView.DataSource = contract.ContractContents.Select(c => new { c.Id, c.Price, c.Locality.Name }).ToList();
+
+            LocalsPricesDataGridView.DataSource = contract.ContractContents;
+            LocalsPricesDataGridView.Columns[0].HeaderText = "Идентификатор";
+            LocalsPricesDataGridView.Columns[1].HeaderText = "Цена";
+            LocalsPricesDataGridView.Columns[2].HeaderText = "Населенный пункт";
+
+
+            //localityDataGridViewTextBoxColumn.
             //_currentScan = 0;
-            //if(_scans.Count > 0)
+            //if (_scans.Count > 0)
             //    ChangeScan();
             //else
             //    NextScanButton.Enabled = false;
+
         }
 
-        private void CancelButton_Click(object sender, EventArgs e) => Close();
+        private void CancelButton_Click(object sender, EventArgs e) => this.Close();
 
         private void LocalsPricesDataGridView_MouseDown(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 var hti = LocalsPricesDataGridView.HitTest(e.X, e.Y);
                 if (hti.RowIndex != -1)
@@ -127,7 +135,7 @@ namespace PetsClient.Contract
                 }
             }
         }
-        
+
         private void PrevScanButton_Click(object sender, EventArgs e)
         {
             //if(_currentScan > 0)
@@ -194,40 +202,30 @@ namespace PetsClient.Contract
 
         private void UpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //var selectedRow = LocalsPricesDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-            //var localForm = new LocalPriceView(_controller,
-            //    LocalsPricesDataGridView.Rows[selectedRow].Cells[0].Value.ToString(),
-            //    decimal.Parse(LocalsPricesDataGridView.Rows[selectedRow].Cells[1].Value.ToString()));
-            //if (localForm.ShowDialog() == DialogResult.OK)
-            //{
-            //    _localprice[selectedRow][0] = localForm.Locality;
-            //    _localprice[selectedRow][1] = localForm.Price.ToString();
-            //    ShowLocals();
-            //}
+            var selectedRow = LocalsPricesDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
+            var localForm = new ContractContentEditView();
+            if (localForm.ShowDialog() == DialogResult.OK)
+            {
+                //_localprice[selectedRow][0] = localForm.Locality;
+                //_localprice[selectedRow][1] = localForm.Price.ToString();
+                //ShowLocals();
+            }
         }
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedRow = LocalsPricesDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-            LocalsPricesDataGridView.Rows.RemoveAt(selectedRow);
+
+            LocalsPricesDataGridView.Rows.Remove(LocalsPricesDataGridView.Rows[selectedRow]);
         }
 
         private void AddLocalPriceButton_Click(object sender, EventArgs e)
         {
-            //var localForm = new LocalPriceView(_controller);
-            //if(localForm.ShowDialog() == DialogResult.OK)
-            //{
-            //    _localprice.Add(new string[] { localForm.Locality, localForm.Price.ToString() });
-            //    ShowLocals();
-            //};
-        }
-
-        private void ShowLocals()
-        {
-            //LocalsPricesDataGridView.Rows.Clear();
-            //foreach (var local in _localprice)
-            //    LocalsPricesDataGridView.Rows.Add(local[0], local[1]);
-
+            var localForm = new ContractContentEditView();
+            if (localForm.ShowDialog() == DialogResult.OK)
+            {
+                ContractEdit.ContractContent.Add(localForm.contentEdit);
+            };
         }
 
         private void AddFileButton_Click(object sender, EventArgs e)
@@ -248,6 +246,11 @@ namespace PetsClient.Contract
             //    }
             //    ChangeScan();
             //}
+        }
+
+        private void LocalsPricesDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.Cancel = true;
         }
     }
 }

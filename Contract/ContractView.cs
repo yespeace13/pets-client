@@ -1,5 +1,8 @@
 ﻿using ModelLibrary.Model.Contract;
+using ModelLibrary.Model.Organization;
 using ModelLibrary.View;
+using PetsClient.Etc;
+using PetsClient.Organization.View;
 using PetsClient.Services;
 
 namespace PetsClient.Contract
@@ -80,7 +83,7 @@ namespace PetsClient.Contract
             _page.Filter = _filterSetting;
             _page.Pages = (int)PagesSize.Value;
             _page.Page = (int)NumberOfPage.Value;
-            var page = _service.Get("contract", _page);
+            var page = _service.Get("contracts", _page);
             if (page != null)
             {
                 ConDataGrid.DataSource = page.Items;
@@ -90,9 +93,9 @@ namespace PetsClient.Contract
 
         private void CreateContractButton_Click(object sender, EventArgs e)
         {
-            //var result = new ContractEditView(0, State.Create);
-            //if (result.ShowDialog() == DialogResult.OK)
-            //    service.Post("contract", result.ContractEdit);
+            var result = new ContractEditView();
+            if (result.ShowDialog() == DialogResult.OK)
+                _service.Post("contracts", result.ContractEdit);
 
             ShowContracts();
         }
@@ -121,10 +124,15 @@ namespace PetsClient.Contract
 
         private void ChangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var selectedRow = ConDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
+            var selectedItem = (ContractViewList)ConDataGrid.Rows[selectedRow].DataBoundItem;
+            var result = new ContractEditView(State.Update, selectedItem.Id);
+            if (result.ShowDialog() == DialogResult.OK)
+            {
+                _service.Put("contracts", selectedItem.Id, result.ContractEdit);
+            }
             ShowContracts();
         }
-
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -191,6 +199,7 @@ namespace PetsClient.Contract
                 if (hti.RowIndex != -1)
                 {
                     var selectedRow = ConDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
+                    new ContractEditView(State.Read, ((ContractViewList)ConDataGrid.Rows[selectedRow].DataBoundItem).Id).ShowDialog();
                 }
             }
         }

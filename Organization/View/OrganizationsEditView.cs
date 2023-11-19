@@ -84,11 +84,11 @@ namespace PetsClient.Organization.View
         {
             var service = new APIServiceConnection<LocalityView, OrganizationEdit, OrganizationEdit>();
 
-            var typeOrg = service.Get<TypeOrganizationView>("typeorganization");
+            var typeOrg = APIServiceOne.GetAll<TypeOrganizationView>("typeorganization");
 
-            var legalType = service.Get<LegalTypeView>("legaltype");
+            var legalType = APIServiceOne.GetAll<LegalTypeView>("legaltype");
 
-            var localitys = service.Get<LocalityView>("localitys");
+            var localitys = APIServiceOne.GetAll<LocalityView>("localities");
 
             TypeOrganizationComboBox.DataSource = typeOrg;
             TypeOrganizationComboBox.DisplayMember = "Name";
