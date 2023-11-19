@@ -8,16 +8,17 @@ namespace PetsClient.Contract
 {
     public partial class ContractEditView : Form
     {
-        public ContractEdit? ContractEdit { get; set; }
+        public ContractEdit ContractEdit { get; set; } = new ContractEdit();
+        public List<ContractContentEdit> ContractContentEdit { get; set; } = new List<ContractContentEdit>();
         private APIServiceConnection<ContractViewList, ContractEdit, ContractViewOne> _service;
         private int _id;
 
         public ContractEditView()
         {
             _service = new APIServiceConnection<ContractViewList, ContractEdit, ContractViewOne>();
-            this.ContractEdit = new ContractEdit();
             InitializeComponent();
             FillOrganizations();
+            FillLocalities();
         }
         public ContractEditView(State state, int id)
         {
@@ -85,32 +86,40 @@ namespace PetsClient.Contract
         {
             if (CheckFilds())
             {
-                foreach (var row in LocalsPricesDataGridView.Rows)
+                this.ContractEdit.Number = NumberTextBox.Text;
+                this.ContractEdit.ExecutorId = ((OrganizationViewList)ExecutorComboBox.SelectedItem).Id;
+                this.ContractEdit.ClientId = ((OrganizationViewList)ClientComboBox.SelectedItem).Id;
+                this.ContractEdit.DateOfConclusion = DateOnly.Parse(DateOfConclusionDateTimePicker.Value.ToShortDateString());
+                this.ContractEdit.DateValid = DateOnly.Parse(DateValidDateTimePicker.Value.ToShortDateString());
+
+                for (int i = 0; i < LocalsPricesDataGridView.RowCount - 1; i++)
                 {
-                    this.ContractEdit.ContractContent.Add(new ContractContentEdit());
+                    var row = LocalsPricesDataGridView.Rows[i];
+                    var id = row.Cells[0].Value != null ? (int)row.Cells[0].Value : 0;
+                    ContractEdit.ContractContent.Add(new ContractContentEdit(id, decimal.Parse(row.Cells[1].Value.ToString()), (int)row.Cells[2].Value, _id));
                 }
+                this.DialogResult = DialogResult.OK;
                 Close();
             }
         }
 
         private void FillFields()
         {
-            this.ContractEdit = new ContractEdit();
+            FillLocalities();
+
             var contract = _service.Get("contracts", _id);
             NumberTextBox.Text = contract.Number;
-            DateOfConclusionDateTimePicker.Value = contract.DateOfConclusion;
-            DateValidDateTimePicker.Value = contract.DateValid;
+            DateOfConclusionDateTimePicker.Value = DateTime.Parse(contract.DateOfConclusion.ToString());
+            DateValidDateTimePicker.Value = DateTime.Parse(contract.DateValid.ToString());
             var orgs = (List<OrganizationViewList>)ExecutorComboBox.DataSource;
             ExecutorComboBox.SelectedItem = orgs.Find(o => o.Id == contract.Executor.Id);
             ClientComboBox.SelectedItem = orgs.Find(o => o.Id == contract.Client.Id);
 
-            LocalsPricesDataGridView.DataSource = contract.ContractContents.Select(c => new { c.Id, c.Price, c.Locality.Name }).ToList();
-
-            LocalsPricesDataGridView.DataSource = contract.ContractContents;
-            LocalsPricesDataGridView.Columns[0].HeaderText = "Идентификатор";
-            LocalsPricesDataGridView.Columns[1].HeaderText = "Цена";
-            LocalsPricesDataGridView.Columns[2].HeaderText = "Населенный пункт";
-
+            var cc = contract.ContractContent;
+            for (var i = 0; i < cc.Count; i++)
+            {
+                LocalsPricesDataGridView.Rows.Add(cc[i].Id, cc[i].Price, cc[i].Locality.Id);
+            }
 
             //localityDataGridViewTextBoxColumn.
             //_currentScan = 0;
@@ -119,6 +128,14 @@ namespace PetsClient.Contract
             //else
             //    NextScanButton.Enabled = false;
 
+        }
+
+        private void FillLocalities()
+        {
+            var localities = APIServiceOne.GetAll<LocalityView>("localities");
+            LocalityDataGridViewComboBoxColumn.DataSource = localities;
+            LocalityDataGridViewComboBoxColumn.ValueMember = "Id";
+            LocalityDataGridViewComboBoxColumn.DisplayMember = "Name";
         }
 
         private void CancelButton_Click(object sender, EventArgs e) => this.Close();
@@ -200,32 +217,17 @@ namespace PetsClient.Contract
             //}
         }
 
-        private void UpdateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var selectedRow = LocalsPricesDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-            var localForm = new ContractContentEditView();
-            if (localForm.ShowDialog() == DialogResult.OK)
-            {
-                //_localprice[selectedRow][0] = localForm.Locality;
-                //_localprice[selectedRow][1] = localForm.Price.ToString();
-                //ShowLocals();
-            }
-        }
-
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedRow = LocalsPricesDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-
-            LocalsPricesDataGridView.Rows.Remove(LocalsPricesDataGridView.Rows[selectedRow]);
+            if(LocalsPricesDataGridView.Rows.Count > 1)
+            {
+                LocalsPricesDataGridView.Rows.Remove(LocalsPricesDataGridView.Rows[selectedRow]);
+            }
         }
 
         private void AddLocalPriceButton_Click(object sender, EventArgs e)
         {
-            var localForm = new ContractContentEditView();
-            if (localForm.ShowDialog() == DialogResult.OK)
-            {
-                ContractEdit.ContractContent.Add(localForm.contentEdit);
-            };
         }
 
         private void AddFileButton_Click(object sender, EventArgs e)
@@ -248,9 +250,5 @@ namespace PetsClient.Contract
             //}
         }
 
-        private void LocalsPricesDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            e.Cancel = true;
-        }
     }
 }

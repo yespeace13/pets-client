@@ -113,10 +113,8 @@ namespace PetsClient.Contract
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            //var columns = new string[ConDataGrid.ColumnCount];
-            //for (var col = 0; col < columns.Length; col++)
-            //    columns[col] = ConDataGrid.Columns[col].HeaderText;
-            //_controller.ExportToExcel(columns, _filtres);
+            var byteArray = _service.GetFile("contract-export", _filterSetting);
+            File.WriteAllBytes("Контракты.xlsx", byteArray);
         }
 
         private void ConDataGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) =>
@@ -137,6 +135,8 @@ namespace PetsClient.Contract
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedRow = ConDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
+            var selectedItem = (ContractViewList)ConDataGrid.Rows[selectedRow].DataBoundItem;
+            _service.Delete("contracts", selectedItem.Id);
             ShowContracts();
         }
 
@@ -154,7 +154,9 @@ namespace PetsClient.Contract
                 }
                 else if (hti.ColumnIndex > -1)
                 {
-                    FiltrTextBox.Text = _filterSetting[ConDataGrid.Columns[hti.ColumnIndex].Name];
+                    FiltrTextBox.Text = _filterSetting[ConDataGrid.Columns[hti.ColumnIndex].DataPropertyName];
+
+                    // Для даты
                     if (hti.ColumnIndex == 2 || hti.ColumnIndex == 3)
                     {
                         if (FiltrGroupBox.Size.Height == 89)
@@ -167,12 +169,13 @@ namespace PetsClient.Contract
                         FiltrEndDateTimePicker.Location = new Point(FiltrTextBox.Location.X, FiltrTextBox.Location.Y + 28);
                         FiltrEndDateTimePicker.Visible = true;
 
-                        //if (_filterSetting.ElementAt(hti.ColumnIndex).Value != "")
-                        //{
-                        //    var dates = _filterSetting.ElementAt(hti.ColumnIndex).Value.Split(' ');
-                        //    FiltrStartDateTimePicker.Value = DateTime.Parse(dates[0]);
-                        //    FiltrEndDateTimePicker.Value = DateTime.Parse(dates[1]);
-                        //}
+                        // Фильтрация по дате TODO надо переделать общий фильтр в сервисе, чтобы работал с датой
+                        if (_filterSetting[ConDataGrid.Columns[hti.ColumnIndex].DataPropertyName] != "")
+                        {
+                            var dates = _filterSetting[ConDataGrid.Columns[hti.ColumnIndex].DataPropertyName].Split(' ');
+                            FiltrStartDateTimePicker.Value = DateTime.Parse(dates[0]);
+                            FiltrEndDateTimePicker.Value = DateTime.Parse(dates[1]);
+                        }
                     }
                     else
                     {
@@ -185,7 +188,7 @@ namespace PetsClient.Contract
                     if (hti.ColumnIndex == ConDataGrid.ColumnCount - 1)
                         FiltrGroupBox.Location = new Point(hti.ColumnX - 80, hti.RowY + 60);
                     else FiltrGroupBox.Location = new Point(hti.ColumnX, hti.RowY + 60);
-                    _columnName = ConDataGrid.Columns[hti.ColumnIndex].Name;
+                    _columnName = ConDataGrid.Columns[hti.ColumnIndex].DataPropertyName;
                 }
             }
 

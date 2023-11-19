@@ -40,11 +40,9 @@
             label4 = new Label();
             label3 = new Label();
             LocalsPricesDataGridView = new DataGridView();
+            ContractContentContextMenuStrip = new ContextMenuStrip(components);
+            удалитьToolStripMenuItem = new ToolStripMenuItem();
             localityViewBindingSource = new BindingSource(components);
-            LocalPriceContextMenuStrip = new ContextMenuStrip(components);
-            UpdateToolStripMenuItem = new ToolStripMenuItem();
-            DeleteToolStripMenuItem = new ToolStripMenuItem();
-            contractContentViewBindingSource = new BindingSource(components);
             DateOfConclusionDateTimePicker = new DateTimePicker();
             DateValidDateTimePicker = new DateTimePicker();
             ExecutorComboBox = new ComboBox();
@@ -56,13 +54,12 @@
             DeleteImageToolStripMenuItem = new ToolStripMenuItem();
             AddLocalPriceButton = new Button();
             AddFileButton = new Button();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
+            IdDataGridViewColumn = new DataGridViewTextBoxColumn();
+            PriceDataGridViewColumn = new DataGridViewTextBoxColumn();
+            LocalityDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)LocalsPricesDataGridView).BeginInit();
+            ContractContentContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)localityViewBindingSource).BeginInit();
-            LocalPriceContextMenuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)contractContentViewBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ScanPictureBox).BeginInit();
             ImageContextMenuStrip.SuspendLayout();
             SuspendLayout();
@@ -149,55 +146,38 @@
             // 
             // LocalsPricesDataGridView
             // 
-            LocalsPricesDataGridView.AllowUserToAddRows = false;
-            LocalsPricesDataGridView.AllowUserToDeleteRows = false;
-            LocalsPricesDataGridView.AutoGenerateColumns = false;
             LocalsPricesDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             LocalsPricesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            LocalsPricesDataGridView.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6 });
-            LocalsPricesDataGridView.ContextMenuStrip = LocalPriceContextMenuStrip;
-            LocalsPricesDataGridView.DataSource = contractContentViewBindingSource;
+            LocalsPricesDataGridView.Columns.AddRange(new DataGridViewColumn[] { IdDataGridViewColumn, PriceDataGridViewColumn, LocalityDataGridViewComboBoxColumn });
+            LocalsPricesDataGridView.ContextMenuStrip = ContractContentContextMenuStrip;
             LocalsPricesDataGridView.Location = new Point(12, 279);
             LocalsPricesDataGridView.MultiSelect = false;
             LocalsPricesDataGridView.Name = "LocalsPricesDataGridView";
-            LocalsPricesDataGridView.ReadOnly = true;
             LocalsPricesDataGridView.RowHeadersVisible = false;
             LocalsPricesDataGridView.RowHeadersWidth = 51;
             LocalsPricesDataGridView.RowTemplate.Height = 24;
             LocalsPricesDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             LocalsPricesDataGridView.Size = new Size(834, 178);
             LocalsPricesDataGridView.TabIndex = 17;
-            LocalsPricesDataGridView.DataError += LocalsPricesDataGridView_DataError;
             LocalsPricesDataGridView.MouseDown += LocalsPricesDataGridView_MouseDown;
+            // 
+            // ContractContentContextMenuStrip
+            // 
+            ContractContentContextMenuStrip.ImageScalingSize = new Size(20, 20);
+            ContractContentContextMenuStrip.Items.AddRange(new ToolStripItem[] { удалитьToolStripMenuItem });
+            ContractContentContextMenuStrip.Name = "ContractContentContextMenuStrip";
+            ContractContentContextMenuStrip.Size = new Size(135, 28);
+            // 
+            // удалитьToolStripMenuItem
+            // 
+            удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
+            удалитьToolStripMenuItem.Size = new Size(134, 24);
+            удалитьToolStripMenuItem.Text = "Удалить";
+            удалитьToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
             // 
             // localityViewBindingSource
             // 
             localityViewBindingSource.DataSource = typeof(ModelLibrary.Model.Etc.LocalityView);
-            // 
-            // LocalPriceContextMenuStrip
-            // 
-            LocalPriceContextMenuStrip.ImageScalingSize = new Size(20, 20);
-            LocalPriceContextMenuStrip.Items.AddRange(new ToolStripItem[] { UpdateToolStripMenuItem, DeleteToolStripMenuItem });
-            LocalPriceContextMenuStrip.Name = "contextMenuStrip1";
-            LocalPriceContextMenuStrip.Size = new Size(148, 52);
-            // 
-            // UpdateToolStripMenuItem
-            // 
-            UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem";
-            UpdateToolStripMenuItem.Size = new Size(147, 24);
-            UpdateToolStripMenuItem.Text = "Изменить";
-            UpdateToolStripMenuItem.Click += UpdateToolStripMenuItem_Click;
-            // 
-            // DeleteToolStripMenuItem
-            // 
-            DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
-            DeleteToolStripMenuItem.Size = new Size(147, 24);
-            DeleteToolStripMenuItem.Text = "Удалить";
-            DeleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
-            // 
-            // contractContentViewBindingSource
-            // 
-            contractContentViewBindingSource.DataSource = typeof(ModelLibrary.Model.Contract.ContractContentView);
             // 
             // DateOfConclusionDateTimePicker
             // 
@@ -291,30 +271,24 @@
             AddFileButton.UseVisualStyleBackColor = true;
             AddFileButton.Click += AddFileButton_Click;
             // 
-            // dataGridViewTextBoxColumn4
+            // IdDataGridViewColumn
             // 
-            dataGridViewTextBoxColumn4.DataPropertyName = "Id";
-            dataGridViewTextBoxColumn4.HeaderText = "Идентификатор";
-            dataGridViewTextBoxColumn4.MinimumWidth = 6;
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
+            IdDataGridViewColumn.HeaderText = "Идентификатор";
+            IdDataGridViewColumn.MinimumWidth = 6;
+            IdDataGridViewColumn.Name = "IdDataGridViewColumn";
+            IdDataGridViewColumn.Visible = false;
             // 
-            // dataGridViewTextBoxColumn5
+            // PriceDataGridViewColumn
             // 
-            dataGridViewTextBoxColumn5.DataPropertyName = "Price";
-            dataGridViewTextBoxColumn5.HeaderText = "Цена";
-            dataGridViewTextBoxColumn5.MinimumWidth = 6;
-            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            dataGridViewTextBoxColumn5.ReadOnly = true;
+            PriceDataGridViewColumn.HeaderText = "Цена";
+            PriceDataGridViewColumn.MinimumWidth = 6;
+            PriceDataGridViewColumn.Name = "PriceDataGridViewColumn";
             // 
-            // dataGridViewTextBoxColumn6
+            // LocalityDataGridViewComboBoxColumn
             // 
-            dataGridViewTextBoxColumn6.DataPropertyName = "Locality";
-            dataGridViewTextBoxColumn6.HeaderText = "Населенный пункт";
-            dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            dataGridViewTextBoxColumn6.ReadOnly = true;
-            dataGridViewTextBoxColumn6.Resizable = DataGridViewTriState.True;
+            LocalityDataGridViewComboBoxColumn.HeaderText = "Населенный пункт";
+            LocalityDataGridViewComboBoxColumn.MinimumWidth = 6;
+            LocalityDataGridViewComboBoxColumn.Name = "LocalityDataGridViewComboBoxColumn";
             // 
             // ContractEditView
             // 
@@ -343,9 +317,8 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Контракт";
             ((System.ComponentModel.ISupportInitialize)LocalsPricesDataGridView).EndInit();
+            ContractContentContextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)localityViewBindingSource).EndInit();
-            LocalPriceContextMenuStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)contractContentViewBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)ScanPictureBox).EndInit();
             ImageContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
@@ -373,14 +346,16 @@
         private Button AddLocalPriceButton;
         private ContextMenuStrip ImageContextMenuStrip;
         private ToolStripMenuItem DeleteImageToolStripMenuItem;
-        private ContextMenuStrip LocalPriceContextMenuStrip;
-        private ToolStripMenuItem UpdateToolStripMenuItem;
-        private ToolStripMenuItem DeleteToolStripMenuItem;
         private Button AddFileButton;
         private BindingSource contractContentViewBindingSource;
         private BindingSource localityViewBindingSource;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
+        private DataGridViewComboBoxColumn localityDataGridViewTextBoxColumn;
+        private ContextMenuStrip ContractContentContextMenuStrip;
+        private ToolStripMenuItem удалитьToolStripMenuItem;
+        private DataGridViewTextBoxColumn IdDataGridViewColumn;
+        private DataGridViewTextBoxColumn PriceDataGridViewColumn;
+        private DataGridViewComboBoxColumn LocalityDataGridViewComboBoxColumn;
     }
 }

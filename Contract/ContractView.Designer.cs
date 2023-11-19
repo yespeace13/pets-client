@@ -281,7 +281,7 @@
             FiltrGroupBox.Controls.Add(FiltrTextBox);
             FiltrGroupBox.Location = new Point(158, 146);
             FiltrGroupBox.Name = "FiltrGroupBox";
-            FiltrGroupBox.Size = new Size(212, 89);
+            FiltrGroupBox.Size = new Size(229, 127);
             FiltrGroupBox.TabIndex = 17;
             FiltrGroupBox.TabStop = false;
             FiltrGroupBox.Text = "Фильтр";
@@ -306,9 +306,9 @@
             // ClearFiltrsButton
             // 
             ClearFiltrsButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            ClearFiltrsButton.Location = new Point(49, 60);
+            ClearFiltrsButton.Location = new Point(67, 92);
             ClearFiltrsButton.Name = "ClearFiltrsButton";
-            ClearFiltrsButton.Size = new Size(75, 23);
+            ClearFiltrsButton.Size = new Size(75, 29);
             ClearFiltrsButton.TabIndex = 3;
             ClearFiltrsButton.Text = "Сбросить";
             ClearFiltrsButton.UseVisualStyleBackColor = true;
@@ -317,9 +317,9 @@
             // AcceptFiltrButton
             // 
             AcceptFiltrButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            AcceptFiltrButton.Location = new Point(131, 60);
+            AcceptFiltrButton.Location = new Point(148, 92);
             AcceptFiltrButton.Name = "AcceptFiltrButton";
-            AcceptFiltrButton.Size = new Size(75, 23);
+            AcceptFiltrButton.Size = new Size(75, 29);
             AcceptFiltrButton.TabIndex = 2;
             AcceptFiltrButton.Text = "Принять";
             AcceptFiltrButton.UseVisualStyleBackColor = true;
@@ -330,7 +330,7 @@
             FiltrTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             FiltrTextBox.Location = new Point(6, 21);
             FiltrTextBox.Name = "FiltrTextBox";
-            FiltrTextBox.Size = new Size(200, 27);
+            FiltrTextBox.Size = new Size(217, 27);
             FiltrTextBox.TabIndex = 1;
             // 
             // Contractview
