@@ -1,4 +1,5 @@
-﻿using PetsClient.Contract;
+﻿using PetsClient.Act;
+using PetsClient.Contract;
 using PetsClient.Organization.View;
 
 namespace PetsClient
@@ -30,7 +31,7 @@ namespace PetsClient
         }
         private void ActsButton_Click(object sender, EventArgs e)
         {
-            //new Actview().ShowDialog();
+            new Actview().ShowDialog();
         }
 
         private void ReportButton_Click(object sender, EventArgs e)

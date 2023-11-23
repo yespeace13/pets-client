@@ -2,8 +2,6 @@
 using ModelLibrary.View;
 using PetsClient.Etc;
 using PetsClient.Services;
-using RestSharp;
-using System.IO;
 
 namespace PetsClient.Organization.View
 {
@@ -108,7 +106,6 @@ namespace PetsClient.Organization.View
         {
             var byteArray = service.GetFile("organizationexport", _filterSetting);
             File.WriteAllBytes("Организации.xlsx", byteArray);
-
         }
 
         private void OrgDataGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)

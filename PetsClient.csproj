@@ -12,14 +12,12 @@
     <None Remove="Resources\fast-forward(1).png" />
     <None Remove="Resources\fast-forward.png" />
     <None Remove="Resources\fast-forward_r.png" />
-    <None Remove="Resources\Microsoft-Fluentui-Emoji-Mono-Service-Dog.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Resources\fast-forward(1).png" />
     <Content Include="Resources\fast-forward.png" />
     <Content Include="Resources\fast-forward_r.png" />
-    <Content Include="Resources\Microsoft-Fluentui-Emoji-Mono-Service-Dog.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,10 +31,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Domain\Animal\AnimalEditView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Domain\Animal\AnimalView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="MenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Organization\View\OrganizationView.cs">
+    <Compile Update="Domain\Organization\OrganizationView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">

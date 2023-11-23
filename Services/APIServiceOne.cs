@@ -13,6 +13,7 @@ public class APIServiceOne
                 configureSerialization: s => s.UseNewtonsoftJson());
     }
     //TODO костыль костыльный обмазанный костылем
+    // Получение записей, где Page
     public static List<T> GetAllFromPage<T>(string resources)
     {
         var pageSettings = new PageSettingsView(1, 500, null, null);
@@ -28,6 +29,7 @@ public class APIServiceOne
         throw new Exception(execute.ErrorMessage);
     }
 
+    // получение всех записей, где нет Page
     public static List<T> GetAll<T>(string resources)
     {
         var request = new RestRequest(resources, Method.Get);
@@ -39,12 +41,11 @@ public class APIServiceOne
         throw new Exception(execute.ErrorMessage);
     }
 
-    public static List<T> Get<T>(string resources)
+    public static T GetOne<T>(string resources, int id)
     {
-        var request = new RestRequest(resources);
+        var request = new RestRequest(resources + "/id");
         request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
-
-        var execute = _сlient.ExecuteGet<List<T>>(request);
+        var execute = _сlient.ExecuteGet<T>(request);
         if (execute.IsSuccessful)
         {
             return execute.Data;
