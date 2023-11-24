@@ -64,19 +64,25 @@ namespace PetsClient.Contract
             if (string.IsNullOrEmpty(NumberTextBox.Text))
                 dialogRes = IView.ShowErrorMessage("Не заполнен номер контракта.");
             else if (DateOfConclusionDateTimePicker.Value > DateValidDateTimePicker.Value)
-                dialogRes = IView.ShowErrorMessage("Дата заключения позже даты действия");
+                dialogRes = IView.ShowErrorMessage("Дата заключения позже даты действия.");
             else if (ExecutorComboBox.SelectedItem == null)
-                dialogRes = IView.ShowErrorMessage("Не выбран исполнитель");
+                dialogRes = IView.ShowErrorMessage("Не выбран исполнитель.");
             else if (ClientComboBox.SelectedItem == null)
-                dialogRes = IView.ShowErrorMessage("Не выбран заказчик");
+                dialogRes = IView.ShowErrorMessage("Не выбран заказчик.");
             else if (LocalsPricesDataGridView.Rows.Count == 0)
-                dialogRes = IView.ShowErrorMessage("Не добавлено содержание контракта");
+                dialogRes = IView.ShowErrorMessage("Не добавлено содержание контракта.");
             else if (ClientComboBox.SelectedItem == ExecutorComboBox.SelectedItem)
-                dialogRes = IView.ShowErrorMessage("Организации одинаковые");
-            //foreach(DataGridViewRow row in LocalsPricesDataGridView.Rows)
-            //{
-            //    if (row.Cells)
-            //}
+                dialogRes = IView.ShowErrorMessage("Организации одинаковые.");
+            else if (LocalsPricesDataGridView.Rows.Count > 0)
+            {
+                foreach (DataGridViewRow row in LocalsPricesDataGridView.Rows)
+                {
+                    if (row.Cells[1].Value != null && decimal.TryParse(row.Cells[1].Value.ToString(), out _))
+                        dialogRes = IView.ShowErrorMessage("Значение цены указано некорректно.");
+                    else if (row.Cells[2].Value != null)
+                        dialogRes = IView.ShowErrorMessage("Населенный пункт не указан.");
+                }
+            }  
             return dialogRes == DialogResult.No;
         }
 

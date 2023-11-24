@@ -31,7 +31,7 @@ namespace PetsClient.Organization.View
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            CreateOrgButton = new Button();
+            CreateButton = new Button();
             NextPageButton = new Button();
             PreviousPageButton = new Button();
             NumberOfPage = new NumericUpDown();
@@ -68,14 +68,14 @@ namespace PetsClient.Organization.View
             // 
             // CreateOrgButton
             // 
-            CreateOrgButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            CreateOrgButton.Location = new Point(1018, 12);
-            CreateOrgButton.Name = "CreateOrgButton";
-            CreateOrgButton.Size = new Size(90, 29);
-            CreateOrgButton.TabIndex = 0;
-            CreateOrgButton.Text = "Добавить";
-            CreateOrgButton.UseVisualStyleBackColor = true;
-            CreateOrgButton.Click += CreateOrgButton_Click;
+            CreateButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            CreateButton.Location = new Point(1018, 12);
+            CreateButton.Name = "CreateOrgButton";
+            CreateButton.Size = new Size(90, 29);
+            CreateButton.TabIndex = 0;
+            CreateButton.Text = "Добавить";
+            CreateButton.UseVisualStyleBackColor = true;
+            CreateButton.Click += CreateOrgButton_Click;
             // 
             // NextPageButton
             // 
@@ -346,7 +346,7 @@ namespace PetsClient.Organization.View
             Controls.Add(NumberOfPage);
             Controls.Add(PreviousPageButton);
             Controls.Add(NextPageButton);
-            Controls.Add(CreateOrgButton);
+            Controls.Add(CreateButton);
             Name = "OrganizationView";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Реестр";
@@ -368,7 +368,7 @@ namespace PetsClient.Organization.View
         private NumericUpDown PagesSize;
         private Label NumberPageLabel;
         private Label CountLabel;
-        private Button CreateOrgButton;
+        private Button CreateButton;
         private DataGridView OrgDataGrid;
         private Label label1;
         private Button ExportButton;

@@ -1,6 +1,7 @@
 ﻿using ModelLibrary.Model.Contract;
 using ModelLibrary.Model.Organization;
 using ModelLibrary.View;
+using PetsClient.Authentication;
 using PetsClient.Etc;
 using PetsClient.Organization.View;
 using PetsClient.Services;
@@ -29,26 +30,25 @@ namespace PetsClient.Contract
 
         private void InitializeForm()
         {
-            //var possibilites = UserSession.User.Privilege.Contracts.Item2;
-            //CreateButton.Enabled = false;
-            //ChangeToolStripMenuItem.Enabled = false;
-            //DeleteToolStripMenuItem.Enabled = false;
-            //if (possibilites == null) return;
-            //foreach (var poss in possibilites)
-            //{
-            //    switch (poss)
-            //    {
-            //        case Possibilities.Add:
-            //            CreateButton.Enabled = true;
-            //            break;
-            //        case Possibilities.Change:
-            //            ChangeToolStripMenuItem.Enabled = true;
-            //            break;
-            //        case Possibilities.Delete:
-            //            DeleteToolStripMenuItem.Enabled = true;
-            //            break;
-            //    }
-            //}
+            CreateButton.Enabled = false;
+            ChangeToolStripMenuItem.Enabled = false;
+            DeleteToolStripMenuItem.Enabled = false;
+
+            foreach (var possibility in UserData.PossibilitiesForEntity("Contract"))
+            {
+                switch (possibility)
+                {
+                    case "Create":
+                        CreateButton.Enabled = true;
+                        break;
+                    case "Update":
+                        ChangeToolStripMenuItem.Enabled = true;
+                        break;
+                    case "Delete":
+                        DeleteToolStripMenuItem.Enabled = true;
+                        break;
+                }
+            }
         }
 
         private void ForwardToPage_Click(object sender, EventArgs e)

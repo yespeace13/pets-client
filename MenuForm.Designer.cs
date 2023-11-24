@@ -31,86 +31,106 @@ namespace PetsClient
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MenuForm));
-            this.PlanButton = new System.Windows.Forms.Button();
-            this.OrgsButton = new System.Windows.Forms.Button();
-            this.ContractsButton = new System.Windows.Forms.Button();
-            this.ActsButton = new System.Windows.Forms.Button();
-            this.ReportButton = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            OrganizationsButton = new Button();
+            ContractsButton = new Button();
+            ActsButton = new Button();
+            ReportButton = new Button();
+            CactchScheduleButton = new Button();
+            ExitButton = new Button();
+            SuspendLayout();
             // 
-            // PlanButton
+            // OrganizationsButton
             // 
-            this.PlanButton.Location = new System.Drawing.Point(197, 269);
-            this.PlanButton.Name = "PlanButton";
-            this.PlanButton.Size = new System.Drawing.Size(319, 33);
-            this.PlanButton.TabIndex = 2;
-            this.PlanButton.Text = "План";
-            this.PlanButton.UseVisualStyleBackColor = true;
-            this.PlanButton.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // OrgsButton
-            // 
-            this.OrgsButton.Location = new System.Drawing.Point(197, 152);
-            this.OrgsButton.Name = "OrgsButton";
-            this.OrgsButton.Size = new System.Drawing.Size(319, 33);
-            this.OrgsButton.TabIndex = 0;
-            this.OrgsButton.Text = "Организации";
-            this.OrgsButton.UseVisualStyleBackColor = true;
-            this.OrgsButton.Click += new System.EventHandler(this.OrgsButton_Click);
+            OrganizationsButton.Location = new Point(256, 129);
+            OrganizationsButton.Margin = new Padding(3, 4, 3, 4);
+            OrganizationsButton.Name = "OrganizationsButton";
+            OrganizationsButton.Size = new Size(372, 60);
+            OrganizationsButton.TabIndex = 0;
+            OrganizationsButton.Text = "Организации";
+            OrganizationsButton.UseVisualStyleBackColor = true;
+            OrganizationsButton.Click += OrgsButton_Click;
             // 
             // ContractsButton
             // 
-            this.ContractsButton.Location = new System.Drawing.Point(197, 191);
-            this.ContractsButton.Name = "ContractsButton";
-            this.ContractsButton.Size = new System.Drawing.Size(319, 33);
-            this.ContractsButton.TabIndex = 1;
-            this.ContractsButton.Text = "Контракты";
-            this.ContractsButton.UseVisualStyleBackColor = true;
-            this.ContractsButton.Click += new System.EventHandler(this.ContractsButton_Click);
+            ContractsButton.Location = new Point(256, 265);
+            ContractsButton.Margin = new Padding(3, 4, 3, 4);
+            ContractsButton.Name = "ContractsButton";
+            ContractsButton.Size = new Size(372, 60);
+            ContractsButton.TabIndex = 1;
+            ContractsButton.Text = "Контракты";
+            ContractsButton.UseVisualStyleBackColor = true;
+            ContractsButton.Click += ContractsButton_Click;
             // 
             // ActsButton
             // 
-            this.ActsButton.Location = new System.Drawing.Point(197, 230);
-            this.ActsButton.Name = "ActsButton";
-            this.ActsButton.Size = new System.Drawing.Size(319, 33);
-            this.ActsButton.TabIndex = 2;
-            this.ActsButton.Text = "Акты";
-            this.ActsButton.UseVisualStyleBackColor = true;
-            this.ActsButton.Click += new System.EventHandler(this.ActsButton_Click);
+            ActsButton.Location = new Point(256, 61);
+            ActsButton.Margin = new Padding(3, 4, 3, 4);
+            ActsButton.Name = "ActsButton";
+            ActsButton.Size = new Size(372, 60);
+            ActsButton.TabIndex = 2;
+            ActsButton.Text = "Акты";
+            ActsButton.UseVisualStyleBackColor = true;
+            ActsButton.Click += ActsButton_Click;
             // 
             // ReportButton
             // 
-            this.ReportButton.Location = new System.Drawing.Point(197, 308);
-            this.ReportButton.Name = "ReportButton";
-            this.ReportButton.Size = new System.Drawing.Size(319, 33);
-            this.ReportButton.TabIndex = 3;
-            this.ReportButton.Text = "Отчет";
-            this.ReportButton.UseVisualStyleBackColor = true;
-            this.ReportButton.Click += new System.EventHandler(this.ReportButton_Click);
+            ReportButton.Location = new Point(256, 333);
+            ReportButton.Margin = new Padding(3, 4, 3, 4);
+            ReportButton.Name = "ReportButton";
+            ReportButton.Size = new Size(372, 60);
+            ReportButton.TabIndex = 3;
+            ReportButton.Text = "Отчет";
+            ReportButton.UseVisualStyleBackColor = true;
+            ReportButton.Click += ReportButton_Click;
+            // 
+            // CactchScheduleButton
+            // 
+            CactchScheduleButton.Location = new Point(256, 197);
+            CactchScheduleButton.Margin = new Padding(3, 4, 3, 4);
+            CactchScheduleButton.Name = "CactchScheduleButton";
+            CactchScheduleButton.Size = new Size(372, 60);
+            CactchScheduleButton.TabIndex = 2;
+            CactchScheduleButton.Text = "План-графики";
+            CactchScheduleButton.UseVisualStyleBackColor = true;
+            CactchScheduleButton.Click += CatchScheduleButton_Click;
+            // 
+            // ExitButton
+            // 
+            ExitButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ExitButton.Location = new Point(768, 12);
+            ExitButton.Name = "ExitButton";
+            ExitButton.Size = new Size(94, 29);
+            ExitButton.TabIndex = 4;
+            ExitButton.Text = "Выход";
+            ExitButton.UseVisualStyleBackColor = true;
+            ExitButton.Click += ExitButton_Click;
             // 
             // MenuForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 450);
-            this.Controls.Add(this.PlanButton);
-            this.Controls.Add(this.ReportButton);
-            this.Controls.Add(this.ActsButton);
-            this.Controls.Add(this.ContractsButton);
-            this.Controls.Add(this.OrgsButton);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "MenuForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MenuForm";
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(874, 485);
+            Controls.Add(ExitButton);
+            Controls.Add(CactchScheduleButton);
+            Controls.Add(ActsButton);
+            Controls.Add(OrganizationsButton);
+            Controls.Add(ReportButton);
+            Controls.Add(ContractsButton);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "MenuForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "MenuForm";
+            ResumeLayout(false);
         }
 
         #endregion
-        private System.Windows.Forms.Button PlanButton;
-        private System.Windows.Forms.Button OrgsButton;
-        private System.Windows.Forms.Button ContractsButton;
-        private System.Windows.Forms.Button ActsButton;
-        private System.Windows.Forms.Button ReportButton;
+        private Button OrganizationsButton;
+        private Button ContractsButton;
+        private Button ActsButton;
+        private Button ReportButton;
+        private Button CactchScheduleButton;
+        private Button ExitButton;
+        private Label label1;
     }
 }

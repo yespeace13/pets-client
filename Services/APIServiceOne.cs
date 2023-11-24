@@ -40,37 +40,5 @@ public class APIServiceOne
             return execute.Data;
         throw new Exception(execute.ErrorMessage);
     }
-
-    public static T GetOne<T>(string resources, int id)
-    {
-        var request = new RestRequest(resources + "/" + id);
-        request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
-        var execute = _сlient.ExecuteGet<T>(request);
-        if (execute.IsSuccessful)
-        {
-            return execute.Data;
-        }
-        throw new Exception(execute.ErrorMessage);
-    }
-
-    public void Post<T>(string resources, T view)
-    {
-        var request = new RestRequest(resources);
-        request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
-
-        if (view == null) throw new ArgumentNullException("Не передан параметр view");
-        request.AddBody(view);
-        _сlient.Post(request);
-    }
-
-    public void Put<T>(string resources, int id, T view)
-    {
-        var request = new RestRequest(resources + $"/{id}");
-        request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
-
-        if (view == null) throw new ArgumentNullException("Не передан параметр view");
-        request.AddBody(view);
-        _сlient.Put(request);
-    }
 }
 

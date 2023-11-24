@@ -1,5 +1,6 @@
 ﻿using ModelLibrary.Model.Organization;
 using ModelLibrary.View;
+using PetsClient.Authentication;
 using PetsClient.Etc;
 using PetsClient.Services;
 
@@ -24,26 +25,25 @@ namespace PetsClient.Organization.View
 
         private void InitializeForm()
         {
-            //var possibilites = UserSession.User.Privilege.Organizations.Item2;
-            //CreateOrgButton.Enabled = false;
-            //ChangeToolStripMenuItem.Enabled = false;
-            //DeleteToolStripMenuItem.Enabled = false;
-            //if (possibilites == null) return;
-            //foreach (var poss in possibilites)
-            //{
-            //    switch (poss)
-            //    {
-            //        case Possibilities.Add:
-            //            CreateOrgButton.Enabled = true;
-            //            break;
-            //        case Possibilities.Change:
-            //            ChangeToolStripMenuItem.Enabled = true;
-            //            break;
-            //        case Possibilities.Delete:
-            //            DeleteToolStripMenuItem.Enabled = true;
-            //            break;
-            //    }
-            //}
+            CreateButton.Enabled = false;
+            ChangeToolStripMenuItem.Enabled = false;
+            DeleteToolStripMenuItem.Enabled = false;
+
+            foreach (var possibility in UserData.PossibilitiesForEntity("Organization"))
+            {
+                switch (possibility)
+                {
+                    case "Create":
+                        CreateButton.Enabled = true;
+                        break;
+                    case "Update":
+                        ChangeToolStripMenuItem.Enabled = true;
+                        break;
+                    case "Delete":
+                        DeleteToolStripMenuItem.Enabled = true;
+                        break;
+                }
+            }
         }
 
         private void ForwardToPage_Click(object sender, EventArgs e)

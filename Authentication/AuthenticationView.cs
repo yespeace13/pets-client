@@ -19,6 +19,7 @@ namespace PetsClient.Authentication
             if (AuthorizationService.IsAuthentication(login, password))
             {
                 UserSuccessfullyAuthenticated = true;
+                UserData.Possibilities = AuthorizationService.GetPossibilities();
                 Close();
             }
             else
