@@ -38,7 +38,7 @@ namespace PetsClient.Contract
             {
                 switch (possibility)
                 {
-                    case "Create":
+                    case "Insert":
                         CreateButton.Enabled = true;
                         break;
                     case "Update":
