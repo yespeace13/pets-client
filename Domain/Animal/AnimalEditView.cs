@@ -1,19 +1,17 @@
 ﻿using ModelLibrary.Model.Animal;
 using PetsClient.Etc;
-using PetsClient.Services;
 
 namespace PetsClient.Act;
 
 public partial class AnimalEditView : Form
 {
-    private int _currentScan;
+    public AnimalViewList Animal { get; set; }
 
-    public AnimalEdit Animal { get; set; }
-
-    public AnimalEditView(State state, int id)
+    public AnimalEditView(State state, AnimalViewList animal)
     {
+        Animal = animal;
         InitializeComponent();
-        FillData(id);
+        FillData();
         PrevScanButton.Enabled = false;
         NextScanButton.Enabled = false;
         if (state == State.Read)
@@ -21,12 +19,10 @@ public partial class AnimalEditView : Form
     }
     public AnimalEditView()
     {
-        //InitializeComponent();
-        //_controller = controller;
-        //FillComboBoxes();
-        //PrevScanButton.Enabled = false;
-        //_state = State.Insert;
-        //Scans = new List<string>();
+        InitializeComponent();
+        Animal = new AnimalViewList();
+        PrevScanButton.Enabled = false;
+        NextScanButton.Enabled = false;
     }
 
     private void EnableControls()
@@ -47,26 +43,53 @@ public partial class AnimalEditView : Form
         CancelButton.Text = "Закрыть";
     }
 
-    private void FillData(int id)
+    private void FillData()
     {
-        var animal = APIServiceOne.GetOne<AnimalViewList>("animals", id);
-        CategoryTextBox.Text = animal.Category;
-        if (animal.Sex == "Самка") FemaleRadioButton.Checked = true;
+        CategoryTextBox.Text = Animal.Category;
+        if (Animal.Sex == "Самка") FemaleRadioButton.Checked = true;
         else MaleRadioButton.Checked = true;
-        BreedTextBox.Text = animal.Breed;
-        SizeNumericUpDown.Value = (decimal)animal.Size;
-        WoolTextBox.Text = animal.Wool;
-        ColorTextBox.Text = animal.Color;
-        EarsTextBox.Text = animal.Ears;
-        TailTextBox.Text = animal.Tail;
-        SpecialSignsTextBox.Text = animal.SpecialSigns;
-        IdenLabelTextBox.Text = animal.IdentificationLabel;
-        ChipNumTextBox.Text = animal.ChipNumber;
-        
+        BreedTextBox.Text = Animal.Breed;
+        SizeNumericUpDown.Value = (decimal)Animal.Size;
+        WoolTextBox.Text = Animal.Wool;
+        ColorTextBox.Text = Animal.Color;
+        EarsTextBox.Text = Animal.Ears;
+        TailTextBox.Text = Animal.Tail;
+        SpecialSignsTextBox.Text = Animal.SpecialSigns;
+        IdenLabelTextBox.Text = Animal.IdentificationLabel;
+        ChipNumTextBox.Text = Animal.ChipNumber;
+
         //Scans = scans;
-        _currentScan = 0;
         //if (Scans.Count != 0) ChangeScan();
     }
+
+    
+
+    private void OkButton_Click(object sender, EventArgs e)
+    {
+        if (CheckFields())
+        {
+            Animal.Category = CategoryTextBox.Text;
+            Animal.Sex = FemaleRadioButton.Checked ? "Caмка" : "Самец";
+            Animal.Breed = BreedTextBox.Text;
+            Animal.Size = (double)SizeNumericUpDown.Value;
+            Animal.Wool = WoolTextBox.Text;
+            Animal.Color = ColorTextBox.Text;
+            Animal.Ears = EarsTextBox.Text;
+            Animal.Tail = TailTextBox.Text;
+            Animal.SpecialSigns = SpecialSignsTextBox.Text;
+            Animal.IdentificationLabel = IdenLabelTextBox.Text;
+            Animal.ChipNumber = ChipNumTextBox.Text;
+            Close();
+        }
+    }
+
+    private bool CheckFields()
+    {
+        var dialogRes = DialogResult.No;
+        return dialogRes == DialogResult.No;
+    }
+
+    private void CancelButton_Click(object sender, EventArgs e) => Close();
 
     private void AddFileButton_Click(object sender, EventArgs e)
     {
@@ -88,6 +111,11 @@ public partial class AnimalEditView : Form
         //}
     }
 
+    private void ScanPictureBox_DoubleClick(object sender, EventArgs e)
+    {
+        //new ScanView(new Bitmap(Scans[_currentScan])).ShowDialog();
+    }
+
     private void ChangeScan()
     {
         //if (File.Exists(Scans[_currentScan]))
@@ -102,12 +130,6 @@ public partial class AnimalEditView : Form
         //    ShowErrorMessage("Не все файлы были загружены.");
         //}
     }
-
-    private static DialogResult ShowErrorMessage(string error)
-    {
-        return MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }
-
     private void PrevScanButton_Click(object sender, EventArgs e)
     {
         //if (_currentScan > 0)
@@ -128,40 +150,5 @@ public partial class AnimalEditView : Form
         //    PrevScanButton.Enabled = true;
         //    ChangeScan();
         //}
-    }
-
-    private void OkButton_Click(object sender, EventArgs e)
-    {
-        if (CheckFields())
-        {
-            //Category =  CategoryTextBox.Text;
-            //Sex = FemaleRadioButton.Checked ? "Caмка" : "Самец";
-            //Breed =  BreedTextBox.Text;
-            //Size = (double)SizeNumericUpDown.Value;
-            //Wool = WoolTextBox.Text;
-            //Color = ColorTextBox.Text;
-            //Ears = EarsTextBox.Text;
-            //Tail =  TailTextBox.Text;
-            //SpecialSigns = SpecialSignsTextBox.Text;
-            //IdentificationLabel = IdenLabelTextBox.Text;
-            //ChipNumber =  ChipNumTextBox.Text;
-            //Locality =  LocalityComboBox.SelectedItem.ToString();
-            //DialogResult = DialogResult.OK;
-            Close();
-        }
-    }
-
-    private bool CheckFields()
-    {
-        var dialogRes = DialogResult.No;
-        return dialogRes == DialogResult.No;
-    }
-
-    private void CancelButton_Click(object sender, EventArgs e) => Close();
-
-
-    private void ScanPictureBox_DoubleClick(object sender, EventArgs e)
-    {
-        //new ScanView(new Bitmap(Scans[_currentScan])).ShowDialog();
     }
 }

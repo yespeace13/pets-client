@@ -43,7 +43,7 @@ public class APIServiceOne
 
     public static T GetOne<T>(string resources, int id)
     {
-        var request = new RestRequest(resources + "/id");
+        var request = new RestRequest(resources + "/" + id);
         request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
         var execute = _сlient.ExecuteGet<T>(request);
         if (execute.IsSuccessful)

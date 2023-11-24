@@ -34,7 +34,7 @@
             CancelButton = new Button();
             label1 = new Label();
             DateOfCapDateTimePicker = new DateTimePicker();
-            OrgsComboBox = new ComboBox();
+            ExecutorComboBox = new ComboBox();
             AnimalsDataGridView = new DataGridView();
             AddAnimalButton = new Button();
             label2 = new Label();
@@ -61,6 +61,7 @@
             // OkButton
             // 
             OkButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            OkButton.DialogResult = DialogResult.OK;
             OkButton.Location = new Point(444, 519);
             OkButton.Name = "OkButton";
             OkButton.Size = new Size(75, 29);
@@ -93,16 +94,17 @@
             // 
             DateOfCapDateTimePicker.Location = new Point(12, 210);
             DateOfCapDateTimePicker.Name = "DateOfCapDateTimePicker";
-            DateOfCapDateTimePicker.Size = new Size(186, 27);
+            DateOfCapDateTimePicker.Size = new Size(195, 27);
             DateOfCapDateTimePicker.TabIndex = 3;
+            DateOfCapDateTimePicker.Value = new DateTime(2023, 11, 24, 0, 0, 0, 0);
             // 
             // OrgsComboBox
             // 
-            OrgsComboBox.FormattingEnabled = true;
-            OrgsComboBox.Location = new Point(12, 86);
-            OrgsComboBox.Name = "OrgsComboBox";
-            OrgsComboBox.Size = new Size(295, 28);
-            OrgsComboBox.TabIndex = 4;
+            ExecutorComboBox.FormattingEnabled = true;
+            ExecutorComboBox.Location = new Point(12, 86);
+            ExecutorComboBox.Name = "OrgsComboBox";
+            ExecutorComboBox.Size = new Size(295, 28);
+            ExecutorComboBox.TabIndex = 4;
             // 
             // AnimalsDataGridView
             // 
@@ -120,6 +122,7 @@
             AnimalsDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             AnimalsDataGridView.Size = new Size(588, 211);
             AnimalsDataGridView.TabIndex = 5;
+            AnimalsDataGridView.DataBindingComplete += AnimalsDataGridView_DataBindingComplete;
             AnimalsDataGridView.MouseDoubleClick += AnimalsDataGridView_MouseDoubleClick;
             AnimalsDataGridView.MouseDown += AnimalsDataGridView_MouseDown;
             // 
@@ -270,7 +273,7 @@
             Controls.Add(label2);
             Controls.Add(AddAnimalButton);
             Controls.Add(AnimalsDataGridView);
-            Controls.Add(OrgsComboBox);
+            Controls.Add(ExecutorComboBox);
             Controls.Add(DateOfCapDateTimePicker);
             Controls.Add(label1);
             Controls.Add(CancelButton);
@@ -292,7 +295,7 @@
         private Button CancelButton;
         private Label label1;
         private DateTimePicker DateOfCapDateTimePicker;
-        private ComboBox OrgsComboBox;
+        private ComboBox ExecutorComboBox;
         private DataGridView AnimalsDataGridView;
         private Button AddAnimalButton;
         private Label label2;

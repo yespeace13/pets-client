@@ -320,6 +320,7 @@
             // OkButton
             // 
             OkButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            OkButton.DialogResult = DialogResult.OK;
             OkButton.Location = new Point(398, 547);
             OkButton.Name = "OkButton";
             OkButton.Size = new Size(118, 29);
@@ -343,7 +344,7 @@
             // 
             openFileDialog1.FileName = "openFileDialog1";
             // 
-            // AnimalView
+            // AnimalEditView
             // 
             AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(652, 588);
@@ -374,7 +375,7 @@
             Controls.Add(SexGroupBox);
             Controls.Add(CategoryTextBox);
             Controls.Add(label1);
-            Name = "AnimalView";
+            Name = "AnimalEditView";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Животное";
             SexGroupBox.ResumeLayout(false);

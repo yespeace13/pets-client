@@ -127,10 +127,7 @@
     <value>True</value>
   </metadata>
   <metadata name="ContractContentContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>644, 18</value>
-  </metadata>
-  <metadata name="localityViewBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>408, 18</value>
+    <value>395, 27</value>
   </metadata>
   <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -157,4 +154,22 @@
   <metadata name="ImageContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>184, 17</value>
   </metadata>
+  <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAKdJREFUOE/N0iEOwjAUgOEuIEhmRoLEYFHzUxyA03AEJDdA7gAENYmZGUEOQzAE
+        gyPBzML/kjZ5zeQT408+09csaVf3F53w8O5YI3RBmN2wQq8NvkqHAtIWevZBjl476I1vLCHtoWcvLBCV
+        oITe+MQcIxz9WiDHmSFqjAp64xVTTFD7teCMFFGy0EBvlEuWMrTQswOiTB8wHcF8iabfaH5I5qc8ZM79
+        AIXrardcT1MZAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="button2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAKlJREFUOE/N0i0OwkAQQOElIEgwkFRisCg8igNwGo5Q2RsgOQBBITEYCBJMgyEY
+        HElNLX1DdjZTPQnhJZ/pTvqz3fCXLVDiEV2gLXGHrh3QaoYKHyOHNEcNu7ZCaoIX7MAa0hRv2LUCqQzy
+        2nZghy7GeMZraoMOvg1whh04oo8RbvGa2qOH1BZ24IohJNkku3aCPLCV+wbuT5Bcm6i5fqPmOkia6yj/
+        uhAa3rRqt3q7yowAAAAASUVORK5CYII=
+</value>
+  </data>
 </root>

@@ -91,7 +91,11 @@ namespace PetsClient.Act
 
         private void CreateActButton_Click(object sender, EventArgs e)
         {
-
+            var result = new ActEditView();
+            if (result.ShowDialog() == DialogResult.OK)
+            {
+                _service.Post("acts", result.Act);
+            }
             ShowActs();
         }
 
@@ -122,7 +126,7 @@ namespace PetsClient.Act
             var result = new ActEditView(State.Update, selectedItem.Id);
             if (result.ShowDialog() == DialogResult.OK)
             {
-                _service.Put("organizations", selectedItem.Id, result.ActEdit);
+                _service.Put("acts", selectedItem.Id, result.Act);
             }
             ShowActs();
         }
@@ -131,7 +135,7 @@ namespace PetsClient.Act
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedRow = ActsDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-            _service.Delete("organizations", ((ActViewList)ActsDataGridView.Rows[selectedRow].DataBoundItem).Id);
+            _service.Delete("acts", ((ActViewList)ActsDataGridView.Rows[selectedRow].DataBoundItem).Id);
             ShowActs();
         }
 

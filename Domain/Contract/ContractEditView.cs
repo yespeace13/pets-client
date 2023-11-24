@@ -6,7 +6,7 @@ using PetsClient.Services;
 
 namespace PetsClient.Contract
 {
-    public partial class ContractEditView : Form
+    public partial class ContractEditView : Form, IView
     {
         public ContractEdit ContractEdit { get; set; } = new ContractEdit();
         public List<ContractContentEdit> ContractContentEdit { get; set; } = new List<ContractContentEdit>();
@@ -55,7 +55,6 @@ namespace PetsClient.Contract
             ExecutorComboBox.Enabled = false;
             LocalsPricesDataGridView.Enabled = false;
             CancelButton.Text = "Закрыть";
-            AddLocalPriceButton.Visible = false;
             AddFileButton.Visible = false;
         }
 
@@ -63,23 +62,22 @@ namespace PetsClient.Contract
         {
             var dialogRes = DialogResult.No;
             if (string.IsNullOrEmpty(NumberTextBox.Text))
-                dialogRes = ShowErrorMessage("Не заполнен номер контракта.");
+                dialogRes = IView.ShowErrorMessage("Не заполнен номер контракта.");
             else if (DateOfConclusionDateTimePicker.Value > DateValidDateTimePicker.Value)
-                dialogRes = ShowErrorMessage("Дата заключения позже даты действия");
+                dialogRes = IView.ShowErrorMessage("Дата заключения позже даты действия");
             else if (ExecutorComboBox.SelectedItem == null)
-                dialogRes = ShowErrorMessage("Не выбран исполнитель");
+                dialogRes = IView.ShowErrorMessage("Не выбран исполнитель");
             else if (ClientComboBox.SelectedItem == null)
-                dialogRes = ShowErrorMessage("Не выбран заказчик");
+                dialogRes = IView.ShowErrorMessage("Не выбран заказчик");
             else if (LocalsPricesDataGridView.Rows.Count == 0)
-                dialogRes = ShowErrorMessage("Не созданы муниципальные районы");
+                dialogRes = IView.ShowErrorMessage("Не добавлено содержание контракта");
             else if (ClientComboBox.SelectedItem == ExecutorComboBox.SelectedItem)
-                dialogRes = ShowErrorMessage("Организации одинаковые");
+                dialogRes = IView.ShowErrorMessage("Организации одинаковые");
+            //foreach(DataGridViewRow row in LocalsPricesDataGridView.Rows)
+            //{
+            //    if (row.Cells)
+            //}
             return dialogRes == DialogResult.No;
-        }
-
-        private static DialogResult ShowErrorMessage(string error)
-        {
-            return MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void OkButton_Click(object sender, EventArgs e)
@@ -121,7 +119,6 @@ namespace PetsClient.Contract
                 LocalsPricesDataGridView.Rows.Add(cc[i].Id, cc[i].Price, cc[i].Locality.Id);
             }
 
-            //localityDataGridViewTextBoxColumn.
             //_currentScan = 0;
             //if (_scans.Count > 0)
             //    ChangeScan();
@@ -153,6 +150,34 @@ namespace PetsClient.Contract
             }
         }
 
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var selectedRow = LocalsPricesDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
+            if (LocalsPricesDataGridView.Rows.Count > 1)
+            {
+                LocalsPricesDataGridView.Rows.Remove(LocalsPricesDataGridView.Rows[selectedRow]);
+            }
+        }
+
+        private void AddFileButton_Click(object sender, EventArgs e)
+        {
+            //if(openFileDialog1.ShowDialog() == DialogResult.OK)
+            //{
+            //    _scans.Add(openFileDialog1.FileName);
+            //    _currentScan = _scans.Count - 1;
+            //    if (_currentScan == 0)
+            //    {
+            //        PrevScanButton.Enabled = false;
+            //        NextScanButton.Enabled = false;
+            //    }
+            //    else
+            //    {
+            //        PrevScanButton.Enabled = true;
+            //        NextScanButton.Enabled = false;
+            //    }
+            //    ChangeScan();
+            //}
+        }
         private void PrevScanButton_Click(object sender, EventArgs e)
         {
             //if(_currentScan > 0)
@@ -216,39 +241,5 @@ namespace PetsClient.Contract
             //    ScanPictureBox.Image = null;
             //}
         }
-
-        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var selectedRow = LocalsPricesDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-            if(LocalsPricesDataGridView.Rows.Count > 1)
-            {
-                LocalsPricesDataGridView.Rows.Remove(LocalsPricesDataGridView.Rows[selectedRow]);
-            }
-        }
-
-        private void AddLocalPriceButton_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void AddFileButton_Click(object sender, EventArgs e)
-        {
-            //if(openFileDialog1.ShowDialog() == DialogResult.OK)
-            //{
-            //    _scans.Add(openFileDialog1.FileName);
-            //    _currentScan = _scans.Count - 1;
-            //    if (_currentScan == 0)
-            //    {
-            //        PrevScanButton.Enabled = false;
-            //        NextScanButton.Enabled = false;
-            //    }
-            //    else
-            //    {
-            //        PrevScanButton.Enabled = true;
-            //        NextScanButton.Enabled = false;
-            //    }
-            //    ChangeScan();
-            //}
-        }
-
     }
 }
