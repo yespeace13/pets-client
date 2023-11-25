@@ -99,6 +99,7 @@
             Controls.Add(ExitButton);
             Controls.Add(CreateButton);
             Name = "ReportGenerate";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Отчет";
             ResumeLayout(false);
             PerformLayout();

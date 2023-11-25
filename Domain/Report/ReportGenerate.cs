@@ -14,7 +14,7 @@
         {
             var from = FromDateTimePicker.Value;
             var to = ToDateTimePicker.Value;
-            if (from < to) 
+            if (from < to)
             {
                 From = DateOnly.Parse(from.ToShortDateString());
                 To = DateOnly.Parse(to.ToShortDateString());

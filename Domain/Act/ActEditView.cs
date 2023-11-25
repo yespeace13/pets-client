@@ -46,7 +46,7 @@ public partial class ActEditView : Form, IView
         OkButton.Visible = false;
         LocalityComboBox.Enabled = false;
         DataContextMenuStrip.Enabled = false;
-        
+
     }
 
     private void FillFields()
@@ -277,6 +277,16 @@ public partial class ActEditView : Form, IView
         //{
         //    ShowErrorMessage("Не все файлы были загружены.");
         //}
+    }
+
+    private void ContractsComboBox_DisplayMemberChanged(object sender, EventArgs e)
+    {
+        LocalityComboBox.DataSource = APIServiceOne.GetAll<LocalityView>("contract");
+    }
+
+    private void LocalityComboBox_DisplayMemberChanged(object sender, EventArgs e)
+    {
+        ContractsComboBox.DataSource = APIServiceOne.GetAll<LocalityView>("contract");
     }
 }
 

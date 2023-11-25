@@ -48,8 +48,8 @@ public class APIServiceOne
     {
         var request = new RestRequest(resource, Method.Post);
         request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
-        request.AddParameter("from", from);
-        request.AddParameter("to", to);
+        request.AddQueryParameter("from", from.ToString());
+        request.AddQueryParameter("to", to.ToString());
 
         _сlient.Post(request);
     }

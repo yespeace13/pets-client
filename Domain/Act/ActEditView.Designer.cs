@@ -98,11 +98,11 @@
             DateOfCapDateTimePicker.TabIndex = 3;
             DateOfCapDateTimePicker.Value = new DateTime(2023, 11, 24, 0, 0, 0, 0);
             // 
-            // OrgsComboBox
+            // ExecutorComboBox
             // 
             ExecutorComboBox.FormattingEnabled = true;
             ExecutorComboBox.Location = new Point(12, 86);
-            ExecutorComboBox.Name = "OrgsComboBox";
+            ExecutorComboBox.Name = "ExecutorComboBox";
             ExecutorComboBox.Size = new Size(295, 28);
             ExecutorComboBox.TabIndex = 4;
             // 
@@ -206,6 +206,7 @@
             ContractsComboBox.Name = "ContractsComboBox";
             ContractsComboBox.Size = new Size(295, 28);
             ContractsComboBox.TabIndex = 34;
+            ContractsComboBox.DisplayMemberChanged += ContractsComboBox_DisplayMemberChanged;
             // 
             // openFileDialog1
             // 
@@ -248,6 +249,7 @@
             LocalityComboBox.Name = "LocalityComboBox";
             LocalityComboBox.Size = new Size(295, 28);
             LocalityComboBox.TabIndex = 37;
+            LocalityComboBox.DisplayMemberChanged += LocalityComboBox_DisplayMemberChanged;
             // 
             // label4
             // 
