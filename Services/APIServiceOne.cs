@@ -1,6 +1,9 @@
 ﻿using ModelLibrary.View;
+using PetsClient.Properties;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
+using System;
+using System.Windows.Forms;
 
 namespace PetsClient.Services;
 public class APIServiceOne
@@ -39,6 +42,16 @@ public class APIServiceOne
         if (execute.IsSuccessful)
             return execute.Data;
         throw new Exception(execute.ErrorMessage);
+    }
+
+    public static void CreateReport(string resource, DateOnly from, DateOnly to)
+    {
+        var request = new RestRequest(resource, Method.Post);
+        request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+        request.AddParameter("from", from);
+        request.AddParameter("to", to);
+
+        _сlient.Post(request);
     }
 }
 

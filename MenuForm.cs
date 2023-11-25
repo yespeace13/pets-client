@@ -1,6 +1,7 @@
 ﻿using PetsClient.Act;
 using PetsClient.Authentication;
 using PetsClient.Contract;
+using PetsClient.Domain.Report;
 using PetsClient.Organization.View;
 
 namespace PetsClient
@@ -62,7 +63,7 @@ namespace PetsClient
 
         private void ReportButton_Click(object sender, EventArgs e)
         {
-            //new ReportView().ShowDialog();
+            new ReportView().ShowDialog();
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
