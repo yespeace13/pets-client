@@ -53,5 +53,11 @@ public class APIServiceOne
 
         _сlient.Post(request);
     }
+
+    public static byte[] GetFile(string resources)
+    {
+        var data = _сlient.DownloadData(new RestRequest(resources, Method.Get));
+        return data;
+    }
 }
 

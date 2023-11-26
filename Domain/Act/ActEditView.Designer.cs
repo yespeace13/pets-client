@@ -110,6 +110,7 @@
             // 
             AnimalsDataGridView.AllowUserToAddRows = false;
             AnimalsDataGridView.AllowUserToDeleteRows = false;
+            AnimalsDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             AnimalsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             AnimalsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             AnimalsDataGridView.Location = new Point(12, 302);
@@ -206,7 +207,7 @@
             ContractsComboBox.Name = "ContractsComboBox";
             ContractsComboBox.Size = new Size(295, 28);
             ContractsComboBox.TabIndex = 34;
-            ContractsComboBox.DisplayMemberChanged += ContractsComboBox_DisplayMemberChanged;
+            ContractsComboBox.SelectedValueChanged += ContractsComboBox_SelectedValueChanged;
             // 
             // openFileDialog1
             // 
@@ -249,7 +250,6 @@
             LocalityComboBox.Name = "LocalityComboBox";
             LocalityComboBox.Size = new Size(295, 28);
             LocalityComboBox.TabIndex = 37;
-            LocalityComboBox.DisplayMemberChanged += LocalityComboBox_DisplayMemberChanged;
             // 
             // label4
             // 

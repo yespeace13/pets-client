@@ -5,6 +5,7 @@ using ModelLibrary.Model.Etc;
 using ModelLibrary.Model.Organization;
 using PetsClient.Etc;
 using PetsClient.Services;
+using System.Diagnostics.Contracts;
 
 namespace PetsClient.Act;
 
@@ -70,7 +71,7 @@ public partial class ActEditView : Form, IView
     {
         var contracts = APIServiceOne.GetAllFromPage<ContractViewList>("contracts");
         var organizations = APIServiceOne.GetAllFromPage<OrganizationViewList>("organizations");
-        var localities = APIServiceOne.GetAll<LocalityView>("localities");
+        //var localities = APIServiceOne.GetAll<LocalityView>("localities");
         ExecutorComboBox.DataSource = organizations;
         ExecutorComboBox.ValueMember = "Id";
         ExecutorComboBox.DisplayMember = "NameOrganization";
@@ -79,9 +80,9 @@ public partial class ActEditView : Form, IView
         ContractsComboBox.ValueMember = "Id";
         ContractsComboBox.DisplayMember = "Number";
 
-        LocalityComboBox.DataSource = localities;
-        LocalityComboBox.ValueMember = "Id";
-        LocalityComboBox.DisplayMember = "Name";
+        //LocalityComboBox.DataSource = localities;
+        //LocalityComboBox.ValueMember = "Id";
+        //LocalityComboBox.DisplayMember = "Name";
     }
 
     private void CancelButton_Click(object sender, EventArgs e) => Close();
@@ -279,14 +280,12 @@ public partial class ActEditView : Form, IView
         //}
     }
 
-    private void ContractsComboBox_DisplayMemberChanged(object sender, EventArgs e)
+    private void ContractsComboBox_SelectedValueChanged(object sender, EventArgs e)
     {
-        LocalityComboBox.DataSource = APIServiceOne.GetAll<LocalityView>("contract");
-    }
-
-    private void LocalityComboBox_DisplayMemberChanged(object sender, EventArgs e)
-    {
-        ContractsComboBox.DataSource = APIServiceOne.GetAll<LocalityView>("contract");
+        LocalityComboBox.DataSource = null;
+        LocalityComboBox.DataSource = APIServiceOne.GetAll<LocalityView>("contract-contents/" + ((ContractViewList)ContractsComboBox.SelectedItem).Id);
+        LocalityComboBox.ValueMember = "Id";
+        LocalityComboBox.DisplayMember = "Name";
     }
 }
 

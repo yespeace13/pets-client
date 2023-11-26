@@ -4,6 +4,7 @@ using ModelLibrary.View;
 using PetsClient.Authentication;
 using PetsClient.Etc;
 using PetsClient.Services;
+using System.Security.Cryptography;
 
 namespace PetsClient.Domain.Report
 {
@@ -105,8 +106,16 @@ namespace PetsClient.Domain.Report
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            var byteArray = _service.GetFile("reportexport", _filterSetting);
-            File.WriteAllBytes("Отчеты.xlsx", byteArray);
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel | *.xlsx";
+            saveFileDialog.DefaultExt = "xlsx";
+            saveFileDialog.FileName = "Отчет";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var byteArray = APIServiceOne.GetFile("reports-excel");
+                var path = saveFileDialog.FileName;
+                File.WriteAllBytes(path, byteArray);
+            }
         }
 
         private void OrgDataGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)

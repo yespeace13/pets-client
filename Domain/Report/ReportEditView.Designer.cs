@@ -36,6 +36,7 @@
             ContentDataGridView = new DataGridView();
             FromDateTimePicker = new DateTimePicker();
             ToDateTimePicker = new DateTimePicker();
+            ExportExcelButton = new Button();
             ((System.ComponentModel.ISupportInitialize)ContentDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -112,11 +113,22 @@
             ToDateTimePicker.Size = new Size(250, 27);
             ToDateTimePicker.TabIndex = 10;
             // 
+            // ExportExcelButton
+            // 
+            ExportExcelButton.Location = new Point(547, 12);
+            ExportExcelButton.Name = "ExportExcelButton";
+            ExportExcelButton.Size = new Size(145, 29);
+            ExportExcelButton.TabIndex = 11;
+            ExportExcelButton.Text = "Экспорт в Excel";
+            ExportExcelButton.UseVisualStyleBackColor = true;
+            ExportExcelButton.Click += ExportExcelButton_Click;
+            // 
             // ReportEditView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(704, 473);
+            Controls.Add(ExportExcelButton);
             Controls.Add(ToDateTimePicker);
             Controls.Add(FromDateTimePicker);
             Controls.Add(ContentDataGridView);
@@ -147,5 +159,6 @@
         private DataGridView ContentDataGridView;
         private DateTimePicker FromDateTimePicker;
         private DateTimePicker ToDateTimePicker;
+        private Button ExportExcelButton;
     }
 }

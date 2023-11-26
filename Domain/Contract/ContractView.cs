@@ -1,9 +1,7 @@
 ﻿using ModelLibrary.Model.Contract;
-using ModelLibrary.Model.Organization;
 using ModelLibrary.View;
 using PetsClient.Authentication;
 using PetsClient.Etc;
-using PetsClient.Organization.View;
 using PetsClient.Services;
 
 namespace PetsClient.Contract
@@ -113,8 +111,15 @@ namespace PetsClient.Contract
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            var byteArray = _service.GetFile("contract-export", _filterSetting);
-            File.WriteAllBytes("Контракты.xlsx", byteArray);
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel | *.xlsx";
+            saveFileDialog.DefaultExt = "Контракты";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var byteArray = _service.GetFile("contract-export", _filterSetting);
+                var path = saveFileDialog.FileName;
+                File.WriteAllBytes(path, byteArray);
+            }
         }
 
         private void ConDataGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) =>
