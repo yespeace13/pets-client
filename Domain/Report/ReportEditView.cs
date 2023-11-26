@@ -34,7 +34,8 @@ namespace PetsClient.Domain.Report
         {
             var saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "Excel | *.xlsx";
-            saveFileDialog.DefaultExt = "Отчет";
+            saveFileDialog.DefaultExt = "xlsx";
+            saveFileDialog.FileName = "Отчет";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var byteArray = APIServiceOne.GetFile("reports-excel/" + _id);

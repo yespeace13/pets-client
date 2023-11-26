@@ -120,6 +120,8 @@ public partial class ActEditView : Form, IView
         if (animalView.ShowDialog() == DialogResult.OK)
         {
             var animals = (List<AnimalViewList>)AnimalsDataGridView.DataSource;
+            if (animals == null)
+                animals = new List<AnimalViewList>();
             animals.Add(animalView.Animal);
             AnimalsDataGridView.DataSource = null;
             AnimalsDataGridView.DataSource = animals;

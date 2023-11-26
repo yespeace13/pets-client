@@ -1,6 +1,7 @@
 ﻿using PetsClient.Act;
 using PetsClient.Authentication;
 using PetsClient.Contract;
+using PetsClient.Domain.Plan;
 using PetsClient.Domain.Report;
 using PetsClient.Organization.View;
 
@@ -54,7 +55,7 @@ namespace PetsClient
 
         private void CatchScheduleButton_Click(object sender, EventArgs e)
         {
-            //new PlanView().ShowDialog();
+            new PlanView().ShowDialog();
         }
         private void ActsButton_Click(object sender, EventArgs e)
         {

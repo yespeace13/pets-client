@@ -120,7 +120,7 @@ namespace PetsClient
             Margin = new Padding(3, 4, 3, 4);
             Name = "MenuForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "MenuForm";
+            Text = "Меню";
             ResumeLayout(false);
         }
 
