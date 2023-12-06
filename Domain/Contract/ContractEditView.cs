@@ -10,21 +10,23 @@ namespace PetsClient.Contract
     {
         public ContractEdit ContractEdit { get; set; } = new ContractEdit();
         public List<ContractContentEdit> ContractContentEdit { get; set; } = new List<ContractContentEdit>();
-        private APIServiceConnection<ContractViewList, ContractEdit, ContractViewOne> _service;
+        private APIServiceModel<ContractViewList, ContractEdit, ContractViewOne> _service;
         private int _id;
+        private State _state = State.Create;
 
         public ContractEditView()
         {
-            _service = new APIServiceConnection<ContractViewList, ContractEdit, ContractViewOne>();
+            _service = new APIServiceModel<ContractViewList, ContractEdit, ContractViewOne>();
             InitializeComponent();
             FillOrganizations();
             FillLocalities();
         }
         public ContractEditView(State state, int id)
         {
-            _service = new APIServiceConnection<ContractViewList, ContractEdit, ContractViewOne>();
+            _service = new APIServiceModel<ContractViewList, ContractEdit, ContractViewOne>();
             InitializeComponent();
-            if (state == State.Read)
+            _state = state;
+            if (_state == State.Read)
                 ChangeEnable();
             PrevScanButton.Enabled = false;
             NextScanButton.Enabled = false;
@@ -71,18 +73,18 @@ namespace PetsClient.Contract
                 dialogRes = IView.ShowErrorMessage("Не выбран заказчик.");
             else if (LocalsPricesDataGridView.Rows.Count == 0)
                 dialogRes = IView.ShowErrorMessage("Не добавлено содержание контракта.");
-            else if (ClientComboBox.SelectedItem == ExecutorComboBox.SelectedItem)
-                dialogRes = IView.ShowErrorMessage("Организации одинаковые.");
+            //else if (ClientComboBox.SelectedItem == ExecutorComboBox.SelectedItem)
+            //    dialogRes = IView.ShowErrorMessage("Организации одинаковые.");
             else if (LocalsPricesDataGridView.Rows.Count > 0)
             {
                 foreach (DataGridViewRow row in LocalsPricesDataGridView.Rows)
                 {
-                    if (row.Cells[1].Value != null && decimal.TryParse(row.Cells[1].Value.ToString(), out _))
-                        dialogRes = IView.ShowErrorMessage("Значение цены указано некорректно.");
-                    else if (row.Cells[2].Value != null)
-                        dialogRes = IView.ShowErrorMessage("Населенный пункт не указан.");
+                    //if (row.Cells[1].Value != null && decimal.TryParse(row.Cells[1].Value.ToString(), out _))
+                    //    dialogRes = IView.ShowErrorMessage("Значение цены указано некорректно.");
+                    //else if (row.Cells[2].Value != null)
+                    //    dialogRes = IView.ShowErrorMessage("Населенный пункт не указан.");
                 }
-            }  
+            }
             return dialogRes == DialogResult.No;
         }
 
@@ -90,11 +92,11 @@ namespace PetsClient.Contract
         {
             if (CheckFilds())
             {
-                this.ContractEdit.Number = NumberTextBox.Text;
-                this.ContractEdit.ExecutorId = ((OrganizationViewList)ExecutorComboBox.SelectedItem).Id;
-                this.ContractEdit.ClientId = ((OrganizationViewList)ClientComboBox.SelectedItem).Id;
+                ContractEdit.Number = NumberTextBox.Text;
+                ContractEdit.ExecutorId = ((OrganizationViewList)ExecutorComboBox.SelectedItem).Id;
+                ContractEdit.ClientId = ((OrganizationViewList)ClientComboBox.SelectedItem).Id;
                 this.ContractEdit.DateOfConclusion = DateOnly.Parse(DateOfConclusionDateTimePicker.Value.ToShortDateString());
-                this.ContractEdit.DateValid = DateOnly.Parse(DateValidDateTimePicker.Value.ToShortDateString());
+                ContractEdit.DateValid = DateOnly.Parse(DateValidDateTimePicker.Value.ToShortDateString());
 
                 for (int i = 0; i < LocalsPricesDataGridView.RowCount - 1; i++)
                 {
@@ -102,11 +104,21 @@ namespace PetsClient.Contract
                     var id = row.Cells[0].Value != null ? (int)row.Cells[0].Value : 0;
                     ContractEdit.ContractContent.Add(new ContractContentEdit(id, decimal.Parse(row.Cells[1].Value.ToString()), (int)row.Cells[2].Value, _id));
                 }
-                this.DialogResult = DialogResult.OK;
+                if (MakeRequest()) return;
+                DialogResult = DialogResult.OK;
                 Close();
             }
         }
 
+        private bool MakeRequest()
+        {
+            var messages = default(string);
+            if (_state == State.Create) messages = _service.Post("contracts", ContractEdit);
+            else if (_state == State.Update) messages = _service.Put("contracts", _id, ContractEdit);
+            if(messages == null) return false;
+            return IView.ShowErrorMessage(messages) == DialogResult.OK;
+        }
+        
         private void FillFields()
         {
             FillLocalities();
@@ -141,7 +153,7 @@ namespace PetsClient.Contract
             LocalityDataGridViewComboBoxColumn.DisplayMember = "Name";
         }
 
-        private void CancelButton_Click(object sender, EventArgs e) => this.Close();
+        private void CancelButton_Click(object sender, EventArgs e) => Close();
 
         private void LocalsPricesDataGridView_MouseDown(object sender, MouseEventArgs e)
         {
@@ -160,9 +172,7 @@ namespace PetsClient.Contract
         {
             var selectedRow = LocalsPricesDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
             if (LocalsPricesDataGridView.Rows.Count > 1)
-            {
                 LocalsPricesDataGridView.Rows.Remove(LocalsPricesDataGridView.Rows[selectedRow]);
-            }
         }
 
         private void AddFileButton_Click(object sender, EventArgs e)

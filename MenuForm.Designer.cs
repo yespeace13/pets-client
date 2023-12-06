@@ -37,58 +37,64 @@ namespace PetsClient
             ReportButton = new Button();
             CactchScheduleButton = new Button();
             ExitButton = new Button();
+            LogButton = new Button();
             SuspendLayout();
             // 
             // OrganizationsButton
             // 
-            OrganizationsButton.Location = new Point(256, 129);
+            OrganizationsButton.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            OrganizationsButton.Location = new Point(80, 176);
             OrganizationsButton.Margin = new Padding(3, 4, 3, 4);
             OrganizationsButton.Name = "OrganizationsButton";
-            OrganizationsButton.Size = new Size(372, 60);
-            OrganizationsButton.TabIndex = 0;
+            OrganizationsButton.Size = new Size(422, 101);
+            OrganizationsButton.TabIndex = 1;
             OrganizationsButton.Text = "Организации";
             OrganizationsButton.UseVisualStyleBackColor = true;
             OrganizationsButton.Click += OrgsButton_Click;
             // 
             // ContractsButton
             // 
-            ContractsButton.Location = new Point(256, 265);
+            ContractsButton.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            ContractsButton.Location = new Point(508, 67);
             ContractsButton.Margin = new Padding(3, 4, 3, 4);
             ContractsButton.Name = "ContractsButton";
-            ContractsButton.Size = new Size(372, 60);
-            ContractsButton.TabIndex = 1;
+            ContractsButton.Size = new Size(422, 101);
+            ContractsButton.TabIndex = 3;
             ContractsButton.Text = "Контракты";
             ContractsButton.UseVisualStyleBackColor = true;
             ContractsButton.Click += ContractsButton_Click;
             // 
             // ActsButton
             // 
-            ActsButton.Location = new Point(256, 61);
+            ActsButton.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            ActsButton.Location = new Point(80, 67);
             ActsButton.Margin = new Padding(3, 4, 3, 4);
             ActsButton.Name = "ActsButton";
-            ActsButton.Size = new Size(372, 60);
-            ActsButton.TabIndex = 2;
+            ActsButton.Size = new Size(422, 101);
+            ActsButton.TabIndex = 0;
             ActsButton.Text = "Акты";
             ActsButton.UseVisualStyleBackColor = true;
             ActsButton.Click += ActsButton_Click;
             // 
             // ReportButton
             // 
-            ReportButton.Location = new Point(256, 333);
+            ReportButton.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            ReportButton.Location = new Point(508, 176);
             ReportButton.Margin = new Padding(3, 4, 3, 4);
             ReportButton.Name = "ReportButton";
-            ReportButton.Size = new Size(372, 60);
-            ReportButton.TabIndex = 3;
+            ReportButton.Size = new Size(422, 101);
+            ReportButton.TabIndex = 4;
             ReportButton.Text = "Отчет";
             ReportButton.UseVisualStyleBackColor = true;
             ReportButton.Click += ReportButton_Click;
             // 
             // CactchScheduleButton
             // 
-            CactchScheduleButton.Location = new Point(256, 197);
+            CactchScheduleButton.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            CactchScheduleButton.Location = new Point(80, 285);
             CactchScheduleButton.Margin = new Padding(3, 4, 3, 4);
             CactchScheduleButton.Name = "CactchScheduleButton";
-            CactchScheduleButton.Size = new Size(372, 60);
+            CactchScheduleButton.Size = new Size(422, 101);
             CactchScheduleButton.TabIndex = 2;
             CactchScheduleButton.Text = "План-графики";
             CactchScheduleButton.UseVisualStyleBackColor = true;
@@ -97,19 +103,31 @@ namespace PetsClient
             // ExitButton
             // 
             ExitButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ExitButton.Location = new Point(768, 12);
+            ExitButton.Location = new Point(887, 12);
             ExitButton.Name = "ExitButton";
             ExitButton.Size = new Size(94, 29);
-            ExitButton.TabIndex = 4;
+            ExitButton.TabIndex = 5;
             ExitButton.Text = "Выход";
             ExitButton.UseVisualStyleBackColor = true;
             ExitButton.Click += ExitButton_Click;
+            // 
+            // LogButton
+            // 
+            LogButton.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point);
+            LogButton.Location = new Point(508, 284);
+            LogButton.Name = "LogButton";
+            LogButton.Size = new Size(422, 101);
+            LogButton.TabIndex = 6;
+            LogButton.Text = "Журнал";
+            LogButton.UseVisualStyleBackColor = true;
+            LogButton.Click += LogButton_Click;
             // 
             // MenuForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(874, 485);
+            ClientSize = new Size(993, 531);
+            Controls.Add(LogButton);
             Controls.Add(ExitButton);
             Controls.Add(CactchScheduleButton);
             Controls.Add(ActsButton);
@@ -132,5 +150,6 @@ namespace PetsClient
         private Button CactchScheduleButton;
         private Button ExitButton;
         private Label label1;
+        private Button LogButton;
     }
 }

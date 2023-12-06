@@ -12,11 +12,11 @@ namespace PetsClient.Organization.View
         private SortSettings _sortSettings;
         private PageSettingsView _page;
         private FilterSetting _filterSetting;
-        private APIServiceConnection<OrganizationViewList, OrganizationEdit, OrganizationEdit> service;
+        private APIServiceModel<OrganizationViewList, OrganizationEdit, OrganizationEdit> service;
 
         public OrganizationView()
         {
-            service = new APIServiceConnection<OrganizationViewList, OrganizationEdit, OrganizationEdit>();
+            service = new APIServiceModel<OrganizationViewList, OrganizationEdit, OrganizationEdit>();
             InitializeComponent();
             InitializeForm();
             InitializeFiltrsDictionary();

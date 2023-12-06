@@ -12,7 +12,7 @@ public partial class PlanView : Form
     private SortSettings _sortSettings;
     private PageSettingsView _page;
     private FilterSetting _filterSetting;
-    private APIServiceConnection<PlanViewList, PlanEdit, PlanViewOne> _service;
+    private APIServiceModel<PlanViewList, PlanEdit, PlanViewOne> _service;
     public PlanView()
     {
         InitializeComponent();
@@ -23,7 +23,7 @@ public partial class PlanView : Form
     private void InitializeFiltrsDictionary()
     {
         _filterSetting = new FilterSetting(typeof(PlanViewList));
-        _service = new APIServiceConnection<PlanViewList, PlanEdit, PlanViewOne>();
+        _service = new APIServiceModel<PlanViewList, PlanEdit, PlanViewOne>();
     }
 
     private void InitializeForm()

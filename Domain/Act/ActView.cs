@@ -12,10 +12,10 @@ namespace PetsClient.Act
         private SortSettings _sortSettings;
         private PageSettingsView _page;
         private FilterSetting _filterSetting;
-        private APIServiceConnection<ActViewList, ActEdit, ActViewOne> _service;
+        private APIServiceModel<ActViewList, ActEdit, ActViewOne> _service;
         public Actview()
         {
-            _service = new APIServiceConnection<ActViewList, ActEdit, ActViewOne>();
+            _service = new APIServiceModel<ActViewList, ActEdit, ActViewOne>();
             InitializeComponent();
             InitializeForm();
             InitializeFiltrsDictionary();

@@ -11,19 +11,19 @@ namespace PetsClient.Domain.Plan;
 public partial class PlanEditView : Form, IView
 {
     public PlanEdit PlanEdited { get; set; } = new PlanEdit();
-    private APIServiceConnection<PlanViewList, PlanEdit, PlanViewOne> _service;
+    private APIServiceModel<PlanViewList, PlanEdit, PlanViewOne> _service;
     private PlanViewOne _view;
     private int _id;
     private List<LocalityView> _localities;
 
-    public PlanEditView(APIServiceConnection<PlanViewList, PlanEdit, PlanViewOne> service)
+    public PlanEditView(APIServiceModel<PlanViewList, PlanEdit, PlanViewOne> service)
     {
         InitializeComponent();
         FillComboBoxes();
         _service = service;
     }
 
-    public PlanEditView(State state, int id, APIServiceConnection<PlanViewList, PlanEdit, PlanViewOne> service)
+    public PlanEditView(State state, int id, APIServiceModel<PlanViewList, PlanEdit, PlanViewOne> service)
     {
 
         InitializeComponent();

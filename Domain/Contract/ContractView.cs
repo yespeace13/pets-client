@@ -12,18 +12,18 @@ namespace PetsClient.Contract
         private SortSettings _sortSettings;
         private PageSettingsView _page;
         private FilterSetting _filterSetting;
-        private APIServiceConnection<ContractViewList, ContractEdit, ContractViewOne> _service;
+        private APIServiceModel<ContractViewList, ContractEdit, ContractViewOne> _service;
         public Contractview()
         {
             InitializeComponent();
             InitializeForm();
             InitializeFiltrsDictionary();
-            ShowContracts();
+            ShowData();
         }
         private void InitializeFiltrsDictionary()
         {
             _filterSetting = new FilterSetting(typeof(ContractViewList));
-            _service = new APIServiceConnection<ContractViewList, ContractEdit, ContractViewOne>();
+            _service = new APIServiceModel<ContractViewList, ContractEdit, ContractViewOne>();
         }
 
         private void InitializeForm()
@@ -51,7 +51,7 @@ namespace PetsClient.Contract
 
         private void ForwardToPage_Click(object sender, EventArgs e)
         {
-            ShowContracts();
+            ShowData();
         }
 
         private void NextPageButton_Click(object sender, EventArgs e)
@@ -59,7 +59,7 @@ namespace PetsClient.Contract
             if (NumberOfPage.Maximum > NumberOfPage.Value)
             {
                 NumberOfPage.Value++;
-                ShowContracts();
+                ShowData();
             }
 
         }
@@ -67,10 +67,10 @@ namespace PetsClient.Contract
         private void PreviousPageButton_Click(object sender, EventArgs e)
         {
             NumberOfPage.Value = NumberOfPage.Value > 1 ? --NumberOfPage.Value : NumberOfPage.Value;
-            ShowContracts();
+            ShowData();
         }
 
-        public void ShowContracts()
+        public void ShowData()
         {
             (string Column, int Value) sortCol = ConDataGrid.SortedColumn == null ?
                 ("Id", 0) : (ConDataGrid.SortedColumn.Name, ConDataGrid.SortOrder == SortOrder.Descending ? 0 : 1);
@@ -91,22 +91,19 @@ namespace PetsClient.Contract
 
         private void CreateContractButton_Click(object sender, EventArgs e)
         {
-            var result = new ContractEditView();
-            if (result.ShowDialog() == DialogResult.OK)
-                _service.Post("contracts", result.ContractEdit);
-
-            ShowContracts();
+            if (new ContractEditView().ShowDialog() == DialogResult.OK)
+                ShowData();
         }
 
         private void PagesSize_ValueChanged(object sender, EventArgs e)
         {
-            ShowContracts();
+            ShowData();
         }
 
 
         private void AcceptButton_Click(object sender, EventArgs e)
         {
-            ShowContracts();
+            ShowData();
         }
 
         private void ExportButton_Click(object sender, EventArgs e)
@@ -123,18 +120,14 @@ namespace PetsClient.Contract
         }
 
         private void ConDataGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) =>
-            ShowContracts();
+            ShowData();
 
         private void ChangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedRow = ConDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
             var selectedItem = (ContractViewList)ConDataGrid.Rows[selectedRow].DataBoundItem;
-            var result = new ContractEditView(State.Update, selectedItem.Id);
-            if (result.ShowDialog() == DialogResult.OK)
-            {
-                _service.Put("contracts", selectedItem.Id, result.ContractEdit);
-            }
-            ShowContracts();
+            if (new ContractEditView(State.Update, selectedItem.Id).ShowDialog() == DialogResult.OK)
+                ShowData();
         }
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -142,7 +135,7 @@ namespace PetsClient.Contract
             var selectedRow = ConDataGrid.Rows.GetFirstRow(DataGridViewElementStates.Selected);
             var selectedItem = (ContractViewList)ConDataGrid.Rows[selectedRow].DataBoundItem;
             _service.Delete("contracts", selectedItem.Id);
-            ShowContracts();
+            ShowData();
         }
 
         private void ConDataGrid_MouseDown(object sender, MouseEventArgs e)
@@ -220,14 +213,14 @@ namespace PetsClient.Contract
                     + FiltrEndDateTimePicker.Value.ToShortDateString();
                 FiltrStartDateTimePicker.Value = DateTime.Now;
                 FiltrGroupBox.Visible = false;
-                ShowContracts();
+                ShowData();
             }
             else if (FiltrTextBox.Text.Length != 0)
             {
                 _filterSetting[_columnName] = FiltrTextBox.Text;
                 FiltrTextBox.Clear();
                 FiltrGroupBox.Visible = false;
-                ShowContracts();
+                ShowData();
             }
 
         }
@@ -236,7 +229,7 @@ namespace PetsClient.Contract
         {
             InitializeFiltrsDictionary();
             FiltrTextBox.Clear();
-            ShowContracts();
+            ShowData();
             FiltrGroupBox.Visible = false;
         }
     }

@@ -6,9 +6,9 @@ namespace PetsClient.Domain.Report
 {
     public partial class ReportEditView : Form, IView
     {
-        private APIServiceConnection<ReportViewList, ReportViewList, ReportViewOne> _service;
+        private APIServiceModel<ReportViewList, ReportViewList, ReportViewOne> _service;
         private int  _id;
-        public ReportEditView(APIServiceConnection<ReportViewList, ReportViewList, ReportViewOne> service, int id)
+        public ReportEditView(APIServiceModel<ReportViewList, ReportViewList, ReportViewOne> service, int id)
         {
             InitializeComponent();
             _service = service;

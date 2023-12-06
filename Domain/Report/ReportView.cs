@@ -14,11 +14,11 @@ namespace PetsClient.Domain.Report
         private SortSettings _sortSettings;
         private PageSettingsView _page;
         private FilterSetting _filterSetting;
-        private APIServiceConnection<ReportViewList, ReportViewList, ReportViewOne> _service;
+        private APIServiceModel<ReportViewList, ReportViewList, ReportViewOne> _service;
 
         public ReportView()
         {
-            _service = new APIServiceConnection<ReportViewList, ReportViewList, ReportViewOne>();
+            _service = new APIServiceModel<ReportViewList, ReportViewList, ReportViewOne>();
             InitializeComponent();
             InitializeForm();
             InitializeFiltrsDictionary();

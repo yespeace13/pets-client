@@ -77,7 +77,7 @@ namespace PetsClient.Organization.View
 
         private void FillFields()
         {
-            var service = new APIServiceConnection<LocalityView, OrganizationEdit, OrganizationEdit>();
+            var service = new APIServiceModel<LocalityView, OrganizationEdit, OrganizationEdit>();
 
             var typeOrg = APIServiceOne.GetAll<TypeOrganizationView>("typeorganization");
 

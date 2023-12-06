@@ -10,9 +10,9 @@ namespace PetsClient.Services
 
         public byte[] GetFile(string resources, FilterSetting filters);
 
-        public void Post(string resources, TEdit view);
+        public string? Post(string resources, TEdit view);
 
-        public void Put(string resources, int id, TEdit view);
+        public string? Put(string resources, int id, TEdit view);
 
         public void Delete(string resources, int id);
     }

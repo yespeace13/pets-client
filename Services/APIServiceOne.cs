@@ -2,8 +2,6 @@
 using PetsClient.Properties;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
-using System;
-using System.Windows.Forms;
 
 namespace PetsClient.Services;
 public class APIServiceOne
@@ -54,10 +52,16 @@ public class APIServiceOne
         _сlient.Post(request);
     }
 
-    public static byte[] GetFile(string resources)
+    public static byte[] GetFile(string resource)
     {
-        var data = _сlient.DownloadData(new RestRequest(resources, Method.Get));
+        var data = _сlient.DownloadData(new RestRequest(resource, Method.Get));
         return data;
+    }
+
+    internal static void UploadFile(string resource, byte[] file)
+    {
+        var request = new RestRequest(resource + "1", Method.Post);
+        request.AddFile("file.jpg", file, "file");
     }
 }
 

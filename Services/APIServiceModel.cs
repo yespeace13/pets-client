@@ -4,21 +4,24 @@ using RestSharp.Serializers.NewtonsoftJson;
 
 namespace PetsClient.Services
 {
-    public class APIServiceConnection<TList, TEdit, TOne> : IPetsAPIClientService<TList, TEdit, TOne>
+    public class APIServiceModel<TList, TEdit, TOne> : IPetsAPIClientService<TList, TEdit, TOne>
     {
         private RestClient _сlient;
-        public APIServiceConnection()
+        private string _resources;
+        public APIServiceModel()
         {
             _сlient = new RestClient(ConnectionConfig.URL,
                 configureSerialization: s => s.UseNewtonsoftJson());
         }
 
-        public void Delete(string resources, int id)
+        public APIServiceModel(string resources)
         {
-            var request = new RestRequest(resources + $"/{id}", Method.Delete);
-            request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
-            _сlient.Execute(request);
+            _resources = resources;
+            _сlient = new RestClient(ConnectionConfig.URL,
+                configureSerialization: s => s.UseNewtonsoftJson());
         }
+
+        
 
         public PageSettings<TList> Get(string resources, PageSettingsView pageSettings)
         {
@@ -65,24 +68,44 @@ namespace PetsClient.Services
             return data;
         }
 
-        public void Post(string resources, TEdit view)
+        public string? Post(string resources, TEdit view)
         {
             var request = new RestRequest(resources);
             request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
 
             if (view == null) throw new ArgumentNullException("Не передан параметр view");
             request.AddBody(view);
-            _сlient.Post(request);
+            var response = _сlient.ExecutePost(request);
+            if (!response.IsSuccessful)
+            {
+                var message = response.Content.Replace("\"", string.Empty).Replace("\\n", "\n");
+                return message;
+            }
+            return null;
+            
         }
 
-        public void Put(string resources, int id, TEdit view)
+        public string? Put(string resources, int id, TEdit view)
         {
             var request = new RestRequest(resources + $"/{id}");
             request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
 
             if (view == null) throw new ArgumentNullException("Не передан параметр view");
             request.AddBody(view);
-            _сlient.Put(request);
+            var response = _сlient.ExecutePut(request);
+            if (!response.IsSuccessful)
+            {
+                var message = response.Content.Replace("\"", string.Empty).Replace("\\n", "\n");
+                return message;
+            }
+            return null;
+        }
+
+        public void Delete(string resources, int id)
+        {
+            var request = new RestRequest(resources + $"/{id}", Method.Delete);
+            request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+            _сlient.Delete(request);
         }
     }
 }

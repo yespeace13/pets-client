@@ -6,13 +6,14 @@ using ModelLibrary.Model.Organization;
 using PetsClient.Etc;
 using PetsClient.Services;
 using System.Diagnostics.Contracts;
+using static System.Windows.Forms.DataFormats;
 
 namespace PetsClient.Act;
 
 public partial class ActEditView : Form, IView
 {
     public ActEdit Act { get; set; } = new ActEdit();
-    private APIServiceConnection<ActViewList, ActEdit, ActViewOne> _service = new APIServiceConnection<ActViewList, ActEdit, ActViewOne>();
+    private APIServiceModel<ActViewList, ActEdit, ActViewOne> _service = new APIServiceModel<ActViewList, ActEdit, ActViewOne>();
     private int _id;
     public ActEditView(State state, int id)
     {
@@ -249,37 +250,33 @@ public partial class ActEditView : Form, IView
 
     private void AddFileButton_Click(object sender, EventArgs e)
     {
-        //if (openFileDialog1.ShowDialog() == DialogResult.OK)
-        //{
-        //    _scans.Add(openFileDialog1.FileName);
-        //    _currentScan = _scans.Count - 1;
-        //    if (_currentScan == 0)
-        //    {
-        //        PrevScanButton.Enabled = false;
-        //        NextScanButton.Enabled = false;
-        //    }
-        //    else
-        //    {
-        //        PrevScanButton.Enabled = true;
-        //        NextScanButton.Enabled = false;
-        //    }
-        //    ChangeScan();
-        //}
+        if (openFileDialog1.ShowDialog() == DialogResult.OK)
+        {
+            //_currentScan = _scans.Count - 1;
+            //if (_currentScan == 0)
+            //{
+            //    PrevScanButton.Enabled = false;
+            //    NextScanButton.Enabled = false;
+            //}
+            //else
+            //{
+            //    PrevScanButton.Enabled = true;
+            //    NextScanButton.Enabled = false;
+            //}
+            var file = openFileDialog1.FileName;
+            var bitmap = new Bitmap(file);
+            var coef = (int)((double)bitmap.Size.Width / bitmap.Size.Height * 10);
+            var i = new Bitmap(bitmap, new Size(ScanPictureBox.Height * coef / 10, ScanPictureBox.Width));
+            ScanPictureBox.Image = i;
+            var bytes = File.ReadAllBytes(file);
+            APIServiceOne.UploadFile("animal-photo", bytes);
+            //ChangeScan();
+        }
     }
 
     private void ChangeScan()
     {
-        //if (File.Exists(_scans[_currentScan]))
-        //{
-        //    var bitmap = new Bitmap(_scans[_currentScan]);
-        //    var coef = (int)((double)bitmap.Size.Width / bitmap.Size.Height * 10);
-        //    var i = new Bitmap(bitmap, new Size(ScanPictureBox.Height * coef / 10, ScanPictureBox.Width));
-        //    ScanPictureBox.Image = i;
-        //}
-        //else
-        //{
-        //    ShowErrorMessage("Не все файлы были загружены.");
-        //}
+
     }
 
     private void ContractsComboBox_SelectedValueChanged(object sender, EventArgs e)
