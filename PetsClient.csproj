@@ -32,6 +32,9 @@
     <Compile Update="Domain\Animal\AnimalEditView.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Domain\Log\LogView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Domain\Plan\PlanEditView.cs">
       <SubType>Form</SubType>
     </Compile>

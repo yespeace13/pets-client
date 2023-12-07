@@ -127,7 +127,7 @@ namespace PetsClient.Domain.Report
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedRow = ViewDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-            _service.Delete("organizations", ((OrganizationViewList)ViewDataGridView.Rows[selectedRow].DataBoundItem).Id);
+            _service.Delete("reports", ((ReportViewList)ViewDataGridView.Rows[selectedRow].DataBoundItem).Id);
             ShowData();
         }
 
