@@ -40,15 +40,6 @@ namespace PetsClient.Organization.View
             NumberPageLabel = new Label();
             CountLabel = new Label();
             OrgDataGrid = new DataGridView();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            nameOrganizationDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            iNNDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            kPPDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            addressDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            typeOrganizationDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            legalTypeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            localityDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            organizationViewListBindingSource = new BindingSource(components);
             OrganizationContextMenuStrip = new ContextMenuStrip(components);
             ChangeToolStripMenuItem = new ToolStripMenuItem();
             DeleteToolStripMenuItem = new ToolStripMenuItem();
@@ -61,16 +52,15 @@ namespace PetsClient.Organization.View
             ((System.ComponentModel.ISupportInitialize)NumberOfPage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PagesSize).BeginInit();
             ((System.ComponentModel.ISupportInitialize)OrgDataGrid).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)organizationViewListBindingSource).BeginInit();
             OrganizationContextMenuStrip.SuspendLayout();
             FiltrGroupBox.SuspendLayout();
             SuspendLayout();
             // 
-            // CreateOrgButton
+            // CreateButton
             // 
             CreateButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             CreateButton.Location = new Point(1018, 12);
-            CreateButton.Name = "CreateOrgButton";
+            CreateButton.Name = "CreateButton";
             CreateButton.Size = new Size(90, 29);
             CreateButton.TabIndex = 0;
             CreateButton.Text = "Добавить";
@@ -160,11 +150,8 @@ namespace PetsClient.Organization.View
             OrgDataGrid.AllowUserToOrderColumns = true;
             OrgDataGrid.AllowUserToResizeRows = false;
             OrgDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            OrgDataGrid.AutoGenerateColumns = false;
             OrgDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             OrgDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            OrgDataGrid.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, nameOrganizationDataGridViewTextBoxColumn, iNNDataGridViewTextBoxColumn, kPPDataGridViewTextBoxColumn, addressDataGridViewTextBoxColumn, typeOrganizationDataGridViewTextBoxColumn, legalTypeDataGridViewTextBoxColumn, localityDataGridViewTextBoxColumn });
-            OrgDataGrid.DataSource = organizationViewListBindingSource;
             OrgDataGrid.Location = new Point(12, 47);
             OrgDataGrid.MultiSelect = false;
             OrgDataGrid.Name = "OrgDataGrid";
@@ -178,74 +165,6 @@ namespace PetsClient.Organization.View
             OrgDataGrid.ColumnHeaderMouseClick += OrgDataGrid_ColumnHeaderMouseClick;
             OrgDataGrid.MouseDoubleClick += OrgDataGrid_MouseDoubleClick;
             OrgDataGrid.MouseDown += OrgDataGrid_MouseDown;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            idDataGridViewTextBoxColumn.HeaderText = "Код";
-            idDataGridViewTextBoxColumn.MinimumWidth = 6;
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            idDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // nameOrganizationDataGridViewTextBoxColumn
-            // 
-            nameOrganizationDataGridViewTextBoxColumn.DataPropertyName = "NameOrganization";
-            nameOrganizationDataGridViewTextBoxColumn.HeaderText = "Название организации";
-            nameOrganizationDataGridViewTextBoxColumn.MinimumWidth = 6;
-            nameOrganizationDataGridViewTextBoxColumn.Name = "nameOrganizationDataGridViewTextBoxColumn";
-            nameOrganizationDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // iNNDataGridViewTextBoxColumn
-            // 
-            iNNDataGridViewTextBoxColumn.DataPropertyName = "INN";
-            iNNDataGridViewTextBoxColumn.HeaderText = "ИНН";
-            iNNDataGridViewTextBoxColumn.MinimumWidth = 6;
-            iNNDataGridViewTextBoxColumn.Name = "iNNDataGridViewTextBoxColumn";
-            iNNDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // kPPDataGridViewTextBoxColumn
-            // 
-            kPPDataGridViewTextBoxColumn.DataPropertyName = "KPP";
-            kPPDataGridViewTextBoxColumn.HeaderText = "КПП";
-            kPPDataGridViewTextBoxColumn.MinimumWidth = 6;
-            kPPDataGridViewTextBoxColumn.Name = "kPPDataGridViewTextBoxColumn";
-            kPPDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // addressDataGridViewTextBoxColumn
-            // 
-            addressDataGridViewTextBoxColumn.DataPropertyName = "Address";
-            addressDataGridViewTextBoxColumn.HeaderText = "Адрес";
-            addressDataGridViewTextBoxColumn.MinimumWidth = 6;
-            addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
-            addressDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // typeOrganizationDataGridViewTextBoxColumn
-            // 
-            typeOrganizationDataGridViewTextBoxColumn.DataPropertyName = "TypeOrganization";
-            typeOrganizationDataGridViewTextBoxColumn.HeaderText = "Тип организации";
-            typeOrganizationDataGridViewTextBoxColumn.MinimumWidth = 6;
-            typeOrganizationDataGridViewTextBoxColumn.Name = "typeOrganizationDataGridViewTextBoxColumn";
-            typeOrganizationDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // legalTypeDataGridViewTextBoxColumn
-            // 
-            legalTypeDataGridViewTextBoxColumn.DataPropertyName = "LegalType";
-            legalTypeDataGridViewTextBoxColumn.HeaderText = "Юридический статус организации";
-            legalTypeDataGridViewTextBoxColumn.MinimumWidth = 6;
-            legalTypeDataGridViewTextBoxColumn.Name = "legalTypeDataGridViewTextBoxColumn";
-            legalTypeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // localityDataGridViewTextBoxColumn
-            // 
-            localityDataGridViewTextBoxColumn.DataPropertyName = "Locality";
-            localityDataGridViewTextBoxColumn.HeaderText = "Населенный пункт";
-            localityDataGridViewTextBoxColumn.MinimumWidth = 6;
-            localityDataGridViewTextBoxColumn.Name = "localityDataGridViewTextBoxColumn";
-            localityDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // organizationViewListBindingSource
-            // 
-            organizationViewListBindingSource.DataSource = typeof(OrganizationViewList);
             // 
             // OrganizationContextMenuStrip
             // 
@@ -353,7 +272,6 @@ namespace PetsClient.Organization.View
             ((System.ComponentModel.ISupportInitialize)NumberOfPage).EndInit();
             ((System.ComponentModel.ISupportInitialize)PagesSize).EndInit();
             ((System.ComponentModel.ISupportInitialize)OrgDataGrid).EndInit();
-            ((System.ComponentModel.ISupportInitialize)organizationViewListBindingSource).EndInit();
             OrganizationContextMenuStrip.ResumeLayout(false);
             FiltrGroupBox.ResumeLayout(false);
             FiltrGroupBox.PerformLayout();
@@ -379,15 +297,6 @@ namespace PetsClient.Organization.View
         private TextBox FiltrTextBox;
         private Button AcceptFiltrButton;
         private Button ClearFiltrsButton;
-        private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn nameOrganizationDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn iNNDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn kPPDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn addressDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn typeOrganizationDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn legalTypeDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn localityDataGridViewTextBoxColumn;
-        private BindingSource organizationViewListBindingSource;
     }
 }
 

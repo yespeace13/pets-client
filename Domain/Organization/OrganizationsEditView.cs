@@ -36,6 +36,8 @@ namespace PetsClient.Organization.View
             TypeOrganizationComboBox.Enabled = false;
             LegalTypeComboBox.Enabled = false;
             LocalityComboBox.Enabled = false;
+            PhoneTextBox.Enabled = false;
+            EmailTextBox.Enabled = false;
             OkButton.Visible = false;
             CancelButton.Text = "Закрыть";
         }
@@ -55,6 +57,10 @@ namespace PetsClient.Organization.View
                 dialogRes = IView.ShowErrorMessage("Не выбран вид организации.");
             else if (LocalityComboBox.SelectedIndex == -1)
                 dialogRes = IView.ShowErrorMessage("Не выбран муниципалитет.");
+            else if (string.IsNullOrEmpty(PhoneTextBox.Text))
+                dialogRes = IView.ShowErrorMessage("Не заполнен телефон.");
+            else if (string.IsNullOrEmpty(EmailTextBox.Text))
+                dialogRes = IView.ShowErrorMessage("Не заполнена почта.");
             return dialogRes == DialogResult.No;
         }
 
@@ -69,8 +75,9 @@ namespace PetsClient.Organization.View
                     AddressTextBox.Text,
                     ((TypeOrganizationView)TypeOrganizationComboBox.SelectedItem).Id,
                     ((LegalTypeView)LegalTypeComboBox.SelectedItem).Id,
-                    ((LocalityView)LocalityComboBox.SelectedItem).Id
-                    );
+                    ((LocalityView)LocalityComboBox.SelectedItem).Id,
+                    PhoneTextBox.Text,
+                    EmailTextBox.Text);
                 Close();
             }
         }
@@ -106,10 +113,17 @@ namespace PetsClient.Organization.View
                 TypeOrganizationComboBox.SelectedItem = typeOrg.Find(t => t.Name == _viewUpdate.TypeOrganization);
                 LegalTypeComboBox.SelectedItem = legalType.Find(t => t.Name == _viewUpdate.LegalType);
                 LocalityComboBox.SelectedItem = localitys.Find(l => l.Name == _viewUpdate.Locality);
+                PhoneTextBox.Text = _viewUpdate.Phone;
+                EmailTextBox.Text = _viewUpdate.Email;
             }
 
         }
 
         private void CancelButton_Click(object sender, EventArgs e) => Close();
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

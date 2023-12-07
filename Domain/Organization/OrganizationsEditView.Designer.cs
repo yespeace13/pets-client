@@ -44,12 +44,16 @@
             label6 = new Label();
             LocalityComboBox = new ComboBox();
             label7 = new Label();
+            phone = new Label();
+            label8 = new Label();
+            PhoneTextBox = new TextBox();
+            EmailTextBox = new TextBox();
             SuspendLayout();
             // 
             // OkButton
             // 
             OkButton.DialogResult = DialogResult.OK;
-            OkButton.Location = new Point(159, 443);
+            OkButton.Location = new Point(159, 518);
             OkButton.Name = "OkButton";
             OkButton.Size = new Size(94, 29);
             OkButton.TabIndex = 0;
@@ -59,7 +63,7 @@
             // 
             // CancelButton
             // 
-            CancelButton.Location = new Point(259, 443);
+            CancelButton.Location = new Point(259, 518);
             CancelButton.Name = "CancelButton";
             CancelButton.Size = new Size(94, 29);
             CancelButton.TabIndex = 1;
@@ -182,11 +186,48 @@
             label7.TabIndex = 14;
             label7.Text = "Населенный пункт";
             // 
+            // phone
+            // 
+            phone.AutoSize = true;
+            phone.Location = new Point(12, 383);
+            phone.Name = "phone";
+            phone.Size = new Size(69, 20);
+            phone.TabIndex = 16;
+            phone.Text = "Телефон";
+            phone.Click += label8_Click;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(12, 437);
+            label8.Name = "label8";
+            label8.Size = new Size(51, 20);
+            label8.TabIndex = 18;
+            label8.Text = "Почта";
+            // 
+            // PhoneTextBox
+            // 
+            PhoneTextBox.Location = new Point(12, 406);
+            PhoneTextBox.Name = "PhoneTextBox";
+            PhoneTextBox.Size = new Size(488, 27);
+            PhoneTextBox.TabIndex = 19;
+            // 
+            // EmailTextBox
+            // 
+            EmailTextBox.Location = new Point(12, 460);
+            EmailTextBox.Name = "EmailTextBox";
+            EmailTextBox.Size = new Size(488, 27);
+            EmailTextBox.TabIndex = 20;
+            // 
             // OrganizationEditView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(512, 484);
+            ClientSize = new Size(512, 563);
+            Controls.Add(EmailTextBox);
+            Controls.Add(PhoneTextBox);
+            Controls.Add(label8);
+            Controls.Add(phone);
             Controls.Add(LocalityComboBox);
             Controls.Add(label7);
             Controls.Add(LegalTypeComboBox);
@@ -231,5 +272,9 @@
         private Label label6;
         private ComboBox LocalityComboBox;
         private Label label7;
+        private Label phone;
+        private Label label8;
+        private TextBox PhoneTextBox;
+        private TextBox EmailTextBox;
     }
 }
