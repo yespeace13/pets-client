@@ -73,16 +73,39 @@ namespace PetsClient.Contract
                 dialogRes = IView.ShowErrorMessage("Не выбран исполнитель.");
             else if (ClientComboBox.SelectedItem == null)
                 dialogRes = IView.ShowErrorMessage("Не выбран заказчик.");
-            else if (LocalsPricesDataGridView.Rows.Count == 0)
-                dialogRes = IView.ShowErrorMessage("Не добавлено содержание контракта.");
             else if (ClientComboBox.SelectedItem == ExecutorComboBox.SelectedItem)
                 dialogRes = IView.ShowErrorMessage("Организации одинаковые.");
+            else if (LocalsPricesDataGridView.Rows.Count == 0)
+                dialogRes = IView.ShowErrorMessage("Не добавлено содержание контракта.");
+            return dialogRes == DialogResult.No;
+        }
+
+        private bool CheckGridContent()
+        {
+            var dialogRes = DialogResult.No;
+
+            foreach (DataGridViewRow row in LocalsPricesDataGridView.Rows)
+            {
+                var price = row.Cells[1].Value;
+                var locality = row.Cells[2].Value;
+
+                if (price == null || price.ToString() == "" || !decimal.TryParse(price.ToString(), out _))
+                {
+                    dialogRes = IView.ShowErrorMessage("Значение цены указано некорректно.");
+                    break;
+                }
+                else if (locality == null || locality.ToString() == "")
+                {
+                    dialogRes = IView.ShowErrorMessage("Населенный пункт не указан.");
+                    break;
+                }
+            }
             return dialogRes == DialogResult.No;
         }
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-            if (CheckFilds())
+            if (CheckFilds() && CheckGridContent())
             {
                 ContractEdit.Number = NumberTextBox.Text;
                 ContractEdit.ExecutorId = ((OrganizationViewList)ExecutorComboBox.SelectedItem).Id;
@@ -283,25 +306,7 @@ namespace PetsClient.Contract
 
         private void AddContentButton_Click(object sender, EventArgs e)
         {
-            if (LocalsPricesDataGridView.Rows.Count > 0)
-            {
-                var lastRowIndex = LocalsPricesDataGridView.Rows.Count - 1;
-                var price = LocalsPricesDataGridView.Rows[lastRowIndex].Cells[1].Value;
-                var locality = LocalsPricesDataGridView.Rows[lastRowIndex].Cells[2].Value;
-
-                if (price == null || price.ToString() == "" || !decimal.TryParse(price.ToString(), out _))
-                {
-                    IView.ShowErrorMessage("Значение цены указано некорректно.");
-                    return;
-                }
-                else if (locality == null || locality.ToString() == "" )
-                {
-                    IView.ShowErrorMessage("Населенный пункт не указан.");
-                    return;
-                }
-                LocalsPricesDataGridView.Rows.Add();
-            }
-            else
+            if (CheckGridContent())
                 LocalsPricesDataGridView.Rows.Add();
         }
     }
