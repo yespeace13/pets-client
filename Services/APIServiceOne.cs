@@ -1,7 +1,9 @@
-﻿using ModelLibrary.View;
+﻿using ModelLibrary.Model.Etc;
+using ModelLibrary.View;
 using PetsClient.Properties;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
+using System.Resources;
 
 namespace PetsClient.Services;
 public class APIServiceOne
@@ -58,10 +60,30 @@ public class APIServiceOne
         return data;
     }
 
-    internal static void UploadFile(string resource, byte[] file)
+    internal static void UploadFile(string resource, byte[] file, int parentId)
     {
-        var request = new RestRequest(resource + "1", Method.Post);
-        request.AddFile("file.jpg", file, "file");
+        var request = new RestRequest(resource + "/" + parentId, Method.Post);
+        request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+        request.AddFile("file", file, "file");
+        _сlient.Post(request);
+    }
+
+    internal static void DeleteFile(string resource, int id)
+    {
+        var request = new RestRequest(resource + "/" + id);
+        request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+        _сlient.Delete(request);
+    }
+
+    internal static List<FileBaseView> GetFiles(string resource, int id)
+    {
+        var request = new RestRequest(resource + "/" + id, Method.Get);
+        request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+
+        var execute = _сlient.ExecuteGet<List<FileBaseView>>(request);
+        if (execute.IsSuccessful)
+            return execute.Data;
+        throw new Exception(execute.ErrorMessage);
     }
 }
 

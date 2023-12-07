@@ -13,6 +13,8 @@ namespace PetsClient.Contract
         private APIServiceModel<ContractViewList, ContractEdit, ContractViewOne> _service;
         private int _id;
         private State _state = State.Create;
+        public List<FileBaseView> Files { get; set; } = new List<FileBaseView>();
+        private int _currentFile = 0;
 
         public ContractEditView()
         {
@@ -73,18 +75,8 @@ namespace PetsClient.Contract
                 dialogRes = IView.ShowErrorMessage("Не выбран заказчик.");
             else if (LocalsPricesDataGridView.Rows.Count == 0)
                 dialogRes = IView.ShowErrorMessage("Не добавлено содержание контракта.");
-            //else if (ClientComboBox.SelectedItem == ExecutorComboBox.SelectedItem)
-            //    dialogRes = IView.ShowErrorMessage("Организации одинаковые.");
-            else if (LocalsPricesDataGridView.Rows.Count > 0)
-            {
-                foreach (DataGridViewRow row in LocalsPricesDataGridView.Rows)
-                {
-                    //if (row.Cells[1].Value != null && decimal.TryParse(row.Cells[1].Value.ToString(), out _))
-                    //    dialogRes = IView.ShowErrorMessage("Значение цены указано некорректно.");
-                    //else if (row.Cells[2].Value != null)
-                    //    dialogRes = IView.ShowErrorMessage("Населенный пункт не указан.");
-                }
-            }
+            else if (ClientComboBox.SelectedItem == ExecutorComboBox.SelectedItem)
+                dialogRes = IView.ShowErrorMessage("Организации одинаковые.");
             return dialogRes == DialogResult.No;
         }
 
@@ -98,27 +90,47 @@ namespace PetsClient.Contract
                 this.ContractEdit.DateOfConclusion = DateOnly.Parse(DateOfConclusionDateTimePicker.Value.ToShortDateString());
                 ContractEdit.DateValid = DateOnly.Parse(DateValidDateTimePicker.Value.ToShortDateString());
 
-                for (int i = 0; i < LocalsPricesDataGridView.RowCount - 1; i++)
+                ContractEdit.ContractContent = new List<ContractContentEdit>();
+                for (int i = 0; i < LocalsPricesDataGridView.RowCount; i++)
                 {
                     var row = LocalsPricesDataGridView.Rows[i];
                     var id = row.Cells[0].Value != null ? (int)row.Cells[0].Value : 0;
                     ContractEdit.ContractContent.Add(new ContractContentEdit(id, decimal.Parse(row.Cells[1].Value.ToString()), (int)row.Cells[2].Value, _id));
                 }
-                if (MakeRequest()) return;
+                if (!RequestIsSuccess()) return;
+                WorkWithFiles();
                 DialogResult = DialogResult.OK;
                 Close();
             }
         }
+        private void WorkWithFiles()
+        {
+            foreach (var file in Files)
+            {
+                if (file.IsDelete && file.Id != 0)
+                    APIServiceOne.DeleteFile("contract-photo", file.Id);
+                if (file.Id == 0 && !file.IsDelete)
+                    APIServiceOne.UploadFile("contract-photo", file.File, _id);
+            }
+        }
 
-        private bool MakeRequest()
+        private bool RequestIsSuccess()
         {
             var messages = default(string);
             if (_state == State.Create) messages = _service.Post("contracts", ContractEdit);
             else if (_state == State.Update) messages = _service.Put("contracts", _id, ContractEdit);
-            if(messages == null) return false;
-            return IView.ShowErrorMessage(messages) == DialogResult.OK;
+            if (!int.TryParse(messages, out int id) && !String.IsNullOrEmpty(messages))
+            {
+                IView.ShowErrorMessage(messages);
+                return false;
+            }
+            else if (_state == State.Create)
+            {
+                _id = id;
+            }
+            return true;
         }
-        
+
         private void FillFields()
         {
             FillLocalities();
@@ -137,11 +149,8 @@ namespace PetsClient.Contract
                 LocalsPricesDataGridView.Rows.Add(cc[i].Id, cc[i].Price, cc[i].Locality.Id);
             }
 
-            //_currentScan = 0;
-            //if (_scans.Count > 0)
-            //    ChangeScan();
-            //else
-            //    NextScanButton.Enabled = false;
+            Files = APIServiceOne.GetFiles("contract-photo", contract.Id);
+            ChangeScan();
 
         }
 
@@ -177,58 +186,72 @@ namespace PetsClient.Contract
 
         private void AddFileButton_Click(object sender, EventArgs e)
         {
-            //if(openFileDialog1.ShowDialog() == DialogResult.OK)
-            //{
-            //    _scans.Add(openFileDialog1.FileName);
-            //    _currentScan = _scans.Count - 1;
-            //    if (_currentScan == 0)
-            //    {
-            //        PrevScanButton.Enabled = false;
-            //        NextScanButton.Enabled = false;
-            //    }
-            //    else
-            //    {
-            //        PrevScanButton.Enabled = true;
-            //        NextScanButton.Enabled = false;
-            //    }
-            //    ChangeScan();
-            //}
+            openFileDialog1.Filter = "Files|*.jpg;*.jpeg;*.png;";
+            openFileDialog1.FileName = "";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var file = File.ReadAllBytes(openFileDialog1.FileName);
+                Files.Add(new FileBaseView
+                {
+                    File = file
+                });
+                _currentFile = Files.Count - 1;
+                if (_currentFile == 0)
+                {
+                    PrevScanButton.Enabled = false;
+                    NextScanButton.Enabled = false;
+                }
+                else
+                {
+                    PrevScanButton.Enabled = true;
+                    NextScanButton.Enabled = false;
+                }
+
+                ChangeScan();
+            }
         }
         private void PrevScanButton_Click(object sender, EventArgs e)
         {
-            //if(_currentScan > 0)
-            //{
-            //    _currentScan--;
-            //    PrevScanButton.Enabled = _currentScan == 0 ? false : true;
-            //    NextScanButton.Enabled = true;
-            //    ChangeScan();
-            //}
+            if (_currentFile > 0)
+            {
+                do
+                {
+                    _currentFile--;
+                }
+                while (_currentFile > 0 && Files[_currentFile].IsDelete);
+
+                PrevScanButton.Enabled = _currentFile == 0 ? false : true;
+                NextScanButton.Enabled = true;
+                ChangeScan();
+            }
         }
 
         private void ChangeScan()
         {
-            //if (File.Exists(_scans[_currentScan]))
-            //{
-            //    var bitmap = new Bitmap(_scans[_currentScan]);
-            //    var coef = (int)((double)bitmap.Size.Width / bitmap.Size.Height * 10);
-            //    var i = new Bitmap(bitmap, new Size(ScanPictureBox.Height * coef / 10, ScanPictureBox.Width));
-            //    ScanPictureBox.Image = i;
-            //}
-            //else
-            //{
-            //    ShowErrorMessage("Не все файлы были загружены.");
-            //}
+            if (Files.Count > 0 && _currentFile < Files.Count && !Files[_currentFile].IsDelete)
+            {
+                using var ms = new MemoryStream(Files[_currentFile].File);
+                var image = Image.FromStream(ms);
+                var bitmap = new Bitmap(image);
+                var coef = (int)((double)bitmap.Size.Width / bitmap.Size.Height * 10);
+                var i = new Bitmap(bitmap, new Size(ScanPictureBox.Height * coef / 10, ScanPictureBox.Width));
+                ScanPictureBox.Image = i;
+            }
         }
 
         private void NextScanButton_Click(object sender, EventArgs e)
         {
-            //if(_currentScan < _scans.Count-1)
-            //{
-            //    _currentScan++;
-            //    NextScanButton.Enabled = _currentScan == _scans.Count -1 ? false : true;
-            //    PrevScanButton.Enabled = true;
-            //    ChangeScan();
-            //}
+            if (_currentFile < Files.Count - 1)
+            {
+                do
+                {
+                    _currentFile++;
+                }
+                while (_currentFile < Files.Count - 1 && Files[_currentFile].IsDelete);
+                NextScanButton.Enabled = _currentFile == Files.Count - 1 ? false : true;
+                PrevScanButton.Enabled = true;
+                ChangeScan();
+            }
         }
 
         private void ScanPictureBox_DoubleClick(object sender, EventArgs e)
@@ -238,24 +261,48 @@ namespace PetsClient.Contract
 
         private void DeleteImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //if(_scans.Count > 0)
-            //{
-            //    _scans.RemoveAt(_currentScan);
-            //    if(_scans.Count == 0)
-            //    {
-            //        _currentScan = 0;
-            //        ScanPictureBox.Image = null;
-            //    }
-            //    else
-            //    {
-            //        _currentScan = _currentScan == 0 ? 0 : --_currentScan;
-            //        ChangeScan();
-            //    }
-            //}
-            //else
-            //{
-            //    ScanPictureBox.Image = null;
-            //}
+            if (Files.Count > 0)
+            {
+                Files[_currentFile].IsDelete = true;
+                ScanPictureBox.Image = null;
+                if (Files.Count == 0)
+                {
+                    _currentFile = 0;
+                }
+                else
+                {
+                    _currentFile = _currentFile == 0 ? 0 : --_currentFile;
+                }
+                ChangeScan();
+            }
+            else
+            {
+                ScanPictureBox.Image = null;
+            }
+        }
+
+        private void AddContentButton_Click(object sender, EventArgs e)
+        {
+            if (LocalsPricesDataGridView.Rows.Count > 0)
+            {
+                var lastRowIndex = LocalsPricesDataGridView.Rows.Count - 1;
+                var price = LocalsPricesDataGridView.Rows[lastRowIndex].Cells[1].Value;
+                var locality = LocalsPricesDataGridView.Rows[lastRowIndex].Cells[2].Value;
+
+                if (price == null || price.ToString() == "" || !decimal.TryParse(price.ToString(), out _))
+                {
+                    IView.ShowErrorMessage("Значение цены указано некорректно.");
+                    return;
+                }
+                else if (locality == null || locality.ToString() == "" )
+                {
+                    IView.ShowErrorMessage("Населенный пункт не указан.");
+                    return;
+                }
+                LocalsPricesDataGridView.Rows.Add();
+            }
+            else
+                LocalsPricesDataGridView.Rows.Add();
         }
     }
 }

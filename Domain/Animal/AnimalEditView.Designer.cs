@@ -300,6 +300,7 @@
             DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
             DeleteToolStripMenuItem.Size = new Size(134, 24);
             DeleteToolStripMenuItem.Text = "Удалить";
+            DeleteToolStripMenuItem.Click += DelScanToolStripMenuItem_Click;
             // 
             // ChipNumTextBox
             // 

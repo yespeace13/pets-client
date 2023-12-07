@@ -1,11 +1,17 @@
 ﻿using ModelLibrary.Model.Animal;
+using ModelLibrary.Model.Etc;
 using PetsClient.Etc;
+using PetsClient.Services;
 
 namespace PetsClient.Act;
 
 public partial class AnimalEditView : Form
 {
     public AnimalViewList Animal { get; set; }
+
+    public List<FileBaseView> Files { get; set; } = new List<FileBaseView>();
+
+    private int _currentFile = 0;
 
     public AnimalEditView(State state, AnimalViewList animal)
     {
@@ -58,8 +64,8 @@ public partial class AnimalEditView : Form
         IdenLabelTextBox.Text = Animal.IdentificationLabel;
         ChipNumTextBox.Text = Animal.ChipNumber;
 
-        //Scans = scans;
-        //if (Scans.Count != 0) ChangeScan();
+        Files = APIServiceOne.GetFiles("animal-photo", Animal.Id);
+        ChangeScan();
     }
 
     
@@ -79,6 +85,7 @@ public partial class AnimalEditView : Form
             Animal.SpecialSigns = SpecialSignsTextBox.Text;
             Animal.IdentificationLabel = IdenLabelTextBox.Text;
             Animal.ChipNumber = ChipNumTextBox.Text;
+            
             Close();
         }
     }
@@ -93,22 +100,29 @@ public partial class AnimalEditView : Form
 
     private void AddFileButton_Click(object sender, EventArgs e)
     {
-        //if (openFileDialog1.ShowDialog() == DialogResult.OK)
-        //{
-        //    Scans.Add(openFileDialog1.FileName);
-        //    _currentScan = Scans.Count - 1;
-        //    if (_currentScan == 0)
-        //    {
-        //        PrevScanButton.Enabled = false;
-        //        NextScanButton.Enabled = false;
-        //    }
-        //    else
-        //    {
-        //        PrevScanButton.Enabled = true;
-        //        NextScanButton.Enabled = false;
-        //    }
-        //    ChangeScan();
-        //}
+        openFileDialog1.Filter = "Files|*.jpg;*.jpeg;*.png;";
+        openFileDialog1.FileName = "";
+        if (openFileDialog1.ShowDialog() == DialogResult.OK)
+        {
+            var file = File.ReadAllBytes(openFileDialog1.FileName);
+            Files.Add(new FileBaseView
+            {
+                File = file
+            });
+            _currentFile = Files.Count - 1;
+            if (_currentFile == 0)
+            {
+                PrevScanButton.Enabled = false;
+                NextScanButton.Enabled = false;
+            }
+            else
+            {
+                PrevScanButton.Enabled = true;
+                NextScanButton.Enabled = false;
+            }
+
+            ChangeScan();
+        }
     }
 
     private void ScanPictureBox_DoubleClick(object sender, EventArgs e)
@@ -118,37 +132,66 @@ public partial class AnimalEditView : Form
 
     private void ChangeScan()
     {
-        //if (File.Exists(Scans[_currentScan]))
-        //{
-        //    var bitmap = new Bitmap(Scans[_currentScan]);
-        //    var coef = (int)((double)bitmap.Size.Width / bitmap.Size.Height * 10);
-        //    var i = new Bitmap(bitmap, new Size(ScanPictureBox.Height * coef / 10, ScanPictureBox.Width));
-        //    ScanPictureBox.Image = i;
-        //}
-        //else
-        //{
-        //    ShowErrorMessage("Не все файлы были загружены.");
-        //}
+        if (Files.Count > 0 && _currentFile < Files.Count && !Files[_currentFile].IsDelete)
+        {
+            using var ms = new MemoryStream(Files[_currentFile].File);
+            var image = Image.FromStream(ms);
+            var bitmap = new Bitmap(image);
+            var coef = (int)((double)bitmap.Size.Width / bitmap.Size.Height * 10);
+            var i = new Bitmap(bitmap, new Size(ScanPictureBox.Height * coef / 10, ScanPictureBox.Width));
+            ScanPictureBox.Image = i;
+        }
     }
     private void PrevScanButton_Click(object sender, EventArgs e)
     {
-        //if (_currentScan > 0)
-        //{
-        //    _currentScan--;
-        //    PrevScanButton.Enabled = _currentScan == 0 ? false : true;
-        //    NextScanButton.Enabled = true;
-        //    ChangeScan();
-        //}
+        if (_currentFile > 0)
+        {
+            do
+            {
+                _currentFile--;
+            }
+            while (_currentFile > 0 && Files[_currentFile].IsDelete);
+
+            PrevScanButton.Enabled = _currentFile == 0 ? false : true;
+            NextScanButton.Enabled = true;
+            ChangeScan();
+        }
     }
 
     private void NextScanButton_Click(object sender, EventArgs e)
     {
-        //if (_currentScan < Scans.Count - 1)
-        //{
-        //    _currentScan++;
-        //    NextScanButton.Enabled = _currentScan == Scans.Count - 1 ? false : true;
-        //    PrevScanButton.Enabled = true;
-        //    ChangeScan();
-        //}
+        if (_currentFile < Files.Count - 1)
+        {
+            do
+            {
+                _currentFile++;
+            }
+            while (_currentFile < Files.Count - 1 && Files[_currentFile].IsDelete);
+            NextScanButton.Enabled = _currentFile == Files.Count - 1 ? false : true;
+            PrevScanButton.Enabled = true;
+            ChangeScan();
+        }
+    }
+
+    private void DelScanToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (Files.Count > 0)
+        {
+            Files[_currentFile].IsDelete = true;
+            ScanPictureBox.Image = null;
+            if (Files.Count == 0)
+            {
+                _currentFile = 0;
+            }
+            else
+            {
+                _currentFile = _currentFile == 0 ? 0 : --_currentFile;
+            }
+            ChangeScan();
+        }
+        else
+        {
+            ScanPictureBox.Image = null;
+        }
     }
 }

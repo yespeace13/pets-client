@@ -81,6 +81,7 @@ namespace PetsClient.Services
                 var message = response.Content.Replace("\"", string.Empty).Replace("\\n", "\n");
                 return message;
             }
+            if (response.StatusCode == System.Net.HttpStatusCode.OK) return response.Content;
             return null;
             
         }

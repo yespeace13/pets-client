@@ -10,13 +10,11 @@
 
   <ItemGroup>
     <None Remove="Resources\fast-forward(1).png" />
-    <None Remove="Resources\fast-forward.png" />
     <None Remove="Resources\fast-forward_r.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Resources\fast-forward(1).png" />
-    <Content Include="Resources\fast-forward.png" />
     <Content Include="Resources\fast-forward_r.png" />
   </ItemGroup>
 

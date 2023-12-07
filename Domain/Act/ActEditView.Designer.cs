@@ -61,7 +61,6 @@
             // OkButton
             // 
             OkButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            OkButton.DialogResult = DialogResult.OK;
             OkButton.Location = new Point(444, 519);
             OkButton.Name = "OkButton";
             OkButton.Size = new Size(75, 29);
@@ -216,6 +215,7 @@
             // 
             // PrevScanButton
             // 
+            PrevScanButton.Image = (Image)resources.GetObject("PrevScanButton.Image");
             PrevScanButton.Location = new Point(316, 120);
             PrevScanButton.Name = "PrevScanButton";
             PrevScanButton.Size = new Size(26, 32);

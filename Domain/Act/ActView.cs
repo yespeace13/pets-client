@@ -19,7 +19,7 @@ namespace PetsClient.Act
             InitializeComponent();
             InitializeForm();
             InitializeFiltrsDictionary();
-            ShowActs();
+            ShowData();
         }
         private void InitializeFiltrsDictionary()
         {
@@ -51,7 +51,7 @@ namespace PetsClient.Act
 
         private void ForwardToPage_Click(object sender, EventArgs e)
         {
-            ShowActs();
+            ShowData();
         }
 
         private void NextPageButton_Click(object sender, EventArgs e)
@@ -59,7 +59,7 @@ namespace PetsClient.Act
             if (NumberOfPage.Maximum > NumberOfPage.Value)
             {
                 NumberOfPage.Value++;
-                ShowActs();
+                ShowData();
             }
 
         }
@@ -67,10 +67,10 @@ namespace PetsClient.Act
         private void PreviousPageButton_Click(object sender, EventArgs e)
         {
             NumberOfPage.Value = NumberOfPage.Value > 1 ? --NumberOfPage.Value : NumberOfPage.Value;
-            ShowActs();
+            ShowData();
         }
 
-        public void ShowActs()
+        public void ShowData()
         {
             (string Column, int Value) sortCol = ActsDataGridView.SortedColumn == null ?
                 ("Id", 0) : (ActsDataGridView.SortedColumn.Name, ActsDataGridView.SortOrder == SortOrder.Descending ? 0 : 1);
@@ -94,20 +94,22 @@ namespace PetsClient.Act
             var result = new ActEditView();
             if (result.ShowDialog() == DialogResult.OK)
             {
-                _service.Post("acts", result.Act);
+                var id = _service.Post("acts", result.Act);
+                if(int.TryParse(id, out int insertedId))
+                WorkWithFiles(insertedId, result);
             }
-            ShowActs();
+            ShowData();
         }
 
         private void PagesSize_ValueChanged(object sender, EventArgs e)
         {
-            ShowActs();
+            ShowData();
         }
 
 
         private void AcceptButton_Click(object sender, EventArgs e)
         {
-            ShowActs();
+            ShowData();
         }
 
         private void ExportButton_Click(object sender, EventArgs e)
@@ -117,7 +119,7 @@ namespace PetsClient.Act
         }
 
         private void ActsDataGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e) =>
-            ShowActs();
+            ShowData();
 
         private void ChangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -127,16 +129,27 @@ namespace PetsClient.Act
             if (result.ShowDialog() == DialogResult.OK)
             {
                 _service.Put("acts", selectedItem.Id, result.Act);
+                WorkWithFiles(selectedItem.Id, result);
             }
-            ShowActs();
+            ShowData();
         }
 
+        private static void WorkWithFiles(int id, ActEditView result)
+        {
+            foreach (var file in result.Files)
+            {
+                if (file.IsDelete && file.Id != 0)
+                    APIServiceOne.DeleteFile("act-photo", file.Id);
+                if (file.Id == 0 && !file.IsDelete)
+                    APIServiceOne.UploadFile("act-photo", file.File, id);   
+            }
+        }
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var selectedRow = ActsDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
             _service.Delete("acts", ((ActViewList)ActsDataGridView.Rows[selectedRow].DataBoundItem).Id);
-            ShowActs();
+            ShowData();
         }
 
         private void ConDataGrid_MouseDown(object sender, MouseEventArgs e)
@@ -212,14 +225,14 @@ namespace PetsClient.Act
                     + FiltrEndDateTimePicker.Value.ToShortDateString();
                 FiltrStartDateTimePicker.Value = DateTime.Now;
                 FiltrGroupBox.Visible = false;
-                ShowActs();
+                ShowData();
             }
             else if (FiltrTextBox.Text.Length != 0)
             {
                 _filterSetting[_columnName] = FiltrTextBox.Text;
                 FiltrTextBox.Clear();
                 FiltrGroupBox.Visible = false;
-                ShowActs();
+                ShowData();
             }
         }
 
@@ -227,7 +240,7 @@ namespace PetsClient.Act
         {
             InitializeFiltrsDictionary();
             FiltrTextBox.Clear();
-            ShowActs();
+            ShowData();
             FiltrGroupBox.Visible = false;
         }
     }

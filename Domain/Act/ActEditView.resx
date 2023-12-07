@@ -127,6 +127,15 @@
     <value>442, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="PrevScanButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vwAADr8BOAVTJAAAAKlJREFUOE/N0i0OwkAQQOElIEgwkFRisCg8igNwGo5Q2RsgOQBBITEYCBJMgyEY
+        HElNLX1DdjZTPQnhJZ/pTvqz3fCXLVDiEV2gLXGHrh3QaoYKHyOHNEcNu7ZCaoIX7MAa0hRv2LUCqQzy
+        2nZghy7GeMZraoMOvg1whh04oo8RbvGa2qOH1BZ24IohJNkku3aCPLCV+wbuT5Bcm6i5fqPmOkia6yj/
+        uhAa3rRqt3q7yowAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="NextScanButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO

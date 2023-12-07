@@ -5,8 +5,6 @@ using ModelLibrary.Model.Etc;
 using ModelLibrary.Model.Organization;
 using PetsClient.Etc;
 using PetsClient.Services;
-using System.Diagnostics.Contracts;
-using static System.Windows.Forms.DataFormats;
 
 namespace PetsClient.Act;
 
@@ -15,11 +13,13 @@ public partial class ActEditView : Form, IView
     public ActEdit Act { get; set; } = new ActEdit();
     private APIServiceModel<ActViewList, ActEdit, ActViewOne> _service = new APIServiceModel<ActViewList, ActEdit, ActViewOne>();
     private int _id;
+    public List<FileBaseView> Files { get; set; } = new List<FileBaseView>();
+    public List<List<FileBaseView>> AnimalFiles { get; set; } = new List<List<FileBaseView>>();
+    private int _currentFile = 0;
     public ActEditView(State state, int id)
     {
         InitializeComponent();
         PrevScanButton.Enabled = false;
-        NextScanButton.Enabled = false;
         FillComboBoxes();
         if (state == State.Read)
             ChangeEnable();
@@ -31,10 +31,8 @@ public partial class ActEditView : Form, IView
     {
         InitializeComponent();
         PrevScanButton.Enabled = false;
-        NextScanButton.Enabled = false;
         FillComboBoxes();
         Act.Animal = new List<AnimalEdit>();
-        //_scans = new List<string>();
     }
 
     private void ChangeEnable()
@@ -54,10 +52,13 @@ public partial class ActEditView : Form, IView
     private void FillFields()
     {
         var act = _service.Get("acts", _id);
+        Files = APIServiceOne.GetFiles("act-photo", act.Id);
+        ChangeScan();
 
         var organizations = (List<OrganizationViewList>)ExecutorComboBox.DataSource;
         var contracts = (List<ContractViewList>)ContractsComboBox.DataSource;
         var localities = (List<LocalityView>)LocalityComboBox.DataSource;
+
         ExecutorComboBox.SelectedItem = organizations.Find(o => o.Id == act.Executor.Id);
         ContractsComboBox.SelectedItem = contracts.Find(c => c.Id == act.Contract.Id);
         LocalityComboBox.SelectedItem = localities.Find(l => l.Id == act.Locality.Id);
@@ -65,14 +66,14 @@ public partial class ActEditView : Form, IView
         DateOfCapDateTimePicker.Value = act.DateOfCapture.ToDateTime(TimeOnly.MinValue);
         AnimalsDataGridView.DataSource = act.Animal;
         Act.Animal = new List<AnimalEdit>();
-        //if (_scans.Count != 0) ChangeScan();
+
     }
 
     private void FillComboBoxes()
     {
         var contracts = APIServiceOne.GetAllFromPage<ContractViewList>("contracts");
         var organizations = APIServiceOne.GetAllFromPage<OrganizationViewList>("organizations");
-        //var localities = APIServiceOne.GetAll<LocalityView>("localities");
+
         ExecutorComboBox.DataSource = organizations;
         ExecutorComboBox.ValueMember = "Id";
         ExecutorComboBox.DisplayMember = "NameOrganization";
@@ -80,10 +81,6 @@ public partial class ActEditView : Form, IView
         ContractsComboBox.DataSource = contracts;
         ContractsComboBox.ValueMember = "Id";
         ContractsComboBox.DisplayMember = "Number";
-
-        //LocalityComboBox.DataSource = localities;
-        //LocalityComboBox.ValueMember = "Id";
-        //LocalityComboBox.DisplayMember = "Name";
     }
 
     private void CancelButton_Click(object sender, EventArgs e) => Close();
@@ -126,6 +123,7 @@ public partial class ActEditView : Form, IView
             animals.Add(animalView.Animal);
             AnimalsDataGridView.DataSource = null;
             AnimalsDataGridView.DataSource = animals;
+            AnimalFiles.Add(animalView.Files);
         }
     }
 
@@ -141,6 +139,7 @@ public partial class ActEditView : Form, IView
             oldAnimal = animalView.Animal;
             AnimalsDataGridView.DataSource = null;
             AnimalsDataGridView.DataSource = animals;
+            AnimalFiles.Add(animalView.Files);
         }
     }
 
@@ -181,6 +180,7 @@ public partial class ActEditView : Form, IView
                     ChipNumber = animal.ChipNumber
                 });
             }
+
             Close();
         }
     }
@@ -206,77 +206,96 @@ public partial class ActEditView : Form, IView
 
     private void DelScanToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        //if (_scans.Count > 0)
-        //{
-        //    _scans.RemoveAt(_currentScan);
-        //    if (_scans.Count == 0)
-        //    {
-        //        _currentScan = 0;
-        //        ScanPictureBox.Image = null;
-        //    }
-        //    else
-        //    {
-        //        _currentScan = _currentScan == 0 ? 0 : --_currentScan;
-        //        ChangeScan();
-        //    }
-        //}
-        //else
-        //{
-        //    ScanPictureBox.Image = null;
-        //}
+        if (Files.Count > 0)
+        {
+            Files[_currentFile].IsDelete = true;
+            ScanPictureBox.Image = null;
+            if (Files.Count == 0)
+            {
+                _currentFile = 0;
+            }
+            else
+            {
+                _currentFile = _currentFile  == 0 ? 0 : --_currentFile;
+            }
+            ChangeScan();
+        }
+        else
+        {
+            ScanPictureBox.Image = null;
+        }
     }
 
     private void PrevScanButton_Click(object sender, EventArgs e)
     {
-        //if (_currentScan > 0)
-        //{
-        //    _currentScan--;
-        //    PrevScanButton.Enabled = _currentScan == 0 ? false : true;
-        //    NextScanButton.Enabled = true;
-        //    ChangeScan();
-        //}
+        if (_currentFile > 0)
+        { 
+            do
+            {
+                _currentFile--;
+            }
+            while (_currentFile > 0 && Files[_currentFile].IsDelete);
+
+            PrevScanButton.Enabled = _currentFile == 0 ? false : true;
+            NextScanButton.Enabled = true;
+            ChangeScan();
+        }
     }
 
     private void NextScanButton_Click(object sender, EventArgs e)
     {
-        //if (_currentScan < _scans.Count - 1)
-        //{
-        //    _currentScan++;
-        //    NextScanButton.Enabled = _currentScan == _scans.Count - 1 ? false : true;
-        //    PrevScanButton.Enabled = true;
-        //    ChangeScan();
-        //}
+        if (_currentFile < Files.Count - 1)
+        {
+            do
+            {
+                _currentFile++;
+            }
+            while (_currentFile < Files.Count - 1 && Files[_currentFile].IsDelete);
+            NextScanButton.Enabled = _currentFile == Files.Count - 1 ? false : true;
+            PrevScanButton.Enabled = true;
+            ChangeScan();
+        }
     }
 
     private void AddFileButton_Click(object sender, EventArgs e)
     {
+        openFileDialog1.Filter = "Files|*.jpg;*.jpeg;*.png;";
+        openFileDialog1.FileName = "";
         if (openFileDialog1.ShowDialog() == DialogResult.OK)
         {
-            //_currentScan = _scans.Count - 1;
-            //if (_currentScan == 0)
-            //{
-            //    PrevScanButton.Enabled = false;
-            //    NextScanButton.Enabled = false;
-            //}
-            //else
-            //{
-            //    PrevScanButton.Enabled = true;
-            //    NextScanButton.Enabled = false;
-            //}
-            var file = openFileDialog1.FileName;
-            var bitmap = new Bitmap(file);
-            var coef = (int)((double)bitmap.Size.Width / bitmap.Size.Height * 10);
-            var i = new Bitmap(bitmap, new Size(ScanPictureBox.Height * coef / 10, ScanPictureBox.Width));
-            ScanPictureBox.Image = i;
-            var bytes = File.ReadAllBytes(file);
-            APIServiceOne.UploadFile("animal-photo", bytes);
-            //ChangeScan();
+            var file = File.ReadAllBytes(openFileDialog1.FileName);
+            Files.Add(new FileBaseView
+            {
+                File = file
+            });
+            _currentFile = Files.Count - 1;
+            if (_currentFile == 0)
+            {
+                PrevScanButton.Enabled = false;
+                NextScanButton.Enabled = false;
+            }
+            else
+            {
+                PrevScanButton.Enabled = true;
+                NextScanButton.Enabled = false;
+            }
+
+            ChangeScan();
         }
     }
 
     private void ChangeScan()
     {
-
+        if (Files.Count > 0 && _currentFile < Files.Count && !Files[_currentFile].IsDelete)
+        {
+            using var ms = new MemoryStream(Files[_currentFile].File);
+            var image = Image.FromStream(ms);
+            var bitmap = new Bitmap(image);
+            var coef = (int)((double)bitmap.Size.Width / bitmap.Size.Height * 10);
+            var i = new Bitmap(bitmap, new Size(ScanPictureBox.Height * coef / 10, ScanPictureBox.Width));
+            ScanPictureBox.Image = i;
+            
+        }
     }
 
     private void ContractsComboBox_SelectedValueChanged(object sender, EventArgs e)

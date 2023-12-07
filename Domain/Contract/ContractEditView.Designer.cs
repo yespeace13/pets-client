@@ -44,7 +44,7 @@
             PriceDataGridViewColumn = new DataGridViewTextBoxColumn();
             LocalityDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn();
             ContractContentContextMenuStrip = new ContextMenuStrip(components);
-            удалитьToolStripMenuItem = new ToolStripMenuItem();
+            DeleteToolStripMenuItem = new ToolStripMenuItem();
             DateOfConclusionDateTimePicker = new DateTimePicker();
             DateValidDateTimePicker = new DateTimePicker();
             ExecutorComboBox = new ComboBox();
@@ -55,15 +55,11 @@
             ImageContextMenuStrip = new ContextMenuStrip(components);
             DeleteImageToolStripMenuItem = new ToolStripMenuItem();
             AddFileButton = new Button();
-            pictureBox1 = new PictureBox();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            AddContentButton = new Button();
             ((System.ComponentModel.ISupportInitialize)LocalsPricesDataGridView).BeginInit();
             ContractContentContextMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ScanPictureBox).BeginInit();
             ImageContextMenuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // CancelButton
@@ -148,6 +144,7 @@
             // 
             // LocalsPricesDataGridView
             // 
+            LocalsPricesDataGridView.AllowUserToAddRows = false;
             LocalsPricesDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             LocalsPricesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             LocalsPricesDataGridView.Columns.AddRange(new DataGridViewColumn[] { IdDataGridViewColumn, PriceDataGridViewColumn, LocalityDataGridViewComboBoxColumn });
@@ -185,16 +182,16 @@
             // ContractContentContextMenuStrip
             // 
             ContractContentContextMenuStrip.ImageScalingSize = new Size(20, 20);
-            ContractContentContextMenuStrip.Items.AddRange(new ToolStripItem[] { удалитьToolStripMenuItem });
+            ContractContentContextMenuStrip.Items.AddRange(new ToolStripItem[] { DeleteToolStripMenuItem });
             ContractContentContextMenuStrip.Name = "ContractContentContextMenuStrip";
             ContractContentContextMenuStrip.Size = new Size(135, 28);
             // 
-            // удалитьToolStripMenuItem
+            // DeleteToolStripMenuItem
             // 
-            удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            удалитьToolStripMenuItem.Size = new Size(134, 24);
-            удалитьToolStripMenuItem.Text = "Удалить";
-            удалитьToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
+            DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
+            DeleteToolStripMenuItem.Size = new Size(134, 24);
+            DeleteToolStripMenuItem.Text = "Удалить";
+            DeleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
             // 
             // DateOfConclusionDateTimePicker
             // 
@@ -270,7 +267,7 @@
             // 
             // AddFileButton
             // 
-            AddFileButton.Location = new Point(537, 245);
+            AddFileButton.Location = new Point(601, 244);
             AddFileButton.Name = "AddFileButton";
             AddFileButton.Size = new Size(139, 29);
             AddFileButton.TabIndex = 26;
@@ -278,57 +275,24 @@
             AddFileButton.UseVisualStyleBackColor = true;
             AddFileButton.Click += AddFileButton_Click;
             // 
-            // pictureBox1
+            // AddContentButton
             // 
-            pictureBox1.Location = new Point(504, 12);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(204, 226);
-            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox1.TabIndex = 22;
-            pictureBox1.TabStop = false;
-            pictureBox1.DoubleClick += ScanPictureBox_DoubleClick;
-            // 
-            // button1
-            // 
-            button1.Image = (Image)resources.GetObject("button1.Image");
-            button1.Location = new Point(714, 109);
-            button1.Name = "button1";
-            button1.Size = new Size(26, 32);
-            button1.TabIndex = 23;
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += NextScanButton_Click;
-            // 
-            // button2
-            // 
-            button2.Image = (Image)resources.GetObject("button2.Image");
-            button2.Location = new Point(472, 109);
-            button2.Name = "button2";
-            button2.Size = new Size(26, 32);
-            button2.TabIndex = 24;
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += PrevScanButton_Click;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(537, 245);
-            button3.Name = "button3";
-            button3.Size = new Size(139, 29);
-            button3.TabIndex = 26;
-            button3.Text = "Загрузить файл";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += AddFileButton_Click;
+            AddContentButton.Location = new Point(501, 244);
+            AddContentButton.Name = "AddContentButton";
+            AddContentButton.Size = new Size(94, 29);
+            AddContentButton.TabIndex = 27;
+            AddContentButton.Text = "Добавить";
+            AddContentButton.UseVisualStyleBackColor = true;
+            AddContentButton.Click += AddContentButton_Click;
             // 
             // ContractEditView
             // 
             AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(752, 504);
-            Controls.Add(button3);
+            Controls.Add(AddContentButton);
             Controls.Add(AddFileButton);
-            Controls.Add(button2);
             Controls.Add(PrevScanButton);
-            Controls.Add(button1);
             Controls.Add(NextScanButton);
-            Controls.Add(pictureBox1);
             Controls.Add(ScanPictureBox);
             Controls.Add(ExecutorComboBox);
             Controls.Add(DateValidDateTimePicker);
@@ -351,7 +315,6 @@
             ContractContentContextMenuStrip.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)ScanPictureBox).EndInit();
             ImageContextMenuStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -382,13 +345,10 @@
         private DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private DataGridViewComboBoxColumn localityDataGridViewTextBoxColumn;
         private ContextMenuStrip ContractContentContextMenuStrip;
-        private ToolStripMenuItem удалитьToolStripMenuItem;
+        private ToolStripMenuItem DeleteToolStripMenuItem;
         private DataGridViewTextBoxColumn IdDataGridViewColumn;
         private DataGridViewTextBoxColumn PriceDataGridViewColumn;
         private DataGridViewComboBoxColumn LocalityDataGridViewComboBoxColumn;
-        private PictureBox pictureBox1;
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Button AddContentButton;
     }
 }
