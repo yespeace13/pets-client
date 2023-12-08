@@ -65,7 +65,7 @@ namespace PetsClient.Domain.Log
             _page.Filter = _filterSetting;
             _page.Pages = (int)PagesSize.Value;
             _page.Page = (int)NumberOfPage.Value;
-            var page = APIServiceOne.GetAll<LogViewList>("logs");
+            var page = APIServiceOne.GetAllFromPage<LogViewList>("logs");
             if (page != null)
             {
                 ViewDataGridView.DataSource = page;
