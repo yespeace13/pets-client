@@ -20,32 +20,8 @@ namespace PetsClient.Domain.Report
         {
             _service = new APIServiceModel<ReportViewList, ReportViewList, ReportViewOne>();
             InitializeComponent();
-            InitializeForm();
             InitializeFiltrsDictionary();
             ShowData();
-        }
-
-        private void InitializeForm()
-        {
-            //CreateButton.Enabled = false;
-            //ChangeToolStripMenuItem.Enabled = false;
-            //DeleteToolStripMenuItem.Enabled = false;
-
-            //foreach (var possibility in UserData.PossibilitiesForEntity("Organization"))
-            //{
-            //    switch (possibility)
-            //    {
-            //        case "Insert":
-            //            CreateButton.Enabled = true;
-            //            break;
-            //        case "Update":
-            //            ChangeToolStripMenuItem.Enabled = true;
-            //            break;
-            //        case "Delete":
-            //            DeleteToolStripMenuItem.Enabled = true;
-            //            break;
-            //    }
-            //}
         }
 
         private void ForwardToPage_Click(object sender, EventArgs e)
@@ -73,20 +49,20 @@ namespace PetsClient.Domain.Report
 
         public void ShowData()
         {
-            //(string Column, int Value) sortCol = ViewDataGridView.SortedColumn == null ?
-            //    ("Id", 0) : (ViewDataGridView.SortedColumn.Name, ViewDataGridView.SortOrder == SortOrder.Descending ? 0 : 1);
-            //_page = new PageSettingsView();
-            //_sortSettings = new SortSettings(sortCol.Column, sortCol.Value);
+            (string Column, int Value) sortCol = ViewDataGridView.SortedColumn == null ?
+                ("Id", 0) : (ViewDataGridView.SortedColumn.Name, ViewDataGridView.SortOrder == SortOrder.Descending ? 0 : 1);
+            _page = new PageSettingsView();
+            _sortSettings = new SortSettings(sortCol.Column, sortCol.Value);
 
-            //_page.Sort = _sortSettings;
-            //_page.Filter = _filterSetting;
-            //_page.Pages = (int)PagesSize.Value;
-            //_page.Page = (int)NumberOfPage.Value;
-            var page = APIServiceOne.GetAll<ReportViewList>("reports");
+            _page.Sort = _sortSettings;
+            _page.Filter = _filterSetting;
+            _page.Pages = (int)PagesSize.Value;
+            _page.Page = (int)NumberOfPage.Value;
+            var page = _service.Get("reports", _page);
             if (page != null)
             {
-                ViewDataGridView.DataSource = page;
-                NumberOfPage.Maximum = 1;
+                ViewDataGridView.DataSource = page.Items;
+                NumberOfPage.Maximum = page.Pages;
             }
 
         }
