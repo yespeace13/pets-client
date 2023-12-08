@@ -306,9 +306,9 @@
             // ClearFiltrsButton
             // 
             ClearFiltrsButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            ClearFiltrsButton.Location = new Point(67, 92);
+            ClearFiltrsButton.Location = new Point(40, 92);
             ClearFiltrsButton.Name = "ClearFiltrsButton";
-            ClearFiltrsButton.Size = new Size(75, 29);
+            ClearFiltrsButton.Size = new Size(88, 29);
             ClearFiltrsButton.TabIndex = 3;
             ClearFiltrsButton.Text = "Сбросить";
             ClearFiltrsButton.UseVisualStyleBackColor = true;
@@ -317,9 +317,9 @@
             // AcceptFiltrButton
             // 
             AcceptFiltrButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            AcceptFiltrButton.Location = new Point(148, 92);
+            AcceptFiltrButton.Location = new Point(134, 92);
             AcceptFiltrButton.Name = "AcceptFiltrButton";
-            AcceptFiltrButton.Size = new Size(75, 29);
+            AcceptFiltrButton.Size = new Size(89, 29);
             AcceptFiltrButton.TabIndex = 2;
             AcceptFiltrButton.Text = "Принять";
             AcceptFiltrButton.UseVisualStyleBackColor = true;

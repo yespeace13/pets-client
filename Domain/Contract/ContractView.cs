@@ -207,7 +207,7 @@ namespace PetsClient.Contract
 
         private void AcceptFiltrButton_Click(object sender, EventArgs e)
         {
-            if (_columnName == "DateOfConclusion" || _columnName == "DateValidation")
+            if (_columnName == "DateOfConclusion" || _columnName == "DateValid")
             {
                 _filterSetting[_columnName] = FiltrStartDateTimePicker.Value.ToShortDateString() + " "
                     + FiltrEndDateTimePicker.Value.ToShortDateString();
