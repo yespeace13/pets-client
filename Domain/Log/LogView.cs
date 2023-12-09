@@ -28,7 +28,7 @@ namespace PetsClient.Domain.Log
 
         private void InitializeForm()
         {
-
+ 
         }
 
         private void ForwardToPage_Click(object sender, EventArgs e)
@@ -102,6 +102,8 @@ namespace PetsClient.Domain.Log
         {
             var selectedRow = ViewDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
             _service.Delete("logs", ((LogViewList)ViewDataGridView.Rows[selectedRow].DataBoundItem).Id);
+            //var selectedItem = (LogViewList)ViewDataGridView.Rows[selectedRow].DataBoundItem;
+            //_service.Delete("logs", selectedItem.Id);
             ShowData();
         }
 
@@ -115,7 +117,7 @@ namespace PetsClient.Domain.Log
                 {
                     ViewDataGridView.ClearSelection();
                     ViewDataGridView.Rows[hti.RowIndex].Selected = true;
-                    //OrganizationContextMenuStrip.Show(ViewDataGridView, e.Location);
+                    LogContextMenuStrip.Show(ViewDataGridView, e.Location);
                 }
                 else if (hti.ColumnIndex > -1)
                 {
@@ -151,7 +153,7 @@ namespace PetsClient.Domain.Log
 
         private void InitializeFiltrsDictionary()
         {
-            _filterSetting = new FilterSetting(typeof(OrganizationViewList));
+            _filterSetting = new FilterSetting(typeof(LogViewList));
         }
     }
 }

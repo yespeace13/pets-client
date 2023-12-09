@@ -30,6 +30,7 @@ namespace PetsClient.Domain.Log
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             CreateButton = new Button();
             NextPageButton = new Button();
             PreviousPageButton = new Button();
@@ -45,10 +46,13 @@ namespace PetsClient.Domain.Log
             ClearFiltrsButton = new Button();
             AcceptFiltrButton = new Button();
             FiltrTextBox = new TextBox();
+            LogContextMenuStrip = new ContextMenuStrip(components);
+            DeleteToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)NumberOfPage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PagesSize).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ViewDataGridView).BeginInit();
             FiltrGroupBox.SuspendLayout();
+            LogContextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // CreateButton
@@ -221,7 +225,21 @@ namespace PetsClient.Domain.Log
             FiltrTextBox.Size = new Size(233, 27);
             FiltrTextBox.TabIndex = 1;
             // 
-            // ReportView
+            // LogContextMenuStrip
+            // 
+            LogContextMenuStrip.ImageScalingSize = new Size(20, 20);
+            LogContextMenuStrip.Items.AddRange(new ToolStripItem[] { DeleteToolStripMenuItem });
+            LogContextMenuStrip.Name = "OrganizationContextMenuStrip";
+            LogContextMenuStrip.Size = new Size(211, 56);
+            // 
+            // DeleteToolStripMenuItem
+            // 
+            DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
+            DeleteToolStripMenuItem.Size = new Size(210, 24);
+            DeleteToolStripMenuItem.Text = "Удалить";
+            DeleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
+            // 
+            // LogView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -238,7 +256,7 @@ namespace PetsClient.Domain.Log
             Controls.Add(PreviousPageButton);
             Controls.Add(NextPageButton);
             Controls.Add(CreateButton);
-            Name = "ReportView";
+            Name = "LogView";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Реестр";
             ((System.ComponentModel.ISupportInitialize)NumberOfPage).EndInit();
@@ -246,6 +264,7 @@ namespace PetsClient.Domain.Log
             ((System.ComponentModel.ISupportInitialize)ViewDataGridView).EndInit();
             FiltrGroupBox.ResumeLayout(false);
             FiltrGroupBox.PerformLayout();
+            LogContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -265,6 +284,8 @@ namespace PetsClient.Domain.Log
         private TextBox FiltrTextBox;
         private Button AcceptFiltrButton;
         private Button ClearFiltrsButton;
+        private ContextMenuStrip LogContextMenuStrip;
+        private ToolStripMenuItem DeleteToolStripMenuItem;
     }
 }
 
