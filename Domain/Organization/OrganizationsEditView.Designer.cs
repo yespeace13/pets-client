@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             OkButton = new Button();
             CancelButton = new Button();
             label1 = new Label();
@@ -48,11 +49,12 @@
             label8 = new Label();
             PhoneTextBox = new TextBox();
             EmailTextBox = new TextBox();
+            DataErrorProvider = new ErrorProvider(components);
+            ((System.ComponentModel.ISupportInitialize)DataErrorProvider).BeginInit();
             SuspendLayout();
             // 
             // OkButton
             // 
-            OkButton.DialogResult = DialogResult.OK;
             OkButton.Location = new Point(159, 518);
             OkButton.Name = "OkButton";
             OkButton.Size = new Size(94, 29);
@@ -82,17 +84,21 @@
             // 
             // NameOrganizationTextBox
             // 
+            DataErrorProvider.SetIconPadding(NameOrganizationTextBox, 10);
             NameOrganizationTextBox.Location = new Point(12, 32);
             NameOrganizationTextBox.Name = "NameOrganizationTextBox";
-            NameOrganizationTextBox.Size = new Size(488, 27);
+            NameOrganizationTextBox.Size = new Size(445, 27);
             NameOrganizationTextBox.TabIndex = 3;
+            NameOrganizationTextBox.Validating += NameOrganizationTextBox_Validating;
             // 
             // INNTextBox
             // 
+            DataErrorProvider.SetIconPadding(INNTextBox, 10);
             INNTextBox.Location = new Point(12, 85);
             INNTextBox.Name = "INNTextBox";
-            INNTextBox.Size = new Size(488, 27);
+            INNTextBox.Size = new Size(445, 27);
             INNTextBox.TabIndex = 5;
+            INNTextBox.Validating += INNTextBox_Validating;
             // 
             // label2
             // 
@@ -105,10 +111,12 @@
             // 
             // KPPTextBox
             // 
+            DataErrorProvider.SetIconPadding(KPPTextBox, 10);
             KPPTextBox.Location = new Point(12, 138);
             KPPTextBox.Name = "KPPTextBox";
-            KPPTextBox.Size = new Size(488, 27);
+            KPPTextBox.Size = new Size(445, 27);
             KPPTextBox.TabIndex = 7;
+            KPPTextBox.Validating += KPPTextBox_Validating;
             // 
             // label3
             // 
@@ -121,10 +129,12 @@
             // 
             // AddressTextBox
             // 
+            DataErrorProvider.SetIconPadding(AddressTextBox, 10);
             AddressTextBox.Location = new Point(12, 191);
             AddressTextBox.Name = "AddressTextBox";
-            AddressTextBox.Size = new Size(488, 27);
+            AddressTextBox.Size = new Size(445, 27);
             AddressTextBox.TabIndex = 9;
+            AddressTextBox.Validating += AddressTextBox_Validating;
             // 
             // label4
             // 
@@ -147,18 +157,22 @@
             // TypeOrganizationComboBox
             // 
             TypeOrganizationComboBox.FormattingEnabled = true;
+            DataErrorProvider.SetIconPadding(TypeOrganizationComboBox, 10);
             TypeOrganizationComboBox.Location = new Point(12, 244);
             TypeOrganizationComboBox.Name = "TypeOrganizationComboBox";
-            TypeOrganizationComboBox.Size = new Size(488, 28);
+            TypeOrganizationComboBox.Size = new Size(445, 28);
             TypeOrganizationComboBox.TabIndex = 11;
+            TypeOrganizationComboBox.Validating += TypeOrganizationComboBox_Validating;
             // 
             // LegalTypeComboBox
             // 
             LegalTypeComboBox.FormattingEnabled = true;
+            DataErrorProvider.SetIconPadding(LegalTypeComboBox, 10);
             LegalTypeComboBox.Location = new Point(12, 298);
             LegalTypeComboBox.Name = "LegalTypeComboBox";
-            LegalTypeComboBox.Size = new Size(488, 28);
+            LegalTypeComboBox.Size = new Size(445, 28);
             LegalTypeComboBox.TabIndex = 13;
+            LegalTypeComboBox.Validating += LegalTypeComboBox_Validating;
             // 
             // label6
             // 
@@ -172,10 +186,12 @@
             // LocalityComboBox
             // 
             LocalityComboBox.FormattingEnabled = true;
+            DataErrorProvider.SetIconPadding(LocalityComboBox, 10);
             LocalityComboBox.Location = new Point(12, 352);
             LocalityComboBox.Name = "LocalityComboBox";
-            LocalityComboBox.Size = new Size(488, 28);
+            LocalityComboBox.Size = new Size(445, 28);
             LocalityComboBox.TabIndex = 15;
+            LocalityComboBox.Validating += LocalityComboBox_Validating;
             // 
             // label7
             // 
@@ -194,7 +210,6 @@
             phone.Size = new Size(69, 20);
             phone.TabIndex = 16;
             phone.Text = "Телефон";
-            phone.Click += label8_Click;
             // 
             // label8
             // 
@@ -207,17 +222,26 @@
             // 
             // PhoneTextBox
             // 
+            DataErrorProvider.SetIconPadding(PhoneTextBox, 10);
             PhoneTextBox.Location = new Point(12, 406);
             PhoneTextBox.Name = "PhoneTextBox";
-            PhoneTextBox.Size = new Size(488, 27);
+            PhoneTextBox.Size = new Size(445, 27);
             PhoneTextBox.TabIndex = 19;
+            PhoneTextBox.Validating += PhoneTextBox_Validating;
             // 
             // EmailTextBox
             // 
+            DataErrorProvider.SetIconPadding(EmailTextBox, 10);
             EmailTextBox.Location = new Point(12, 460);
             EmailTextBox.Name = "EmailTextBox";
-            EmailTextBox.Size = new Size(488, 27);
+            EmailTextBox.Size = new Size(445, 27);
             EmailTextBox.TabIndex = 20;
+            EmailTextBox.Validating += EmailTextBox_Validating;
+            // 
+            // DataErrorProvider
+            // 
+            DataErrorProvider.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            DataErrorProvider.ContainerControl = this;
             // 
             // OrganizationEditView
             // 
@@ -250,6 +274,7 @@
             Name = "OrganizationEditView";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Организация";
+            ((System.ComponentModel.ISupportInitialize)DataErrorProvider).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -276,5 +301,6 @@
         private Label label8;
         private TextBox PhoneTextBox;
         private TextBox EmailTextBox;
+        private ErrorProvider DataErrorProvider;
     }
 }
