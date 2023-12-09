@@ -65,11 +65,11 @@ namespace PetsClient.Domain.Log
             _page.Filter = _filterSetting;
             _page.Pages = (int)PagesSize.Value;
             _page.Page = (int)NumberOfPage.Value;
-            var page = APIServiceOne.GetAllFromPage<LogViewList>("logs");
+            var page = _service.Get("logs", _page);
             if (page != null)
             {
-                ViewDataGridView.DataSource = page;
-                NumberOfPage.Maximum = 1;
+                ViewDataGridView.DataSource = page.Items;
+                NumberOfPage.Maximum = page.Pages;
             }
 
         }
