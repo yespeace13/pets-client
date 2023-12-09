@@ -30,6 +30,7 @@ namespace PetsClient.Domain.Report
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             CreateButton = new Button();
             NextPageButton = new Button();
             PreviousPageButton = new Button();
@@ -45,10 +46,14 @@ namespace PetsClient.Domain.Report
             ClearFiltrsButton = new Button();
             AcceptFiltrButton = new Button();
             FiltrTextBox = new TextBox();
+            ReportContextMenuStrip = new ContextMenuStrip(components);
+            ChangeToolStripMenuItem = new ToolStripMenuItem();
+            DeleteToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)NumberOfPage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PagesSize).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ViewDataGridView).BeginInit();
             FiltrGroupBox.SuspendLayout();
+            ReportContextMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // CreateButton
@@ -223,6 +228,26 @@ namespace PetsClient.Domain.Report
             FiltrTextBox.Size = new Size(233, 27);
             FiltrTextBox.TabIndex = 1;
             // 
+            // ReportContextMenuStrip
+            // 
+            ReportContextMenuStrip.ImageScalingSize = new Size(20, 20);
+            ReportContextMenuStrip.Items.AddRange(new ToolStripItem[] { ChangeToolStripMenuItem, DeleteToolStripMenuItem });
+            ReportContextMenuStrip.Name = "OrganizationContextMenuStrip";
+            ReportContextMenuStrip.Size = new Size(211, 80);
+            // 
+            // ChangeToolStripMenuItem
+            // 
+            ChangeToolStripMenuItem.Name = "ChangeToolStripMenuItem";
+            ChangeToolStripMenuItem.Size = new Size(210, 24);
+            ChangeToolStripMenuItem.Text = "Изменить";
+            // 
+            // DeleteToolStripMenuItem
+            // 
+            DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
+            DeleteToolStripMenuItem.Size = new Size(210, 24);
+            DeleteToolStripMenuItem.Text = "Удалить";
+            DeleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
+            // 
             // ReportView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -248,6 +273,7 @@ namespace PetsClient.Domain.Report
             ((System.ComponentModel.ISupportInitialize)ViewDataGridView).EndInit();
             FiltrGroupBox.ResumeLayout(false);
             FiltrGroupBox.PerformLayout();
+            ReportContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -267,6 +293,9 @@ namespace PetsClient.Domain.Report
         private TextBox FiltrTextBox;
         private Button AcceptFiltrButton;
         private Button ClearFiltrsButton;
+        private ContextMenuStrip ReportContextMenuStrip;
+        private ToolStripMenuItem ChangeToolStripMenuItem;
+        private ToolStripMenuItem DeleteToolStripMenuItem;
     }
 }
 

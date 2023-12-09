@@ -117,7 +117,7 @@ namespace PetsClient.Domain.Report
                 {
                     ViewDataGridView.ClearSelection();
                     ViewDataGridView.Rows[hti.RowIndex].Selected = true;
-                    //OrganizationContextMenuStrip.Show(ViewDataGridView, e.Location);
+                    ReportContextMenuStrip.Show(ViewDataGridView, e.Location);
                 }
                 else if (hti.ColumnIndex > -1)
                 {
