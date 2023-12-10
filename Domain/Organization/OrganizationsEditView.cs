@@ -10,7 +10,7 @@ namespace PetsClient.Organization.View;
 public partial class OrganizationEditView : Form, IView
 {
     public OrganizationEdit? OrganizationEdit { get; set; }
-    private OrganizationViewList? _viewUpdate;
+    private readonly OrganizationViewList? _viewUpdate;
 
     public OrganizationEditView(OrganizationViewList view, State status)
     {
@@ -29,7 +29,7 @@ public partial class OrganizationEditView : Form, IView
 
     private void ChangeEnable()
     {
-        CancelButton.Left = (ClientSize.Width - CancelButton.Width) / 2;
+        ExitButton.Left = (ClientSize.Width - ExitButton.Width) / 2;
         NameOrganizationTextBox.Enabled = false;
         INNTextBox.Enabled = false;
         KPPTextBox.Enabled = false;
@@ -40,28 +40,7 @@ public partial class OrganizationEditView : Form, IView
         PhoneTextBox.Enabled = false;
         EmailTextBox.Enabled = false;
         OkButton.Visible = false;
-        CancelButton.Text = "Закрыть";
-    }
-
-    private void CheckFilds()
-    {
-
-        //if (string.IsNullOrEmpty(NameOrganizationTextBox.Text))
-        //    dialogRes = IView.ShowErrorMessage("Не заполнено название.");
-        //if (string.IsNullOrEmpty(INNTextBox.Text))
-        //    dialogRes = IView.ShowErrorMessage("Не заполнен ИНН.");
-        //else if (string.IsNullOrEmpty(AddressTextBox.Text))
-        //    dialogRes = IView.ShowErrorMessage("Не заполнен адрес.");
-        //else if (TypeOrganizationComboBox.SelectedIndex == -1)
-        //    dialogRes = IView.ShowErrorMessage("Не выбран тип организации.");
-        //else if (LegalTypeComboBox.SelectedIndex == -1)
-        //    dialogRes = IView.ShowErrorMessage("Не выбран вид организации.");
-        //else if (LocalityComboBox.SelectedIndex == -1)
-        //    dialogRes = IView.ShowErrorMessage("Не выбран муниципалитет.");
-        //else if (string.IsNullOrEmpty(PhoneTextBox.Text))
-        //    dialogRes = IView.ShowErrorMessage("Не заполнен телефон.");
-        //else if (string.IsNullOrEmpty(EmailTextBox.Text))
-        //    dialogRes = IView.ShowErrorMessage("Не заполнена почта.");
+        ExitButton.Text = "Закрыть";
     }
 
     private void OkButton_Click(object sender, EventArgs e)
@@ -112,8 +91,8 @@ public partial class OrganizationEditView : Form, IView
             KPPTextBox.Text = _viewUpdate.KPP;
             AddressTextBox.Text = _viewUpdate.Address;
             TypeOrganizationComboBox.SelectedItem = typeOrg.Find(t => t.Name == _viewUpdate.TypeOrganization);
-            LegalTypeComboBox.SelectedItem = legalType.Find(t => t.Name == _viewUpdate.LegalType);
-            LocalityComboBox.SelectedItem = localitys.Find(l => l.Name == _viewUpdate.Locality);
+            LegalTypeComboBox.SelectedItem = legalType?.Find(t => t.Name == _viewUpdate.LegalType);
+            LocalityComboBox.SelectedItem = localitys?.Find(l => l.Name == _viewUpdate.Locality);
             PhoneTextBox.Text = _viewUpdate.Phone;
             EmailTextBox.Text = _viewUpdate.Email;
         }
@@ -123,7 +102,7 @@ public partial class OrganizationEditView : Form, IView
     private void CancelButton_Click(object sender, EventArgs e) => Close();
 
 
-    string message = "Поле должно быть заполнено.";
+    readonly string message = "Поле должно быть заполнено.";
 
     private void NameOrganizationTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
     {
@@ -151,18 +130,6 @@ public partial class OrganizationEditView : Form, IView
             DataErrorProvider.SetError(INNTextBox, string.Empty);
 
         
-    }
-
-    private void KPPTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)
-    {
-        if (string.IsNullOrEmpty(KPPTextBox.Text))
-        {
-            e.Cancel = true;
-            DataErrorProvider.SetError(KPPTextBox, message);
-
-        }
-        else
-            DataErrorProvider.SetError(KPPTextBox, string.Empty);
     }
 
     private void AddressTextBox_Validating(object sender, System.ComponentModel.CancelEventArgs e)

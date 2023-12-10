@@ -60,7 +60,7 @@
             ChipNumTextBox = new TextBox();
             label10 = new Label();
             OkButton = new Button();
-            CancelButton = new Button();
+            ExitButton = new Button();
             openFileDialog1 = new OpenFileDialog();
             SexGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)SizeNumericUpDown).BeginInit();
@@ -332,14 +332,14 @@
             // 
             // CancelButton
             // 
-            CancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            CancelButton.Location = new Point(522, 547);
-            CancelButton.Name = "CancelButton";
-            CancelButton.Size = new Size(118, 29);
-            CancelButton.TabIndex = 45;
-            CancelButton.Text = "Отмена";
-            CancelButton.UseVisualStyleBackColor = true;
-            CancelButton.Click += CancelButton_Click;
+            ExitButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            ExitButton.Location = new Point(522, 547);
+            ExitButton.Name = "CancelButton";
+            ExitButton.Size = new Size(118, 29);
+            ExitButton.TabIndex = 45;
+            ExitButton.Text = "Отмена";
+            ExitButton.UseVisualStyleBackColor = true;
+            ExitButton.Click += CancelButton_Click;
             // 
             // openFileDialog1
             // 
@@ -349,7 +349,7 @@
             // 
             AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(652, 588);
-            Controls.Add(CancelButton);
+            Controls.Add(ExitButton);
             Controls.Add(OkButton);
             Controls.Add(ChipNumTextBox);
             Controls.Add(label10);
@@ -418,7 +418,7 @@
         private TextBox ChipNumTextBox;
         private Label label10;
         private Button OkButton;
-        private Button CancelButton;
+        private Button ExitButton;
         private OpenFileDialog openFileDialog1;
         private ContextMenuStrip ScanContextMenuStrip;
         private ToolStripMenuItem DeleteToolStripMenuItem;

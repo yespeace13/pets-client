@@ -1,11 +1,6 @@
-﻿using ModelLibrary.Model.Organization;
-using ModelLibrary.Model.Papka;
-using ModelLibrary.Model.Report;
+﻿using ModelLibrary.Model.LogInformation;
 using ModelLibrary.View;
-using PetsClient.Authentication;
-using PetsClient.Etc;
 using PetsClient.Services;
-using System.Security.Cryptography;
 
 namespace PetsClient.Domain.Log
 {
@@ -15,20 +10,14 @@ namespace PetsClient.Domain.Log
         private SortSettings _sortSettings;
         private PageSettingsView _page;
         private FilterSetting _filterSetting;
-        private APIServiceModel<LogViewList, LogViewList, LogViewList> _service;
+        private readonly APIServiceModel<LogViewList, LogViewList, LogViewList> _service;
 
         public LogView()
         {
             _service = new APIServiceModel<LogViewList, LogViewList, LogViewList>();
             InitializeComponent();
-            InitializeForm();
             InitializeFiltrsDictionary();
             ShowData();
-        }
-
-        private void InitializeForm()
-        {
- 
         }
 
         private void ForwardToPage_Click(object sender, EventArgs e)
@@ -56,10 +45,10 @@ namespace PetsClient.Domain.Log
 
         public void ShowData()
         {
-            (string Column, int Value) sortCol = ViewDataGridView.SortedColumn == null ?
+            (string Column, int Value) = ViewDataGridView.SortedColumn == null ?
                 ("Id", 0) : (ViewDataGridView.SortedColumn.Name, ViewDataGridView.SortOrder == SortOrder.Descending ? 0 : 1);
             _page = new PageSettingsView();
-            _sortSettings = new SortSettings(sortCol.Column, sortCol.Value);
+            _sortSettings = new SortSettings(Column, Value);
 
             _page.Sort = _sortSettings;
             _page.Filter = _filterSetting;
@@ -80,15 +69,18 @@ namespace PetsClient.Domain.Log
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Excel | *.xlsx";
-            saveFileDialog.DefaultExt = "xlsx";
-            saveFileDialog.FileName = "Отчет";
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Excel | *.xlsx",
+                DefaultExt = "xlsx",
+                FileName = "Отчет"
+            };
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                var byteArray = APIServiceOne.GetFile("logs-excel");
+                var byteArray = APIServiceOne.GetFile("logs-export");
                 var path = saveFileDialog.FileName;
-                File.WriteAllBytes(path, byteArray);
+                if (byteArray != null)
+                    File.WriteAllBytes(path, byteArray);
             }
         }
 

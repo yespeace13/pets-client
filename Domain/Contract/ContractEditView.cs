@@ -58,7 +58,7 @@ namespace PetsClient.Contract
             DateValidDateTimePicker.Enabled = false;
             ExecutorComboBox.Enabled = false;
             LocalsPricesDataGridView.Enabled = false;
-            CancelButton.Text = "Закрыть";
+            ExitButton.Text = "Закрыть";
             AddFileButton.Visible = false;
         }
 

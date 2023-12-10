@@ -11,8 +11,8 @@ namespace PetsClient.Act;
 public partial class ActEditView : Form, IView
 {
     public ActEdit Act { get; set; } = new ActEdit();
-    private APIServiceModel<ActViewList, ActEdit, ActViewOne> _service = new APIServiceModel<ActViewList, ActEdit, ActViewOne>();
-    private int _id;
+    private readonly APIServiceModel<ActViewList, ActEdit, ActViewOne> _service = new();
+    private readonly int _id;
     public List<FileBaseView> Files { get; set; } = new List<FileBaseView>();
     public List<List<FileBaseView>> AnimalFiles { get; set; } = new List<List<FileBaseView>>();
     private int _currentFile = 0;
@@ -40,7 +40,7 @@ public partial class ActEditView : Form, IView
         ContractsComboBox.Enabled = false;
         ExecutorComboBox.Enabled = false;
         DateOfCapDateTimePicker.Enabled = false;
-        CancelButton.Text = "Закрыть";
+        ExitButton.Text = "Закрыть";
         AddAnimalButton.Visible = false;
         AddFileButton.Visible = false;
         OkButton.Visible = false;
@@ -118,8 +118,7 @@ public partial class ActEditView : Form, IView
         if (animalView.ShowDialog() == DialogResult.OK)
         {
             var animals = (List<AnimalViewList>)AnimalsDataGridView.DataSource;
-            if (animals == null)
-                animals = new List<AnimalViewList>();
+            animals ??= new List<AnimalViewList>();
             animals.Add(animalView.Animal);
             AnimalsDataGridView.DataSource = null;
             AnimalsDataGridView.DataSource = animals;
@@ -168,7 +167,7 @@ public partial class ActEditView : Form, IView
                 {
                     Id = animal.Id,
                     Category = animal.Category,
-                    Sex = animal.Sex == "Самка" ? true : false,
+                    Sex = animal.Sex == "Самка",
                     Breed = animal.Breed,
                     Size = animal.Size,
                     Wool = animal.Wool,
@@ -180,7 +179,7 @@ public partial class ActEditView : Form, IView
                     ChipNumber = animal.ChipNumber
                 });
             }
-
+            DialogResult = DialogResult.OK;
             Close();
         }
     }
@@ -236,7 +235,7 @@ public partial class ActEditView : Form, IView
             }
             while (_currentFile > 0 && Files[_currentFile].IsDelete);
 
-            PrevScanButton.Enabled = _currentFile == 0 ? false : true;
+            PrevScanButton.Enabled = _currentFile != 0;
             NextScanButton.Enabled = true;
             ChangeScan();
         }
@@ -251,7 +250,7 @@ public partial class ActEditView : Form, IView
                 _currentFile++;
             }
             while (_currentFile < Files.Count - 1 && Files[_currentFile].IsDelete);
-            NextScanButton.Enabled = _currentFile == Files.Count - 1 ? false : true;
+            NextScanButton.Enabled = _currentFile != Files.Count - 1;
             PrevScanButton.Enabled = true;
             ChangeScan();
         }

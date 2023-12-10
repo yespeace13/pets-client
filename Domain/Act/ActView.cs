@@ -12,7 +12,7 @@ namespace PetsClient.Act
         private SortSettings _sortSettings;
         private PageSettingsView _page;
         private FilterSetting _filterSetting;
-        private APIServiceModel<ActViewList, ActEdit, ActViewOne> _service;
+        private readonly APIServiceModel<ActViewList, ActEdit, ActViewOne> _service;
         public Actview()
         {
             _service = new APIServiceModel<ActViewList, ActEdit, ActViewOne>();
@@ -72,10 +72,10 @@ namespace PetsClient.Act
 
         public void ShowData()
         {
-            (string Column, int Value) sortCol = ActsDataGridView.SortedColumn == null ?
+            (string Column, int Value) = ActsDataGridView.SortedColumn == null ?
                 ("Id", 0) : (ActsDataGridView.SortedColumn.Name, ActsDataGridView.SortOrder == SortOrder.Descending ? 0 : 1);
             _page = new PageSettingsView();
-            _sortSettings = new SortSettings(sortCol.Column, sortCol.Value);
+            _sortSettings = new SortSettings(Column, Value);
 
             _page.Sort = _sortSettings;
             _page.Filter = _filterSetting;

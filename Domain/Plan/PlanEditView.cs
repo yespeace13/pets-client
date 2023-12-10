@@ -4,16 +4,15 @@ using ModelLibrary.Model.Plan;
 using PetsClient.Etc;
 using PetsClient.Services;
 using System.Globalization;
-using System.Security.Policy;
 
 namespace PetsClient.Domain.Plan;
 
 public partial class PlanEditView : Form, IView
 {
     public PlanEdit PlanEdited { get; set; } = new PlanEdit();
-    private APIServiceModel<PlanViewList, PlanEdit, PlanViewOne> _service;
-    private PlanViewOne _view;
-    private int _id;
+    private readonly APIServiceModel<PlanViewList, PlanEdit, PlanViewOne> _service;
+    private readonly PlanViewOne _view;
+    private readonly int _id;
     private List<LocalityView> _localities;
     private List<ActViewList> _acts;
 
@@ -44,7 +43,7 @@ public partial class PlanEditView : Form, IView
         var years = Enumerable.Range(currentYear - 2, 5);
         YearComboBox.DataSource = years.ToList();
         YearComboBox.SelectedItem = currentYear;
-        CultureInfo culture = new CultureInfo("ru-RU");
+        CultureInfo culture = new("ru-RU");
         culture.DateTimeFormat.MonthNames = culture.DateTimeFormat.MonthGenitiveNames;
         culture.DateTimeFormat.AbbreviatedMonthNames = culture.DateTimeFormat.AbbreviatedMonthGenitiveNames;
         MonthComboBox.DataSource = culture.DateTimeFormat.MonthNames.Take(12).ToList();
@@ -58,7 +57,7 @@ public partial class PlanEditView : Form, IView
         AddDayButton.Visible = false;
         DeleteDayButton.Visible = false;
         CalendarFlowLayoutPanel.Enabled = false;
-        CancelButton.Text = "Закрыть";
+        ExitButton.Text = "Закрыть";
     }
 
     private bool CheckFilds()
@@ -148,7 +147,7 @@ public partial class PlanEditView : Form, IView
                 var item = _acts.Find(a => a.Id == content[i].Act.Id);
                 actCombobox.SelectedIndex = _acts.IndexOf(item);
             }
-            
+
             var checkedBox = (CheckBox)groupBox.Controls[8];
             checkedBox.Checked = content[i].Check;
 
@@ -167,14 +166,9 @@ public partial class PlanEditView : Form, IView
 
     private void AddDayButton_Click(object sender, EventArgs e)
     {
-        if (CheckDay())
-            CreateGroupBox();
+        CreateGroupBox();
     }
 
-    private bool CheckDay()
-    {
-        return true;
-    }
 
     private void CreateGroupBox()
     {

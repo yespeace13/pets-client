@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ContractEditView));
-            CancelButton = new Button();
+            ExitButton = new Button();
             OkButton = new Button();
             label7 = new Label();
             label6 = new Label();
@@ -64,13 +64,13 @@
             // 
             // CancelButton
             // 
-            CancelButton.Location = new Point(597, 463);
-            CancelButton.Name = "CancelButton";
-            CancelButton.Size = new Size(143, 29);
-            CancelButton.TabIndex = 16;
-            CancelButton.Text = "Отмена";
-            CancelButton.UseVisualStyleBackColor = true;
-            CancelButton.Click += CancelButton_Click;
+            ExitButton.Location = new Point(597, 463);
+            ExitButton.Name = "CancelButton";
+            ExitButton.Size = new Size(143, 29);
+            ExitButton.TabIndex = 16;
+            ExitButton.Text = "Отмена";
+            ExitButton.UseVisualStyleBackColor = true;
+            ExitButton.Click += CancelButton_Click;
             // 
             // OkButton
             // 
@@ -299,7 +299,7 @@
             Controls.Add(DateOfConclusionDateTimePicker);
             Controls.Add(LocalsPricesDataGridView);
             Controls.Add(label3);
-            Controls.Add(CancelButton);
+            Controls.Add(ExitButton);
             Controls.Add(label4);
             Controls.Add(OkButton);
             Controls.Add(NumberTextBox);
@@ -320,7 +320,7 @@
         }
 
         #endregion
-        private Button CancelButton;
+        private Button ExitButton;
         private Button OkButton;
         private Label label7;
         private Label label6;

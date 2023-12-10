@@ -46,7 +46,7 @@ public partial class AnimalEditView : Form
         ChipNumTextBox.Enabled = false;
         AddFileButton.Enabled = false;
         OkButton.Visible = false;
-        CancelButton.Text = "Закрыть";
+        ExitButton.Text = "Закрыть";
     }
 
     private void FillData()

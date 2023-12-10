@@ -31,7 +31,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ActEditView));
             OkButton = new Button();
-            CancelButton = new Button();
+            ExitButton = new Button();
             label1 = new Label();
             DateOfCapDateTimePicker = new DateTimePicker();
             ExecutorComboBox = new ComboBox();
@@ -71,14 +71,14 @@
             // 
             // CancelButton
             // 
-            CancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            CancelButton.Location = new Point(525, 519);
-            CancelButton.Name = "CancelButton";
-            CancelButton.Size = new Size(75, 29);
-            CancelButton.TabIndex = 1;
-            CancelButton.Text = "Отмена";
-            CancelButton.UseVisualStyleBackColor = true;
-            CancelButton.Click += CancelButton_Click;
+            ExitButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            ExitButton.Location = new Point(525, 519);
+            ExitButton.Name = "CancelButton";
+            ExitButton.Size = new Size(75, 29);
+            ExitButton.TabIndex = 1;
+            ExitButton.Text = "Отмена";
+            ExitButton.UseVisualStyleBackColor = true;
+            ExitButton.Click += CancelButton_Click;
             // 
             // label1
             // 
@@ -278,7 +278,7 @@
             Controls.Add(ExecutorComboBox);
             Controls.Add(DateOfCapDateTimePicker);
             Controls.Add(label1);
-            Controls.Add(CancelButton);
+            Controls.Add(ExitButton);
             Controls.Add(OkButton);
             Name = "ActEditView";
             StartPosition = FormStartPosition.CenterScreen;
@@ -294,7 +294,7 @@
         #endregion
 
         private Button OkButton;
-        private Button CancelButton;
+        private Button ExitButton;
         private Label label1;
         private DateTimePicker DateOfCapDateTimePicker;
         private ComboBox ExecutorComboBox;

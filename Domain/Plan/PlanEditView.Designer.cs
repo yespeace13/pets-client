@@ -28,7 +28,7 @@ partial class PlanEditView
     /// </summary>
     private void InitializeComponent()
     {
-        CancelButton = new Button();
+        ExitButton = new Button();
         OkButton = new Button();
         YearComboBox = new ComboBox();
         label1 = new Label();
@@ -53,14 +53,14 @@ partial class PlanEditView
         // 
         // CancelButton
         // 
-        CancelButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-        CancelButton.Location = new Point(770, 593);
-        CancelButton.Name = "CancelButton";
-        CancelButton.Size = new Size(143, 29);
-        CancelButton.TabIndex = 16;
-        CancelButton.Text = "Отмена";
-        CancelButton.UseVisualStyleBackColor = true;
-        CancelButton.Click += CancelButton_Click;
+        ExitButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+        ExitButton.Location = new Point(770, 593);
+        ExitButton.Name = "CancelButton";
+        ExitButton.Size = new Size(143, 29);
+        ExitButton.TabIndex = 16;
+        ExitButton.Text = "Отмена";
+        ExitButton.UseVisualStyleBackColor = true;
+        ExitButton.Click += CancelButton_Click;
         // 
         // OkButton
         // 
@@ -258,7 +258,7 @@ partial class PlanEditView
         Controls.Add(label2);
         Controls.Add(label1);
         Controls.Add(YearComboBox);
-        Controls.Add(CancelButton);
+        Controls.Add(ExitButton);
         Controls.Add(OkButton);
         Name = "PlanEditView";
         StartPosition = FormStartPosition.CenterScreen;
@@ -272,7 +272,7 @@ partial class PlanEditView
     }
 
     #endregion
-    private Button CancelButton;
+    private Button ExitButton;
     private Button OkButton;
     private BindingSource contractContentViewBindingSource;
     private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;

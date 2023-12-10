@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            CancelButton = new Button();
+            ExitButton = new Button();
             label1 = new Label();
             NumberTextBox = new TextBox();
             label2 = new Label();
@@ -42,13 +42,13 @@
             // 
             // CancelButton
             // 
-            CancelButton.Location = new Point(305, 432);
-            CancelButton.Name = "CancelButton";
-            CancelButton.Size = new Size(94, 29);
-            CancelButton.TabIndex = 1;
-            CancelButton.Text = "Закрыть";
-            CancelButton.UseVisualStyleBackColor = true;
-            CancelButton.Click += CancelButton_Click;
+            ExitButton.Location = new Point(305, 432);
+            ExitButton.Name = "CancelButton";
+            ExitButton.Size = new Size(94, 29);
+            ExitButton.TabIndex = 1;
+            ExitButton.Text = "Закрыть";
+            ExitButton.UseVisualStyleBackColor = true;
+            ExitButton.Click += CancelButton_Click;
             // 
             // label1
             // 
@@ -136,7 +136,7 @@
             Controls.Add(label2);
             Controls.Add(NumberTextBox);
             Controls.Add(label1);
-            Controls.Add(CancelButton);
+            Controls.Add(ExitButton);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -149,7 +149,7 @@
         }
 
         #endregion
-        private Button CancelButton;
+        private Button ExitButton;
         private Label label1;
         private TextBox NumberTextBox;
         private TextBox INNTextBox;

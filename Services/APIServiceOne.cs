@@ -1,14 +1,12 @@
 ﻿using ModelLibrary.Model.Etc;
 using ModelLibrary.View;
-using PetsClient.Properties;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
-using System.Resources;
 
 namespace PetsClient.Services;
 public class APIServiceOne
 {
-    private static RestClient _сlient;
+    private static readonly RestClient _сlient;
 
     static APIServiceOne()
     {
@@ -17,7 +15,7 @@ public class APIServiceOne
     }
     //TODO костыль костыльный обмазанный костылем
     // Получение записей, где Page
-    public static List<T> GetAllFromPage<T>(string resources)
+    public static List<T>? GetAllFromPage<T>(string resources)
     {
         var pageSettings = new PageSettingsView(1, 500, null, null);
         var request = new RestRequest(resources, Method.Get);
@@ -28,12 +26,12 @@ public class APIServiceOne
 
         var execute = _сlient.ExecuteGet<PageSettings<T>>(request);
         if (execute.IsSuccessful)
-            return execute.Data.Items.ToList();
+            return execute.Data?.Items.ToList();
         throw new Exception(execute.ErrorMessage);
     }
 
     // получение всех записей, где нет Page
-    public static List<T> GetAll<T>(string resources)
+    public static List<T>? GetAll<T>(string resources)
     {
         var request = new RestRequest(resources, Method.Get);
         request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
@@ -54,7 +52,7 @@ public class APIServiceOne
         _сlient.Post(request);
     }
 
-    public static byte[] GetFile(string resource)
+    public static byte[]? GetFile(string resource)
     {
         var data = _сlient.DownloadData(new RestRequest(resource, Method.Get));
         return data;
@@ -75,7 +73,7 @@ public class APIServiceOne
         _сlient.Delete(request);
     }
 
-    internal static List<FileBaseView> GetFiles(string resource, int id)
+    internal static List<FileBaseView>? GetFiles(string resource, int id)
     {
         var request = new RestRequest(resource + "/" + id, Method.Get);
         request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);

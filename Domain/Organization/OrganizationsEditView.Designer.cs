@@ -30,7 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             OkButton = new Button();
-            CancelButton = new Button();
+            ExitButton = new Button();
             label1 = new Label();
             NameOrganizationTextBox = new TextBox();
             INNTextBox = new TextBox();
@@ -65,13 +65,13 @@
             // 
             // CancelButton
             // 
-            CancelButton.Location = new Point(259, 518);
-            CancelButton.Name = "CancelButton";
-            CancelButton.Size = new Size(94, 29);
-            CancelButton.TabIndex = 1;
-            CancelButton.Text = "Отмена";
-            CancelButton.UseVisualStyleBackColor = true;
-            CancelButton.Click += CancelButton_Click;
+            ExitButton.Location = new Point(259, 518);
+            ExitButton.Name = "CancelButton";
+            ExitButton.Size = new Size(94, 29);
+            ExitButton.TabIndex = 1;
+            ExitButton.Text = "Отмена";
+            ExitButton.UseVisualStyleBackColor = true;
+            ExitButton.Click += CancelButton_Click;
             // 
             // label1
             // 
@@ -117,7 +117,6 @@
             KPPTextBox.Name = "KPPTextBox";
             KPPTextBox.Size = new Size(445, 27);
             KPPTextBox.TabIndex = 7;
-            KPPTextBox.Validating += KPPTextBox_Validating;
             // 
             // label3
             // 
@@ -267,7 +266,7 @@
             Controls.Add(label2);
             Controls.Add(NameOrganizationTextBox);
             Controls.Add(label1);
-            Controls.Add(CancelButton);
+            Controls.Add(ExitButton);
             Controls.Add(OkButton);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -283,7 +282,7 @@
         #endregion
 
         private Button OkButton;
-        private Button CancelButton;
+        private Button ExitButton;
         private Label label1;
         private TextBox NameOrganizationTextBox;
         private TextBox INNTextBox;
