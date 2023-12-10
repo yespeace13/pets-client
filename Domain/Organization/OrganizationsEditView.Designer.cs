@@ -111,6 +111,7 @@
             // 
             // KPPTextBox
             // 
+            KPPTextBox.CausesValidation = false;
             DataErrorProvider.SetIconPadding(KPPTextBox, 10);
             KPPTextBox.Location = new Point(12, 138);
             KPPTextBox.Name = "KPPTextBox";
