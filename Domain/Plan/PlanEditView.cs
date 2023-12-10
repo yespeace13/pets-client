@@ -1,10 +1,10 @@
-﻿using ModelLibrary.Model.Contract;
+﻿using ModelLibrary.Model.Act;
 using ModelLibrary.Model.Etc;
-using ModelLibrary.Model.Organization;
 using ModelLibrary.Model.Plan;
 using PetsClient.Etc;
 using PetsClient.Services;
 using System.Globalization;
+using System.Security.Policy;
 
 namespace PetsClient.Domain.Plan;
 
@@ -15,6 +15,7 @@ public partial class PlanEditView : Form, IView
     private PlanViewOne _view;
     private int _id;
     private List<LocalityView> _localities;
+    private List<ActViewList> _acts;
 
     public PlanEditView(APIServiceModel<PlanViewList, PlanEdit, PlanViewOne> service)
     {
@@ -38,6 +39,7 @@ public partial class PlanEditView : Form, IView
     private void FillComboBoxes()
     {
         _localities = APIServiceOne.GetAll<LocalityView>("localities");
+        _acts = APIServiceOne.GetAllFromPage<ActViewList>("acts");
         var currentYear = DateTime.Now.Year;
         var years = Enumerable.Range(currentYear - 2, 5);
         YearComboBox.DataSource = years.ToList();
@@ -53,7 +55,7 @@ public partial class PlanEditView : Form, IView
         YearComboBox.Enabled = false;
         MonthComboBox.Enabled = false;
         OkButton.Visible = false;
-        AddDayButton.Visible= false;
+        AddDayButton.Visible = false;
         DeleteDayButton.Visible = false;
         CalendarFlowLayoutPanel.Enabled = false;
         CancelButton.Text = "Закрыть";
@@ -112,8 +114,8 @@ public partial class PlanEditView : Form, IView
                     Day = (int)dayNumeric.Value,
                     LocalityId = _localities.First(l => l.Name == localityCombobox.SelectedItem.ToString()).Id,
                     Adress = addressBox.Text,
-                    Check = checkedBox.Checked
-                    //ActId = actComboBox
+                    Check = checkedBox.Checked,
+                    ActId = actComboBox.SelectedIndex != -1 ? _acts[actComboBox.SelectedIndex].Id : null
                 });
             }
             Close();
@@ -140,6 +142,13 @@ public partial class PlanEditView : Form, IView
             var addressBox = (TextBox)groupBox.Controls[5];
             addressBox.Text = content[i].Adress;
 
+            if (content[i].Act != null)
+            {
+                var actCombobox = ((ComboBox)groupBox.Controls[7]);
+                var item = _acts.Find(a => a.Id == content[i].Act.Id);
+                actCombobox.SelectedIndex = _acts.IndexOf(item);
+            }
+            
             var checkedBox = (CheckBox)groupBox.Controls[8];
             checkedBox.Checked = content[i].Check;
 
@@ -235,6 +244,7 @@ public partial class PlanEditView : Form, IView
             Size = new Size(ActComboBox.Width, ActComboBox.Height),
             Location = new Point(ActComboBox.Location.X, ActComboBox.Location.Y)
         };
+        actCombobox.Items.AddRange(_acts.Select(l => l.Id.ToString()).ToArray());
         groupBox.Controls.Add(actCombobox);
 
         var checkBox = new CheckBox
