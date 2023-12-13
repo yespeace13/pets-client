@@ -158,9 +158,9 @@ namespace PetsClient.Domain.Log
             // 
             label1.Location = new Point(12, 16);
             label1.Name = "label1";
-            label1.Size = new Size(103, 20);
+            label1.Size = new Size(65, 25);
             label1.TabIndex = 13;
-            label1.Text = "Отчеты";
+            label1.Text = "Журнал";
             // 
             // ExportButton
             // 
@@ -194,7 +194,7 @@ namespace PetsClient.Domain.Log
             FiltrGroupBox.Controls.Add(ClearFiltrsButton);
             FiltrGroupBox.Controls.Add(AcceptFiltrButton);
             FiltrGroupBox.Controls.Add(FiltrTextBox);
-            FiltrGroupBox.Location = new Point(181, 144);
+            FiltrGroupBox.Location = new Point(325, 104);
             FiltrGroupBox.Name = "FiltrGroupBox";
             FiltrGroupBox.Size = new Size(229, 127);
             FiltrGroupBox.TabIndex = 18;
@@ -245,7 +245,7 @@ namespace PetsClient.Domain.Log
             FiltrTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             FiltrTextBox.Location = new Point(6, 21);
             FiltrTextBox.Name = "FiltrTextBox";
-            FiltrTextBox.Size = new Size(246, 27);
+            FiltrTextBox.Size = new Size(217, 27);
             FiltrTextBox.TabIndex = 1;
             // 
             // LogView

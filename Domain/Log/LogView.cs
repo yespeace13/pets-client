@@ -164,6 +164,14 @@ namespace PetsClient.Domain.Log
 
         private void AcceptFiltrButton_Click(object sender, EventArgs e)
         {
+            if (_columnName == "ActionDate")
+            {
+                _filterSetting[_columnName] = FiltrStartDateTimePicker.Value.ToShortDateString() + " "
+                    + FiltrEndDateTimePicker.Value.ToShortDateString();
+                FiltrStartDateTimePicker.Value = DateTime.Now;
+                FiltrGroupBox.Visible = false;
+                ShowData();
+            }
             if (FiltrTextBox.Text.Length != 0)
             {
                 _filterSetting[_columnName] = FiltrTextBox.Text;
