@@ -31,7 +31,6 @@ namespace PetsClient.Domain.Log
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            CreateButton = new Button();
             NextPageButton = new Button();
             PreviousPageButton = new Button();
             NumberOfPage = new NumericUpDown();
@@ -42,28 +41,20 @@ namespace PetsClient.Domain.Log
             ViewDataGridView = new DataGridView();
             label1 = new Label();
             ExportButton = new Button();
+            LogContextMenuStrip = new ContextMenuStrip(components);
+            DeleteToolStripMenuItem = new ToolStripMenuItem();
             FiltrGroupBox = new GroupBox();
+            FiltrEndDateTimePicker = new DateTimePicker();
+            FiltrStartDateTimePicker = new DateTimePicker();
             ClearFiltrsButton = new Button();
             AcceptFiltrButton = new Button();
             FiltrTextBox = new TextBox();
-            LogContextMenuStrip = new ContextMenuStrip(components);
-            DeleteToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)NumberOfPage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PagesSize).BeginInit();
             ((System.ComponentModel.ISupportInitialize)ViewDataGridView).BeginInit();
-            FiltrGroupBox.SuspendLayout();
             LogContextMenuStrip.SuspendLayout();
+            FiltrGroupBox.SuspendLayout();
             SuspendLayout();
-            // 
-            // CreateButton
-            // 
-            CreateButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            CreateButton.Location = new Point(1018, 12);
-            CreateButton.Name = "CreateButton";
-            CreateButton.Size = new Size(90, 29);
-            CreateButton.TabIndex = 0;
-            CreateButton.Text = "Добавить";
-            CreateButton.UseVisualStyleBackColor = true;
             // 
             // NextPageButton
             // 
@@ -182,25 +173,57 @@ namespace PetsClient.Domain.Log
             ExportButton.UseVisualStyleBackColor = true;
             ExportButton.Click += ExportButton_Click;
             // 
+            // LogContextMenuStrip
+            // 
+            LogContextMenuStrip.ImageScalingSize = new Size(20, 20);
+            LogContextMenuStrip.Items.AddRange(new ToolStripItem[] { DeleteToolStripMenuItem });
+            LogContextMenuStrip.Name = "OrganizationContextMenuStrip";
+            LogContextMenuStrip.Size = new Size(135, 28);
+            // 
+            // DeleteToolStripMenuItem
+            // 
+            DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
+            DeleteToolStripMenuItem.Size = new Size(134, 24);
+            DeleteToolStripMenuItem.Text = "Удалить";
+            DeleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
+            // 
             // FiltrGroupBox
             // 
+            FiltrGroupBox.Controls.Add(FiltrEndDateTimePicker);
+            FiltrGroupBox.Controls.Add(FiltrStartDateTimePicker);
             FiltrGroupBox.Controls.Add(ClearFiltrsButton);
             FiltrGroupBox.Controls.Add(AcceptFiltrButton);
             FiltrGroupBox.Controls.Add(FiltrTextBox);
-            FiltrGroupBox.Location = new Point(12, 96);
+            FiltrGroupBox.Location = new Point(181, 144);
             FiltrGroupBox.Name = "FiltrGroupBox";
-            FiltrGroupBox.Size = new Size(245, 100);
-            FiltrGroupBox.TabIndex = 16;
+            FiltrGroupBox.Size = new Size(229, 127);
+            FiltrGroupBox.TabIndex = 18;
             FiltrGroupBox.TabStop = false;
             FiltrGroupBox.Text = "Фильтр";
             FiltrGroupBox.Visible = false;
             // 
+            // FiltrEndDateTimePicker
+            // 
+            FiltrEndDateTimePicker.Location = new Point(6, 49);
+            FiltrEndDateTimePicker.Name = "FiltrEndDateTimePicker";
+            FiltrEndDateTimePicker.Size = new Size(200, 27);
+            FiltrEndDateTimePicker.TabIndex = 19;
+            FiltrEndDateTimePicker.Visible = false;
+            // 
+            // FiltrStartDateTimePicker
+            // 
+            FiltrStartDateTimePicker.Location = new Point(6, 32);
+            FiltrStartDateTimePicker.Name = "FiltrStartDateTimePicker";
+            FiltrStartDateTimePicker.Size = new Size(200, 27);
+            FiltrStartDateTimePicker.TabIndex = 18;
+            FiltrStartDateTimePicker.Visible = false;
+            // 
             // ClearFiltrsButton
             // 
-            ClearFiltrsButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ClearFiltrsButton.Location = new Point(52, 65);
+            ClearFiltrsButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            ClearFiltrsButton.Location = new Point(40, 92);
             ClearFiltrsButton.Name = "ClearFiltrsButton";
-            ClearFiltrsButton.Size = new Size(94, 29);
+            ClearFiltrsButton.Size = new Size(88, 29);
             ClearFiltrsButton.TabIndex = 3;
             ClearFiltrsButton.Text = "Сбросить";
             ClearFiltrsButton.UseVisualStyleBackColor = true;
@@ -209,9 +232,9 @@ namespace PetsClient.Domain.Log
             // AcceptFiltrButton
             // 
             AcceptFiltrButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            AcceptFiltrButton.Location = new Point(152, 65);
+            AcceptFiltrButton.Location = new Point(134, 92);
             AcceptFiltrButton.Name = "AcceptFiltrButton";
-            AcceptFiltrButton.Size = new Size(87, 29);
+            AcceptFiltrButton.Size = new Size(89, 29);
             AcceptFiltrButton.TabIndex = 2;
             AcceptFiltrButton.Text = "Принять";
             AcceptFiltrButton.UseVisualStyleBackColor = true;
@@ -219,25 +242,11 @@ namespace PetsClient.Domain.Log
             // 
             // FiltrTextBox
             // 
-            FiltrTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            FiltrTextBox.Location = new Point(6, 26);
+            FiltrTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            FiltrTextBox.Location = new Point(6, 21);
             FiltrTextBox.Name = "FiltrTextBox";
-            FiltrTextBox.Size = new Size(233, 27);
+            FiltrTextBox.Size = new Size(246, 27);
             FiltrTextBox.TabIndex = 1;
-            // 
-            // LogContextMenuStrip
-            // 
-            LogContextMenuStrip.ImageScalingSize = new Size(20, 20);
-            LogContextMenuStrip.Items.AddRange(new ToolStripItem[] { DeleteToolStripMenuItem });
-            LogContextMenuStrip.Name = "OrganizationContextMenuStrip";
-            LogContextMenuStrip.Size = new Size(211, 56);
-            // 
-            // DeleteToolStripMenuItem
-            // 
-            DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
-            DeleteToolStripMenuItem.Size = new Size(210, 24);
-            DeleteToolStripMenuItem.Text = "Удалить";
-            DeleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
             // 
             // LogView
             // 
@@ -255,16 +264,15 @@ namespace PetsClient.Domain.Log
             Controls.Add(NumberOfPage);
             Controls.Add(PreviousPageButton);
             Controls.Add(NextPageButton);
-            Controls.Add(CreateButton);
             Name = "LogView";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Реестр";
             ((System.ComponentModel.ISupportInitialize)NumberOfPage).EndInit();
             ((System.ComponentModel.ISupportInitialize)PagesSize).EndInit();
             ((System.ComponentModel.ISupportInitialize)ViewDataGridView).EndInit();
+            LogContextMenuStrip.ResumeLayout(false);
             FiltrGroupBox.ResumeLayout(false);
             FiltrGroupBox.PerformLayout();
-            LogContextMenuStrip.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -276,16 +284,17 @@ namespace PetsClient.Domain.Log
         private NumericUpDown PagesSize;
         private Label NumberPageLabel;
         private Label CountLabel;
-        private Button CreateButton;
         private DataGridView ViewDataGridView;
         private Label label1;
         private Button ExportButton;
-        private GroupBox FiltrGroupBox;
-        private TextBox FiltrTextBox;
-        private Button AcceptFiltrButton;
-        private Button ClearFiltrsButton;
         private ContextMenuStrip LogContextMenuStrip;
         private ToolStripMenuItem DeleteToolStripMenuItem;
+        private DateTimePicker FiltrEndDateTimePicker;
+        private DateTimePicker FiltrStartDateTimePicker;
+        private Button ClearFiltrsButton;
+        private Button AcceptFiltrButton;
+        private TextBox FiltrTextBox;
+        private GroupBox FiltrGroupBox;
     }
 }
 

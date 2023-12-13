@@ -20,6 +20,11 @@ namespace PetsClient.Domain.Log
             ShowData();
         }
 
+        private void InitializeFiltrsDictionary()
+        {
+            _filterSetting = new FilterSetting(typeof(LogViewList));
+        }
+
         private void ForwardToPage_Click(object sender, EventArgs e)
         {
             ShowData();
@@ -114,6 +119,39 @@ namespace PetsClient.Domain.Log
                 else if (hti.ColumnIndex > -1)
                 {
                     FiltrTextBox.Text = _filterSetting[ViewDataGridView.Columns[hti.ColumnIndex].DataPropertyName];
+                    //FiltrGroupBox.Visible = true;
+                    //if (hti.ColumnIndex == ViewDataGridView.ColumnCount - 1)
+                    //    FiltrGroupBox.Location = new Point(hti.ColumnX - 80, hti.RowY + 80);
+                    //else FiltrGroupBox.Location = new Point(hti.ColumnX, hti.RowY + 80);
+                    //_columnName = ViewDataGridView.Columns[hti.ColumnIndex].DataPropertyName;
+
+                    if (hti.ColumnIndex == 12)
+                    {
+                        if (FiltrGroupBox.Size.Height == 89)
+                            FiltrGroupBox.Size = new Size(FiltrGroupBox.Size.Width, FiltrGroupBox.Size.Height + 28);
+                        FiltrTextBox.Visible = false;
+
+                        FiltrStartDateTimePicker.Visible = true;
+                        FiltrStartDateTimePicker.Location = FiltrTextBox.Location;
+
+                        FiltrEndDateTimePicker.Location = new Point(FiltrTextBox.Location.X, FiltrTextBox.Location.Y + 28);
+                        FiltrEndDateTimePicker.Visible = true;
+
+                        // Фильтрация по дате TODO надо переделать общий фильтр в сервисе, чтобы работал с датой
+                        if (_filterSetting[ViewDataGridView.Columns[hti.ColumnIndex].DataPropertyName] != "")
+                        {
+                            var dates = _filterSetting[ViewDataGridView.Columns[hti.ColumnIndex].DataPropertyName].Split(' ');
+                            FiltrStartDateTimePicker.Value = DateTime.Parse(dates[0]);
+                            FiltrEndDateTimePicker.Value = DateTime.Parse(dates[1]);
+                        }
+                    }
+                    else
+                    {
+                        FiltrGroupBox.Size = new Size(FiltrGroupBox.Size.Width, 89);
+                        FiltrTextBox.Visible = true;
+                        FiltrStartDateTimePicker.Visible = false;
+                        FiltrEndDateTimePicker.Visible = false;
+                    }
                     FiltrGroupBox.Visible = true;
                     if (hti.ColumnIndex == ViewDataGridView.ColumnCount - 1)
                         FiltrGroupBox.Location = new Point(hti.ColumnX - 80, hti.RowY + 80);
@@ -141,11 +179,6 @@ namespace PetsClient.Domain.Log
             FiltrTextBox.Clear();
             ShowData();
             FiltrGroupBox.Visible = false;
-        }
-
-        private void InitializeFiltrsDictionary()
-        {
-            _filterSetting = new FilterSetting(typeof(LogViewList));
         }
     }
 }
