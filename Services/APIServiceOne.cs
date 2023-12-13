@@ -27,6 +27,8 @@ public class APIServiceOne
         var execute = _сlient.ExecuteGet<PageSettings<T>>(request);
         if (execute.IsSuccessful)
             return execute.Data?.Items.ToList();
+        if (execute.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            MessageBox.Show("У вас нет прав на: " + resources);
         throw new Exception(execute.ErrorMessage);
     }
 

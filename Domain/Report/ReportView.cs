@@ -88,7 +88,7 @@ namespace PetsClient.Domain.Report
             saveFileDialog.FileName = "Отчет";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                var byteArray = APIServiceOne.GetFile("reports-excel");
+                var byteArray = APIServiceOne.GetFile("reports-export");
                 var path = saveFileDialog.FileName;
                 File.WriteAllBytes(path, byteArray);
             }

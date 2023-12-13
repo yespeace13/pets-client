@@ -117,7 +117,7 @@ public partial class PlanView : Form
         saveFileDialog.FileName = "Планы-графики отлова";
         if (saveFileDialog.ShowDialog() == DialogResult.OK)
         {
-            var byteArray = _service.GetFile("plans-excel", _filterSetting);
+            var byteArray = _service.GetFile("plans-export", _filterSetting);
             var path = saveFileDialog.FileName;
             File.WriteAllBytes(path, byteArray);
         }

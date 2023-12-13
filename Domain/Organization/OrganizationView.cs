@@ -104,7 +104,7 @@ namespace PetsClient.Organization.View
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            var byteArray = service.GetFile("organizationexport", _filterSetting);
+            var byteArray = service.GetFile("organization-export", _filterSetting);
             File.WriteAllBytes("Организации.xlsx", byteArray);
         }
 
