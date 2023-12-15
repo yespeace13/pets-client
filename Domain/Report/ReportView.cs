@@ -1,10 +1,8 @@
 ﻿using ModelLibrary.Model.Organization;
 using ModelLibrary.Model.Report;
 using ModelLibrary.View;
-using PetsClient.Authentication;
 using PetsClient.Etc;
 using PetsClient.Services;
-using System.Security.Cryptography;
 
 namespace PetsClient.Domain.Report
 {
@@ -118,6 +116,13 @@ namespace PetsClient.Domain.Report
                     ViewDataGridView.ClearSelection();
                     ViewDataGridView.Rows[hti.RowIndex].Selected = true;
                     ReportContextMenuStrip.Show(ViewDataGridView, e.Location);
+                    var report = (ReportViewList)ViewDataGridView.Rows[hti.RowIndex].DataBoundItem;
+                    var statuses = APIServiceOne.Get<List<ReportStatusView>>($"reports/{report.Id}/statuses");
+                    if (statuses.Count == 1)
+                        ChangeToolStripMenuItem.Enabled = false;
+                    else
+                        ChangeToolStripMenuItem.Enabled = true;
+
                 }
                 else if (hti.ColumnIndex > -1)
                 {
@@ -140,7 +145,7 @@ namespace PetsClient.Domain.Report
                 if (hti.RowIndex != -1)
                 {
                     var selectedRow = ViewDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
-                    new ReportEditView(_service, ((ReportViewList)ViewDataGridView.Rows[selectedRow].DataBoundItem).Id).ShowDialog();
+                    new ReportEditView(((ReportViewList)ViewDataGridView.Rows[selectedRow].DataBoundItem).Id).ShowDialog();
                 }
             }
         }
@@ -166,7 +171,16 @@ namespace PetsClient.Domain.Report
 
         private void InitializeFiltrsDictionary()
         {
-            _filterSetting = new FilterSetting(typeof(OrganizationViewList));
+            _filterSetting = new FilterSetting(typeof(ReportViewList));
+        }
+
+        private void ChangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var selectedRow = ViewDataGridView.Rows.GetFirstRow(DataGridViewElementStates.Selected);
+            var id = ((ReportViewList)ViewDataGridView.Rows[selectedRow].DataBoundItem).Id;
+            if (new ReportEditView(id, State.Update).ShowDialog() == DialogResult.OK)
+                ShowData();
+            
         }
     }
 }

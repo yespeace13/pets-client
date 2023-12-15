@@ -1,5 +1,6 @@
 ﻿using ModelLibrary.Model.Etc;
 using ModelLibrary.View;
+using PetsClient.Properties;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 
@@ -84,6 +85,39 @@ public class APIServiceOne
         if (execute.IsSuccessful)
             return execute.Data;
         throw new Exception(execute.ErrorMessage);
+    }
+
+    public static T? Get<T>(string resource)
+    {
+        var request = new RestRequest(resource, Method.Get);
+        request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+
+        var execute = _сlient.ExecuteGet<T>(request);
+        if (execute.IsSuccessful)
+            return execute.Data;
+        throw new Exception(execute.ErrorMessage);
+    }
+
+    public static string? Post(string resource)
+    {
+        var request = new RestRequest(resource, Method.Post);
+        request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+        var response = _сlient.ExecutePost(request);
+        if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
+            return "У вас нет прав";
+        else
+            return response.Content;
+    }
+
+    internal static string? CheckReports(string resource)
+    {
+        var request = new RestRequest(resource, Method.Post);
+        request.AddHeader("Authorization", "Bearer " + ConnectionConfig.Token);
+        var response = _сlient.ExecuteGet(request);
+        if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            return null;
+        return response.Content.Replace("\"", "");
+
     }
 }
 

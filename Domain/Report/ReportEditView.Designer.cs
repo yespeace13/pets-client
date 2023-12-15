@@ -37,13 +37,16 @@
             FromDateTimePicker = new DateTimePicker();
             ToDateTimePicker = new DateTimePicker();
             ExportExcelButton = new Button();
+            ReportStatusComboBox = new ComboBox();
+            label4 = new Label();
+            AcceptButton = new Button();
             ((System.ComponentModel.ISupportInitialize)ContentDataGridView).BeginInit();
             SuspendLayout();
             // 
-            // CancelButton
+            // ExitButton
             // 
-            ExitButton.Location = new Point(305, 432);
-            ExitButton.Name = "CancelButton";
+            ExitButton.Location = new Point(753, 563);
+            ExitButton.Name = "ExitButton";
             ExitButton.Size = new Size(94, 29);
             ExitButton.TabIndex = 1;
             ExitButton.Text = "Закрыть";
@@ -86,17 +89,15 @@
             // 
             // ContentDataGridView
             // 
-            ContentDataGridView.AllowUserToAddRows = false;
-            ContentDataGridView.AllowUserToDeleteRows = false;
+            ContentDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ContentDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             ContentDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             ContentDataGridView.Location = new Point(11, 117);
             ContentDataGridView.Name = "ContentDataGridView";
-            ContentDataGridView.ReadOnly = true;
             ContentDataGridView.RowHeadersVisible = false;
             ContentDataGridView.RowHeadersWidth = 51;
             ContentDataGridView.RowTemplate.Height = 29;
-            ContentDataGridView.Size = new Size(682, 299);
+            ContentDataGridView.Size = new Size(836, 440);
             ContentDataGridView.TabIndex = 8;
             // 
             // FromDateTimePicker
@@ -115,7 +116,7 @@
             // 
             // ExportExcelButton
             // 
-            ExportExcelButton.Location = new Point(547, 12);
+            ExportExcelButton.Location = new Point(702, 82);
             ExportExcelButton.Name = "ExportExcelButton";
             ExportExcelButton.Size = new Size(145, 29);
             ExportExcelButton.TabIndex = 11;
@@ -123,11 +124,43 @@
             ExportExcelButton.UseVisualStyleBackColor = true;
             ExportExcelButton.Click += ExportExcelButton_Click;
             // 
+            // ReportStatusComboBox
+            // 
+            ReportStatusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            ReportStatusComboBox.FormattingEnabled = true;
+            ReportStatusComboBox.Location = new Point(268, 32);
+            ReportStatusComboBox.Name = "ReportStatusComboBox";
+            ReportStatusComboBox.Size = new Size(250, 28);
+            ReportStatusComboBox.TabIndex = 12;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(268, 9);
+            label4.Name = "label4";
+            label4.Size = new Size(101, 20);
+            label4.TabIndex = 13;
+            label4.Text = "Статус отчета";
+            // 
+            // AcceptButton
+            // 
+            AcceptButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            AcceptButton.Location = new Point(653, 563);
+            AcceptButton.Name = "AcceptButton";
+            AcceptButton.Size = new Size(94, 29);
+            AcceptButton.TabIndex = 14;
+            AcceptButton.Text = "Ок";
+            AcceptButton.UseVisualStyleBackColor = true;
+            AcceptButton.Click += AcceptButton_Click;
+            // 
             // ReportEditView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(704, 473);
+            ClientSize = new Size(859, 604);
+            Controls.Add(AcceptButton);
+            Controls.Add(label4);
+            Controls.Add(ReportStatusComboBox);
             Controls.Add(ExportExcelButton);
             Controls.Add(ToDateTimePicker);
             Controls.Add(FromDateTimePicker);
@@ -142,7 +175,7 @@
             MinimizeBox = false;
             Name = "ReportEditView";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Организация";
+            Text = "Отчет";
             ((System.ComponentModel.ISupportInitialize)ContentDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -160,5 +193,8 @@
         private DateTimePicker FromDateTimePicker;
         private DateTimePicker ToDateTimePicker;
         private Button ExportExcelButton;
+        private ComboBox ReportStatusComboBox;
+        private Label label4;
+        private Button AcceptButton;
     }
 }

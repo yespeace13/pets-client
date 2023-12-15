@@ -5,6 +5,7 @@ using PetsClient.Domain.Log;
 using PetsClient.Domain.Plan;
 using PetsClient.Domain.Report;
 using PetsClient.Organization.View;
+using PetsClient.Services;
 
 namespace PetsClient;
 
@@ -14,7 +15,10 @@ public partial class MenuForm : Form
     {
         InitializeComponent();
         InitPossibilities();
+        ShowAllNotice();
     }
+
+    
 
     private void InitPossibilities()
     {
@@ -65,5 +69,14 @@ public partial class MenuForm : Form
 
     private void ExitButton_Click(object sender, EventArgs e) =>
         Application.Restart();
+
+
+
+    private void ShowAllNotice()
+    {
+        var notices = APIServiceOne.CheckReports("notices/reports");
+        if (notices != null)
+            MessageBox.Show(notices);
+    }
 
 }

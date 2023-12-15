@@ -240,6 +240,7 @@ namespace PetsClient.Domain.Report
             ChangeToolStripMenuItem.Name = "ChangeToolStripMenuItem";
             ChangeToolStripMenuItem.Size = new Size(210, 24);
             ChangeToolStripMenuItem.Text = "Изменить";
+            ChangeToolStripMenuItem.Click += ChangeToolStripMenuItem_Click;
             // 
             // DeleteToolStripMenuItem
             // 
