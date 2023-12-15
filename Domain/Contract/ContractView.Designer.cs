@@ -383,12 +383,6 @@
         private Button AcceptFiltrButton;
         private TextBox FiltrTextBox;
         private DateTimePicker FiltrStartDateTimePicker;
-        private DataGridViewTextBoxColumn Id;
-        private DataGridViewTextBoxColumn Number;
-        private DataGridViewTextBoxColumn DateOfConclusion;
-        private DataGridViewTextBoxColumn DateValidation;
-        private DataGridViewTextBoxColumn Executor;
-        private DataGridViewTextBoxColumn Client;
         private DateTimePicker FiltrEndDateTimePicker;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn numberDataGridViewTextBoxColumn;

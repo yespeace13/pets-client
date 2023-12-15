@@ -92,7 +92,7 @@ namespace PetsClient.Organization.View
         private void CreateOrgButton_Click(object sender, EventArgs e)
         {
             var result = new OrganizationEditView();
-            if (result.ShowDialog() == DialogResult.OK)
+            if (result.ShowDialog() == DialogResult.OK && result.OrganizationEdit != null)
                 service.Post("organizations", result.OrganizationEdit);
 
             ShowOrganizations();

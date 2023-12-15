@@ -149,7 +149,6 @@ namespace PetsClient
         private Button ReportButton;
         private Button CactchScheduleButton;
         private Button ExitButton;
-        private Label label1;
         private Button LogButton;
     }
 }

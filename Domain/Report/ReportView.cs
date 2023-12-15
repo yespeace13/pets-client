@@ -12,7 +12,7 @@ namespace PetsClient.Domain.Report
         private SortSettings _sortSettings;
         private PageSettingsView _page;
         private FilterSetting _filterSetting;
-        private APIServiceModel<ReportViewList, ReportViewList, ReportViewOne> _service;
+        private readonly APIServiceModel<ReportViewList, ReportViewList, ReportViewOne> _service;
 
         public ReportView()
         {
@@ -47,10 +47,10 @@ namespace PetsClient.Domain.Report
 
         public void ShowData()
         {
-            (string Column, int Value) sortCol = ViewDataGridView.SortedColumn == null ?
+            (string Column, int Value) = ViewDataGridView.SortedColumn == null ?
                 ("Id", 0) : (ViewDataGridView.SortedColumn.Name, ViewDataGridView.SortOrder == SortOrder.Descending ? 0 : 1);
             _page = new PageSettingsView();
-            _sortSettings = new SortSettings(sortCol.Column, sortCol.Value);
+            _sortSettings = new SortSettings(Column, Value);
 
             _page.Sort = _sortSettings;
             _page.Filter = _filterSetting;
@@ -80,15 +80,18 @@ namespace PetsClient.Domain.Report
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Excel | *.xlsx";
-            saveFileDialog.DefaultExt = "xlsx";
-            saveFileDialog.FileName = "Отчет";
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Excel | *.xlsx",
+                DefaultExt = "xlsx",
+                FileName = "Отчет"
+            };
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var byteArray = APIServiceOne.GetFile("reports-export");
                 var path = saveFileDialog.FileName;
-                File.WriteAllBytes(path, byteArray);
+                if(byteArray != null)
+                    File.WriteAllBytes(path, byteArray);
             }
         }
 
@@ -118,7 +121,7 @@ namespace PetsClient.Domain.Report
                     ReportContextMenuStrip.Show(ViewDataGridView, e.Location);
                     var report = (ReportViewList)ViewDataGridView.Rows[hti.RowIndex].DataBoundItem;
                     var statuses = APIServiceOne.Get<List<ReportStatusView>>($"reports/{report.Id}/statuses");
-                    if (statuses.Count == 1)
+                    if (statuses?.Count == 1)
                         ChangeToolStripMenuItem.Enabled = false;
                     else
                         ChangeToolStripMenuItem.Enabled = true;

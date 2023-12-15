@@ -116,7 +116,7 @@ public class APIServiceOne
         var response = _сlient.ExecuteGet(request);
         if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
             return null;
-        return response.Content.Replace("\"", "");
+        return response.Content?.Replace("\"", "");
 
     }
 }

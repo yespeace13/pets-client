@@ -29,8 +29,8 @@ public partial class MenuForm : Form
         ReportButton.Enabled = false;
         LogButton.Visible = false;
 
-        var possibilities = UserData.Possibilities.Where(p => p.Possibility == "Read");
-
+        var possibilities = UserData.Possibilities?.Where(p => p.Possibility == "Read");
+        if (possibilities == null) return;
         foreach (var possibility in possibilities)
         {
             if (possibility.Entity == "Act")

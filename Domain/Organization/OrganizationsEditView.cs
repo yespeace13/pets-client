@@ -90,7 +90,7 @@ public partial class OrganizationEditView : Form, IView
             INNTextBox.Text = _viewUpdate.INN;
             KPPTextBox.Text = _viewUpdate.KPP;
             AddressTextBox.Text = _viewUpdate.Address;
-            TypeOrganizationComboBox.SelectedItem = typeOrg.Find(t => t.Name == _viewUpdate.TypeOrganization);
+            TypeOrganizationComboBox.SelectedItem = typeOrg?.Find(t => t.Name == _viewUpdate.TypeOrganization);
             LegalTypeComboBox.SelectedItem = legalType?.Find(t => t.Name == _viewUpdate.LegalType);
             LocalityComboBox.SelectedItem = localitys?.Find(l => l.Name == _viewUpdate.Locality);
             PhoneTextBox.Text = _viewUpdate.Phone;

@@ -11,10 +11,9 @@ public partial class PlanEditView : Form, IView
 {
     public PlanEdit PlanEdited { get; set; } = new PlanEdit();
     private readonly APIServiceModel<PlanViewList, PlanEdit, PlanViewOne> _service;
-    private readonly PlanViewOne _view;
     private readonly int _id;
-    private List<LocalityView> _localities;
-    private List<ActViewList> _acts;
+    private List<LocalityView>? _localities;
+    private List<ActViewList>? _acts;
 
     public PlanEditView(APIServiceModel<PlanViewList, PlanEdit, PlanViewOne> service)
     {
@@ -93,7 +92,7 @@ public partial class PlanEditView : Form, IView
     {
         if (CheckFilds())
         {
-            PlanEdited.Year = (int)YearComboBox.SelectedValue;
+            PlanEdited.Year = (int)(YearComboBox.SelectedValue ?? DateTime.Now.Year);
             PlanEdited.Month = MonthComboBox.SelectedIndex + 1;
             PlanEdited.PlanContent = new List<PlanContentEdit>();
 
@@ -144,7 +143,7 @@ public partial class PlanEditView : Form, IView
             if (content[i].Act != null)
             {
                 var actCombobox = ((ComboBox)groupBox.Controls[7]);
-                var item = _acts.Find(a => a.Id == content[i].Act.Id);
+                var item = _acts?.Find(a => a.Id == content[i].Act.Id);
                 actCombobox.SelectedIndex = _acts.IndexOf(item);
             }
 

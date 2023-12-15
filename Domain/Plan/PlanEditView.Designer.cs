@@ -275,9 +275,6 @@ partial class PlanEditView
     private Button ExitButton;
     private Button OkButton;
     private BindingSource contractContentViewBindingSource;
-    private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-    private DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-    private DataGridViewComboBoxColumn localityDataGridViewTextBoxColumn;
     private ComboBox YearComboBox;
     private Label label1;
     private Label label2;

@@ -1,16 +1,15 @@
 ﻿using ModelLibrary.Model.Report;
 using PetsClient.Etc;
 using PetsClient.Services;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace PetsClient.Domain.Report
 {
     public partial class ReportEditView : Form, IView
     {
         private readonly APIServiceModel<ReportViewList, ReportViewList, ReportViewOne> _service = new();
-        private int _id;
+        private readonly int _id;
         private ReportViewOne _report;
-        private ReportStatusView _oldStatus;
+        private ReportStatusView? _oldStatus;
 
         public ReportEditView(int id)
         {
@@ -20,7 +19,7 @@ namespace PetsClient.Domain.Report
             FromDateTimePicker.Enabled = false;
             NumberTextBox.Enabled = false;
             ReportStatusComboBox.Enabled = false;
-            AcceptButton.Visible = false;
+            OkButton.Visible = false;
             ContentDataGridView.AllowUserToAddRows = false;
             ContentDataGridView.AllowUserToDeleteRows = false;
             ContentDataGridView.ReadOnly = true;
@@ -47,17 +46,20 @@ namespace PetsClient.Domain.Report
             FromDateTimePicker.Value = _report.DateStart.ToDateTime(TimeOnly.MinValue);
             NumberTextBox.Text = _report.Number.ToString();
             ContentDataGridView.DataSource = _report.ReportContent;
-            ReportStatusComboBox.SelectedValue = _oldStatus.Id;
+            ReportStatusComboBox.SelectedValue = _oldStatus?.Id;
+
         }
 
         private void CancelButton_Click(object sender, EventArgs e) => Close();
 
         private void ExportExcelButton_Click(object sender, EventArgs e)
         {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Excel | *.xlsx";
-            saveFileDialog.DefaultExt = "xlsx";
-            saveFileDialog.FileName = "Отчет";
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Excel | *.xlsx",
+                DefaultExt = "xlsx",
+                FileName = "Отчет"
+            };
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var byteArray = APIServiceOne.GetFile("reports-excel/" + _id);
@@ -77,7 +79,7 @@ namespace PetsClient.Domain.Report
         private void AcceptButton_Click(object sender, EventArgs e)
         {
             var newStatus = (ReportStatusView)ReportStatusComboBox.SelectedItem;
-            if(newStatus.Id != _oldStatus.Id)
+            if(_oldStatus == null || newStatus.Id != _oldStatus.Id)
             {
                 var message = APIServiceOne.Post($"reports/{_report.Id}/statuses/{newStatus.Id}");
                 if(String.IsNullOrEmpty(message))

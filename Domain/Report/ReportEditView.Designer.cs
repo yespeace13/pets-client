@@ -39,7 +39,7 @@
             ExportExcelButton = new Button();
             ReportStatusComboBox = new ComboBox();
             label4 = new Label();
-            AcceptButton = new Button();
+            OkButton = new Button();
             ((System.ComponentModel.ISupportInitialize)ContentDataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -144,21 +144,21 @@
             // 
             // AcceptButton
             // 
-            AcceptButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            AcceptButton.Location = new Point(653, 563);
-            AcceptButton.Name = "AcceptButton";
-            AcceptButton.Size = new Size(94, 29);
-            AcceptButton.TabIndex = 14;
-            AcceptButton.Text = "Ок";
-            AcceptButton.UseVisualStyleBackColor = true;
-            AcceptButton.Click += AcceptButton_Click;
+            OkButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            OkButton.Location = new Point(653, 563);
+            OkButton.Name = "AcceptButton";
+            OkButton.Size = new Size(94, 29);
+            OkButton.TabIndex = 14;
+            OkButton.Text = "Ок";
+            OkButton.UseVisualStyleBackColor = true;
+            OkButton.Click += AcceptButton_Click;
             // 
             // ReportEditView
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(859, 604);
-            Controls.Add(AcceptButton);
+            Controls.Add(OkButton);
             Controls.Add(label4);
             Controls.Add(ReportStatusComboBox);
             Controls.Add(ExportExcelButton);
@@ -195,6 +195,6 @@
         private Button ExportExcelButton;
         private ComboBox ReportStatusComboBox;
         private Label label4;
-        private Button AcceptButton;
+        private Button OkButton;
     }
 }
